@@ -1,6 +1,6 @@
 ﻿
 CREATE PROC [dsp].[Setting_PropsSet]
-    @AppName TSTRING = N'<notset>', @AppVersion TSTRING = N'<notset>', @SystemUserId TSTRING = N'<notset>', @AppUserId TSTRING = N'<notset>',
+    @appName TSTRING = N'<notset>', @appVersion TSTRING = N'<notset>', @SystemUserId TSTRING = N'<notset>', @AppUserId TSTRING = N'<notset>',
     @PaginationDefaultRecordCount INT = -1, @PaginationMaxRecordCount INT = -1, @IsProductionEnvironment INT = -1, @IsUnitTestMode INT = -1,
     @ConfirmServerName TSTRING = NULL, @MaintenanceMode INT = -1
 AS
@@ -19,17 +19,17 @@ BEGIN
            SET  IsProductionEnvironment = @IsProductionEnvironment;
     END;
 
-    IF (dsp.Param_IsSet(@AppName) = 1)
+    IF (dsp.Param_IsSet(@appName) = 1)
         UPDATE  dsp.Setting
-           SET  AppName = @AppName;
+           SET  AppName = @appName;
 
-    IF (dsp.Param_IsSet(@AppVersion) = 1)
+    IF (dsp.Param_IsSet(@appVersion) = 1)
     BEGIN
-        EXEC dsp.[Setting_$IncreaseAppVersion] @AppVersion = @AppVersion OUTPUT, @ForceIncrease = 0;
-        IF (@AppVersion IS NULL) --
-            EXEC err.ThrowGeneralException @ProcId = @@PROCID, @Message = 'AppVersion contains an invalid value!';
+        EXEC dsp.[Setting_$IncreaseAppVersion] @appVersion = @appVersion OUTPUT, @ForceIncrease = 0;
+        IF (@appVersion IS NULL) --
+            EXEC err.ThrowGeneralException @procId = @@PROCID, @message = 'AppVersion contains an invalid value!';
         UPDATE  dsp.Setting
-           SET  AppVersion = @AppVersion;
+           SET  AppVersion = @appVersion;
     END;
 
     IF (dsp.Param_IsSet(@PaginationDefaultRecordCount) = 1)

@@ -2,7 +2,7 @@
 AS
 BEGIN
 	-- Declaring pattern
-	DECLARE @SchemaName TSTRING;
+	DECLARE @schemaName TSTRING;
 	DECLARE @ObjectName TSTRING;
 	DECLARE @Script TBIGSTRING;
 	DECLARE @ClassName TSTRING;
@@ -17,7 +17,7 @@ BEGIN
 	OPEN Procedures_Cursor;
 
 	FETCH NEXT FROM Procedures_Cursor
-	INTO @SchemaName, @ObjectName, @Script, @ClassName;
+	INTO @schemaName, @ObjectName, @Script, @ClassName;
 
 	SET @ClassName = REPLACE(@ClassName, '[', '');
 	DECLARE @Msg TSTRING;
@@ -29,13 +29,13 @@ BEGIN
 		FROM	STRING_SPLIT(@Script, ' ') AS SS
 		WHERE	CHARINDEX('_$', SS.value) > 0 AND	REPLACE(SS.value, '[', '') NOT LIKE '%.' + @ClassName + '_$%';
 
-		EXEC @Msg = dsp.Formatter_FormatMessage @Message = 'ObjectName: [{0}].[{1}]', @Param0 = @SchemaName, @Param1 = @ObjectName;
+		EXEC @Msg = dsp.Formatter_FormatMessage @message = 'ObjectName: [{0}].[{1}]', @param0 = @schemaName, @param1 = @ObjectName;
 		IF (@HasWrongClassName = 1) --
 			EXEC tSQLt.Fail @Message0 = @Msg;
 
 		-- fetch next record
 		FETCH NEXT FROM Procedures_Cursor
-		INTO @SchemaName, @ObjectName, @Script, @ClassName;
+		INTO @schemaName, @ObjectName, @Script, @ClassName;
 	END;
 
 	CLOSE Procedures_Cursor;

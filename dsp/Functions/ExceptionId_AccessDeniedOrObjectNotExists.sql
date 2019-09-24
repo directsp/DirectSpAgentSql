@@ -1,0 +1,7 @@
+﻿
+CREATE FUNCTION [dsp].ExceptionId_AccessDeniedOrObjectNotExists()
+RETURNS INT WITH SCHEMABINDING
+AS
+BEGIN
+	RETURN 55002;
+END

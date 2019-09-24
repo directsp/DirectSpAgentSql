@@ -1,0 +1,6 @@
+﻿CREATE FUNCTION [dsp].[ExceptionId_MaintenanceReadOnly] ()
+RETURNS INT WITH SCHEMABINDING
+AS
+BEGIN
+	RETURN 55028;
+END

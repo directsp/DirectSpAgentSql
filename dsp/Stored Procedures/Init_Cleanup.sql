@@ -5,10 +5,10 @@ BEGIN
     ----------------
     -- Check Production Environment and Run Cleanup
     ----------------
-    EXEC dsp.[Init_$Cleanup] @IsProductionEnvironment = 0, @IsWithCleanup = 1;
+    EXEC dsp.[Init_$Cleanup] @isProductionEnvironment = 0, @isWithCleanup = 1;
 
     -- Report it is done
-    EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'System has been cleaned up!.';
+    EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'System has been cleaned up!.';
 END;
 
 

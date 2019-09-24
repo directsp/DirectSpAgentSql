@@ -1,14 +1,14 @@
 ﻿CREATE PROC [dsp].[Synonym_Create]
-	@SchemaName TSTRING, @SynonymName TSTRING, @ObjectName TSTRING
+	@schemaName TSTRING, @SynonymName TSTRING, @ObjectName TSTRING
 AS
 BEGIN
 	DECLARE @sql TSTRING;
 
 	-- drop if already exists
-	SET @sql = 'DROP SYNONYM IF EXISTS ' + @SchemaName + '.' + @SynonymName;
+	SET @sql = 'DROP SYNONYM IF EXISTS ' + @schemaName + '.' + @SynonymName;
 	EXEC (@sql);
 
 	-- create synonym
-	SET @sql = 'CREATE SYNONYM ' + @SchemaName + '.' + @SynonymName + ' FOR ' + @ObjectName;
+	SET @sql = 'CREATE SYNONYM ' + @schemaName + '.' + @SynonymName + ' FOR ' + @ObjectName;
 	EXEC (@sql);
 END;

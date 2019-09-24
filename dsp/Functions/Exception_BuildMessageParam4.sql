@@ -1,54 +1,54 @@
-﻿CREATE	FUNCTION [dsp].[Exception_BuildMessageParam4] (@ProcId INT,
-	@ExceptionId INT,
-	@Message TSTRING = NULL,
-	@Param0 TSTRING = '<notset>',
-	@Param1 TSTRING = '<notset>',
-	@Param2 TSTRING = '<notset>',
-	@Param3 TSTRING = '<notset>')
+﻿CREATE	FUNCTION [dsp].[Exception_BuildMessageParam4] (@procId INT,
+	@exceptionId  INT,
+	@message TSTRING = NULL,
+	@param0 TSTRING = '<notset>',
+	@param1 TSTRING = '<notset>',
+	@param2 TSTRING = '<notset>',
+	@param3 TSTRING = '<notset>')
 RETURNS TJSON
 AS
 BEGIN
 	-- get exception name and detail
-	DECLARE @Description TSTRING;
-	DECLARE @ExceptionName TSTRING;
+	DECLARE @description TSTRING;
+	DECLARE @exceptionName TSTRING;
 
-	SELECT	@Description = Description, @ExceptionName = ExceptionName
+	SELECT	@description = Description, @exceptionName = ExceptionName
 	FROM	dsp.Exception
-	WHERE	ExceptionId = @ExceptionId;
+	WHERE	ExceptionId = @exceptionId ;
 
 	-- validate exception Id
-	IF (@ExceptionName IS NULL)
+	IF (@exceptionName IS NULL)
 	BEGIN
-		SET @Message = 'Inavlid AppExceptionId; ExceptionId: {0}';
-		SET @Param0 = @ExceptionId;
-		SET @ExceptionId = 55001;
+		SET @message = 'Inavlid AppExceptionId; ExceptionId: {0}';
+		SET @param0 = @exceptionId ;
+		SET @exceptionId  = dsp.ExceptionId_General();
 	END;
 
 	-- Replace Message
-	EXEC @Message = dsp.Formatter_FormatMessage @Message = @Message, @Param0 = @Param0, @Param1 = @Param1, @Param2 = @Param2, @Param3 = @Param3;
+	EXEC @message = dsp.Formatter_FormatMessage @message = @message, @param0 = @param0, @param1 = @param1, @param2 = @param2, @param3 = @param3;
 
 	-- generate exception
-	DECLARE @Exception TJSON = '{}';
-	SET @Exception = JSON_MODIFY(@Exception, '$.errorId', @ExceptionId);
-	SET @Exception = JSON_MODIFY(@Exception, '$.errorName', @ExceptionName);
-	IF (@Description IS NOT NULL)
-		SET @Exception = JSON_MODIFY(@Exception, '$.errorDescription', @Description);
-	IF (@Description IS NOT NULL)
-		SET @Exception = JSON_MODIFY(@Exception, '$.errorDescription', @Description);
-	IF (@Message IS NOT NULL)
-		SET @Exception = JSON_MODIFY(@Exception, '$.errorMessage', @Message);
+	DECLARE @exception TJSON = '{}';
+	SET @exception = JSON_MODIFY(@exception, '$.errorId', @exceptionId );
+	SET @exception = JSON_MODIFY(@exception, '$.errorName', @exceptionName);
+	IF (@description IS NOT NULL)
+		SET @exception = JSON_MODIFY(@exception, '$.errorDescription', @description);
+	IF (@description IS NOT NULL)
+		SET @exception = JSON_MODIFY(@exception, '$.errorDescription', @description);
+	IF (@message IS NOT NULL)
+		SET @exception = JSON_MODIFY(@exception, '$.errorMessage', @message);
 
 	-- Set Schema and ProcName
-	IF (@ProcId IS NOT NULL)
+	IF (@procId IS NOT NULL)
 	BEGIN
-		DECLARE @ProcName TSTRING = ISNULL(OBJECT_NAME(@ProcId), '(NoSP)');
-		DECLARE @SchemaName TSTRING = OBJECT_SCHEMA_NAME(@ProcId);
-		IF (@SchemaName IS NOT NULL)
-			SET @ProcName = @SchemaName + '.' + @ProcName;
-		SET @Exception = JSON_MODIFY(@Exception, '$.errorProcName', @ProcName);
+		DECLARE @procName TSTRING = ISNULL(OBJECT_NAME(@procId), '(NoSP)');
+		DECLARE @schemaName TSTRING = OBJECT_SCHEMA_NAME(@procId);
+		IF (@schemaName IS NOT NULL)
+			SET @procName = @schemaName + '.' + @procName;
+		SET @exception = JSON_MODIFY(@exception, '$.errorProcName', @procName);
 	END;
 
-	RETURN @Exception;
+	RETURN @exception;
 END;
 
 

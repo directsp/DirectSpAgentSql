@@ -13,8 +13,8 @@ BEGIN
 	EXEC @Result = sys.sp_getapplock @Resource = @LockName, @LockMode = 'Exclusive', @LockOwner = @LockOwner;
 
 	-- throw error for error result
-	IF (@Result < 0) --
-		EXEC err.ThrowGeneralException @ProcId = @@PROCID, @Message = N'Get AppLock Error! ErrorNumber: {0}', @Param0 = @Result;
+	IF (@Result < 0) 
+		EXEC Exception_ThrowGeneral @procId = @@PROCID, @message = N'Get AppLock Error! ErrorNumber: {0}', @param0 = @Result;
 
 	SET @LockId = JSON_MODIFY(@LockId, '$.LockOwner', @LockOwner);
 	SET @LockId = JSON_MODIFY(@LockId, '$.LockName', @LockName);

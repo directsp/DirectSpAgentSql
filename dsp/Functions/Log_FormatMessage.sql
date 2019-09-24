@@ -1,11 +1,11 @@
 ﻿CREATE FUNCTION [dsp].[Log_FormatMessage] (
-	@ProcId INT,
-	@Message TSTRING,
+	@procId INT,
+	@message TSTRING,
 	@Elipsis BIT = 0,
-	@Param0 TSTRING = '<notset>',
-	@Param1 TSTRING = '<notset>',
-	@Param2 TSTRING = '<notset>',
-	@Param3 TSTRING = '<notset>')
+	@param0 TSTRING = '<notset>',
+	@param1 TSTRING = '<notset>',
+	@param2 TSTRING = '<notset>',
+	@param3 TSTRING = '<notset>')
 RETURNS TSTRING
 AS
 BEGIN
@@ -13,23 +13,23 @@ BEGIN
 	SET @Elipsis = ISNULL(@Elipsis, 0);
 
 	-- Format Message
-	SET @Message = dsp.Formatter_FormatMessage(@Message, @Param0, @Param1, @Param2, @Param3);
+	SET @message = dsp.Formatter_FormatMessage(@message, @param0, @param1, @param2, @param3);
 
 	-- Put Elipsis
 	IF (@Elipsis = 1)
 	BEGIN
-		DECLARE @LastString TSTRING = SUBSTRING(@Message, LEN(@Message), 1);
+		DECLARE @LastString TSTRING = SUBSTRING(@message, LEN(@message), 1);
 		IF (@LastString NOT LIKE '[.?!:>;]')
-			SET @Message = @Message + ' ...';
+			SET @message = @message + ' ...';
 	END;
 
 	-- Set Schema and ProcName
-	DECLARE @ProcName TSTRING = ISNULL(OBJECT_NAME(@ProcId), '(NoSP)');
-	DECLARE @SchemaName TSTRING = OBJECT_SCHEMA_NAME(@ProcId);
-	IF (@SchemaName IS NOT NULL)
-		SET @ProcName = @SchemaName + '.' + @ProcName;
+	DECLARE @procName TSTRING = ISNULL(OBJECT_NAME(@procId), '(NoSP)');
+	DECLARE @schemaName TSTRING = OBJECT_SCHEMA_NAME(@procId);
+	IF (@schemaName IS NOT NULL)
+		SET @procName = @schemaName + '.' + @procName;
 
 	-- Format message 
-	DECLARE @msg TSTRING = @ProcName + '> ' + @Message;
+	DECLARE @msg TSTRING = @procName + '> ' + @message;
 	RETURN @msg;
 END;

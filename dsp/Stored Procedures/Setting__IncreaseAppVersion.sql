@@ -1,21 +1,21 @@
 ﻿CREATE PROC [dsp].[Setting_$IncreaseAppVersion]
-    @AppVersion TSTRING OUT, @ForceIncrease INT
+    @appVersion TSTRING OUT, @ForceIncrease INT
 AS
 BEGIN
     DECLARE @Position INT;
     DECLARE @Part1 TSTRING;
     DECLARE @Part2 TSTRING;
     DECLARE @Part3 TSTRING;
-    EXEC dsp.String_Tokenize @Expression = @AppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part1 OUTPUT;
-    EXEC dsp.String_Tokenize @Expression = @AppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part2 OUTPUT;
-    EXEC dsp.String_Tokenize @Expression = @AppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part3 OUTPUT;
+    EXEC dsp.String_Tokenize @Expression = @appVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part1 OUTPUT;
+    EXEC dsp.String_Tokenize @Expression = @appVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part2 OUTPUT;
+    EXEC dsp.String_Tokenize @Expression = @appVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part3 OUTPUT;
 
     SET @Position = NULL;
     DECLARE @OldPart1 TSTRING;
     DECLARE @OldPart2 TSTRING;
     DECLARE @OldPart3 TSTRING;
     DECLARE @OldAppVersion TSTRING;
-    EXEC dsp.Setting_Props @AppVersion = @OldAppVersion OUT;
+    EXEC dsp.Setting_Props @appVersion = @OldAppVersion OUT;
     EXEC dsp.String_Tokenize @Expression = @OldAppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @OldPart1 OUTPUT;
     EXEC dsp.String_Tokenize @Expression = @OldAppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @OldPart2 OUTPUT;
     EXEC dsp.String_Tokenize @Expression = @OldAppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @OldPart3 OUTPUT;
@@ -28,5 +28,5 @@ BEGIN
 	END
 
     -- Check format
-    SET @AppVersion = @Part1 + '.' + @Part2 + '.' + @Part3;
+    SET @appVersion = @Part1 + '.' + @Part2 + '.' + @Part3;
 END;

@@ -28,7 +28,7 @@ BEGIN
 		SET @ConstValueInScript = CAST(SUBSTRING(@Script, @StartNumPadIndex, @EndStrNumdIndex - @StartNumPadIndex) AS INT);
 	END TRY
 	BEGIN CATCH
-		EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'ConstFunctionValue has written before ConstFunctionName!';
+		EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'ConstFunctionValue has written before ConstFunctionName!';
 	END CATCH;
 
 	-- Getting Function Id

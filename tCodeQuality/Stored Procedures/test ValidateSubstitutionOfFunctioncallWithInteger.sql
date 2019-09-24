@@ -3,7 +3,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
     -- Getting Stored Procedures and Functions definition
-    EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = N'Getting Stored Procedures definition';
+    EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting Stored Procedures definition';
     DECLARE Text_Cursor CURSOR FAST_FORWARD FORWARD_ONLY FORWARD_ONLY LOCAL FOR
     SELECT  PD.SchemaName, PD.ObjectName, PD.Script
       FROM  dsp.Metadata_ProceduresDefination() AS PD
@@ -13,13 +13,13 @@ BEGIN
 
     DECLARE @Script TBIGSTRING;
     DECLARE @ObjectName TSTRING;
-    DECLARE @SchemaName TSTRING;
+    DECLARE @schemaName TSTRING;
     DECLARE @Pattern TSTRING = '/*co' + 'nst.';
 
     WHILE (1 = 1)
     BEGIN
         FETCH NEXT FROM Text_Cursor
-         INTO @SchemaName, @ObjectName, @Script;
+         INTO @schemaName, @ObjectName, @Script;
         IF (@@FETCH_STATUS <> 0)
             BREAK;
 
@@ -45,11 +45,11 @@ BEGIN
 
             IF (@IsMatch = 0)
             BEGIN
-                DECLARE @Message TSTRING;
-                DECLARE @FullObjectName TSTRING = @SchemaName + '.' + @ObjectName;
-                EXEC @Message = dsp.Formatter_FormatMessage @Message = N'ConstValueInFunction({0}) and ConstValueInScript({1}) are inconsistence; the function name is: {2} in the SP: {3}',
-                    @Param0 = @ConstValueInFunction, @Param1 = @ConstValueInScript, @Param2 = @ConstFunctionName, @Param3 = @FullObjectName;
-                EXEC tSQLt.Fail @Message0 = @Message;
+                DECLARE @message TSTRING;
+                DECLARE @FullObjectName TSTRING = @schemaName + '.' + @ObjectName;
+                EXEC @message = dsp.Formatter_FormatMessage @message = N'ConstValueInFunction({0}) and ConstValueInScript({1}) are inconsistence; the function name is: {2} in the SP: {3}',
+                    @param0 = @ConstValueInFunction, @param1 = @ConstValueInScript, @param2 = @ConstFunctionName, @param3 = @FullObjectName;
+                EXEC tSQLt.Fail @Message0 = @message;
             END;
 
             SET @StartIndex = CHARINDEX(@Pattern, @Script);

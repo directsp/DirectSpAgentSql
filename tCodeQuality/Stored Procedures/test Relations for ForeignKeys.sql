@@ -38,7 +38,7 @@ BEGIN
 		-- ignore /NoFk column
 		IF (CHARINDEX('/nofk', @Description) > 0)
 		BEGIN
-			EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = '**** NoFk: {0}.{1}', @Param0 = @TableName, @Param1 = @ColumnName
+			EXEC dsp.Log_Trace @procId = @@PROCID, @message = '**** NoFk: {0}.{1}', @param0 = @TableName, @param1 = @ColumnName
 			CONTINUE;
 		END
 		    

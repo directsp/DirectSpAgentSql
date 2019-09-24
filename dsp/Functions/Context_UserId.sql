@@ -1,7 +1,7 @@
 ﻿
-CREATE FUNCTION [dsp].[Context_UserId] (@Context TCONTEXT)
+CREATE FUNCTION [dsp].[Context_UserId] (@context TCONTEXT)
 RETURNS TSTRING
 AS
 BEGIN
-    RETURN JSON_VALUE(@Context, '$.UserId');
+    RETURN JSON_VALUE(@context, '$.userId');
 END;

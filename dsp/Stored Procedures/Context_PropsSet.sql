@@ -1,55 +1,55 @@
 ﻿CREATE PROC [dsp].[Context_PropsSet]
-    @Context TCONTEXT OUT, @AppName TSTRING = N'<notset>', @AppVersion TSTRING = N'<notset>', @AuthUserId TSTRING = N'<notset>', @UserId TSTRING = N'<notset>',
-    @Audience TSTRING = N'<notset>', @IsCaptcha BIT = NULL, @RecordCount INT = -1, @RecordIndex INT = -1, @ClientVersion TSTRING = N'<notset>'
+    @context TCONTEXT OUT, @appName TSTRING = N'<notset>', @appVersion TSTRING = N'<notset>', @AuthUserId TSTRING = N'<notset>', @userId TSTRING = N'<notset>',
+    @audience TSTRING = N'<notset>', @isCaptcha BIT = NULL, @RecordCount INT = -1, @RecordIndex INT = -1, @ClientVersion TSTRING = N'<notset>'
 AS
 BEGIN
-    IF (@Context IS NULL OR @Context = '')
-        SET @Context = '{}';
+    IF (@context IS NULL OR @context = '')
+        SET @context = '{}';
 
     -- Fix built-in users
-    IF (@UserId = N'$' OR   @UserId = N'$$')
+    IF (@userId = N'$' OR   @userId = N'$$')
     BEGIN
         DECLARE @SystemUserId TSTRING;
         DECLARE @AppUserId TSTRING;
         EXEC dsp.Setting_Props @SystemUserId = @SystemUserId OUT, @AppUserId = @AppUserId OUT;
 
-        IF (@UserId = N'$')
-            SET @UserId = @SystemUserId;
+        IF (@userId = N'$')
+            SET @userId = @SystemUserId;
 
-        IF (@UserId = N'$$')
-            SET @UserId = ISNULL(@AppUserId, @SystemUserId);
+        IF (@userId = N'$$')
+            SET @userId = ISNULL(@AppUserId, @SystemUserId);
     END;
 
-    IF (@AppName IS NULL OR @AppName <> N'<notset>')
-        SET @Context = JSON_MODIFY(@Context, '$.AppName', @AppName);
+    IF (@appName IS NULL OR @appName <> N'<notset>')
+        SET @context = JSON_MODIFY(@context, '$.appName', @appName);
 
-    IF (@AppVersion IS NULL OR  @AppVersion <> N'<notset>')
-        SET @Context = JSON_MODIFY(@Context, '$.AppVersion', @AppVersion);
+    IF (@appVersion IS NULL OR  @appVersion <> N'<notset>')
+        SET @context = JSON_MODIFY(@context, '$.appVersion', @appVersion);
 
     IF (@AuthUserId IS NULL OR  @AuthUserId <> N'<notset>')
-        SET @Context = JSON_MODIFY(@Context, N'$.AuthUserId', @AuthUserId);
+        SET @context = JSON_MODIFY(@context, N'$.authUserId', @AuthUserId);
 
-    IF (@UserId IS NULL OR  @UserId <> N'<notset>')
-        SET @Context = JSON_MODIFY(@Context, N'$.UserId', @UserId);
+    IF (@userId IS NULL OR  @userId <> N'<notset>')
+        SET @context = JSON_MODIFY(@context, N'$.userId', @userId);
 
-    IF (@Audience IS NULL OR @Audience <> N'<notset>')
-        SET @Context = JSON_MODIFY(@Context, N'$.Audience', @Audience);
+    IF (@audience IS NULL OR @audience <> N'<notset>')
+        SET @context = JSON_MODIFY(@context, N'$.audience', @audience);
 
     -- update InvokeOptions
-    IF (JSON_QUERY(@Context, N'$.InvokeOptions') IS NULL)
-        SET @Context = JSON_MODIFY(@Context, N'$.InvokeOptions', JSON_QUERY('{}', '$'));
+    IF (JSON_QUERY(@context, N'$.invokeOptions') IS NULL)
+        SET @context = JSON_MODIFY(@context, N'$.invokeOptions', JSON_QUERY('{}', '$'));
 
-    IF (@IsCaptcha IS NOT NULL)
-        SET @Context = JSON_MODIFY(@Context, N'$.InvokeOptions.IsCaptcha', @IsCaptcha);
+    IF (@isCaptcha IS NOT NULL)
+        SET @context = JSON_MODIFY(@context, N'$.invokeOptions.isCaptcha', @isCaptcha);
 
     IF (@RecordCount IS NULL OR @RecordCount <> -1)
-        SET @Context = JSON_MODIFY(@Context, N'$.InvokeOptions.RecordCount', @RecordCount);
+        SET @context = JSON_MODIFY(@context, N'$.invokeOptions.recordCount', @RecordCount);
 
     IF (@RecordIndex IS NULL OR @RecordIndex <> -1)
-        SET @Context = JSON_MODIFY(@Context, N'$.InvokeOptions.RecordIndex', @RecordIndex);
+        SET @context = JSON_MODIFY(@context, N'$.invokeOptions.recordIndex', @RecordIndex);
 
     IF (@ClientVersion IS NULL OR   @ClientVersion <> N'<notset>')
-        SET @Context = JSON_MODIFY(@Context, N'$.InvokeOptions.ClientVersion', @ClientVersion);
+        SET @context = JSON_MODIFY(@context, N'$.invokeOptions.clientVersion', @ClientVersion);
 END;
 
 

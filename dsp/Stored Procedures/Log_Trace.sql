@@ -1,27 +1,27 @@
 ﻿CREATE PROCEDURE [dsp].[Log_Trace]
-    @ProcId AS INT, @Message AS TSTRING, @Param0 AS TSTRING = '<notset>', @Param1 AS TSTRING = '<notset>', @Param2 AS TSTRING = '<notset>',
-    @Param3 AS TSTRING = '<notset>', @Param4 AS TSTRING = '<notset>', @Param5 AS TSTRING = '<notset>', @Elipse BIT = 1, @IsHeader BIT = 0
+    @procId AS INT, @message AS TSTRING, @param0 AS TSTRING = '<notset>', @param1 AS TSTRING = '<notset>', @param2 AS TSTRING = '<notset>',
+    @param3 AS TSTRING = '<notset>', @param4 AS TSTRING = '<notset>', @param5 AS TSTRING = '<notset>', @elipse BIT = 1, @isHeader BIT = 0
 AS
 BEGIN
     -- check is log enbaled (fast)
     DECLARE @Log_IsEnabled BIT = CAST(SESSION_CONTEXT(N'dsp.Log_IsEnabled') AS BIT);
     IF (@Log_IsEnabled IS NOT NULL AND   @Log_IsEnabled = 0)
-        RETURN;
+        RETURN 0;
 
     -- check is log enbaled
     IF (dsp.Log_IsEnabled() = 0)
-        RETURN;
+        RETURN 0;
 
     -- Format Message
-    DECLARE @Msg TSTRING = dsp.Log_FormatMessage2(@ProcId, @Message, @Elipse, @Param0, @Param1, @Param2, @Param3, @Param4, @Param5);
+    DECLARE @Msg TSTRING = dsp.Log_FormatMessage2(@procId, @message, @elipse, @param0, @param1, @param2, @param3, @param4, @param5);
 
     -- Manage header
-    IF (@IsHeader = 1)
+    IF (@isHeader = 1)
         SET @Msg = dsp.String_ReplaceEnter(N'\n-----------------------\n-- ' + @Msg + N'\n-----------------------');
 
     -- Check Filter
     IF (dsp.Log_$CheckFilters(@Msg) = 0)
-        RETURN;
+        RETURN 0;
 
     -- Print with Black Color
     -- PRINT @Msg;

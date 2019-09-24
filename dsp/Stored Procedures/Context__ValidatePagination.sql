@@ -19,5 +19,5 @@ BEGIN
 		SET @RecordCount = @PaginationMaxRecordCount;
 
 	IF (@RecordCount > @PaginationMaxRecordCount) --
-		EXEC err.ThrowPageSizeTooLarge @ProcId = @@PROCID;
+		EXEC err.ThrowPageSizeTooLarge @procId = @@PROCID;
 END;

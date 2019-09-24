@@ -22,7 +22,7 @@ BEGIN
 
 	-- throw error for error result
 	IF (@Result < 0) --
-		EXEC err.ThrowGeneralException @ProcId = @@PROCID, @Message = N'Release AppLock Error! ErrorNumber: {0}', @Param0 = @Result;
+		EXEC err.ThrowGeneralException @procId = @@PROCID, @message = N'Release AppLock Error! ErrorNumber: {0}', @param0 = @Result;
 	
 	SET @LockId = NULL;
 END;

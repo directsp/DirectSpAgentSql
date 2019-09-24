@@ -21,7 +21,7 @@ BEGIN
 			TABLE_SCHEMA = @DestinationSchemaName;
 
 	IF (@PrimaryKey IS NULL)
-		EXEC err.ThrowGeneralException @ProcId = @@PROCID, @Message = 'Could not find Primary key for table {0}!', @Param0 = @DestinationTableName
+		EXEC err.ThrowGeneralException @procId = @@PROCID, @message = 'Could not find Primary key for table {0}!', @param0 = @DestinationTableName
 
 	-- columns
 	DECLARE @ColumnsForUpdate TSTRING =

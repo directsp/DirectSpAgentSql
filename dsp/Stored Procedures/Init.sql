@@ -1,19 +1,19 @@
 ﻿CREATE PROC [dsp].[Init]
-    @IsProductionEnvironment BIT = NULL
+    @isProductionEnvironment BIT = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @TranCount INT = @@TRANCOUNT;
-    IF (@TranCount = 0)
+    DECLARE @tranCount INT = @@TRANCOUNT;
+    IF (@tranCount = 0)
         BEGIN TRANSACTION;
     BEGIN TRY
-        EXEC dsp.[Init_$Start] @IsProductionEnvironment = @IsProductionEnvironment, @IsWithCleanup = NULL, @Reserved = NULL;
+        EXEC dsp.[Init_$Start] @isProductionEnvironment = @isProductionEnvironment, @isWithCleanup = NULL, @reserved = NULL;
 
-        IF (@TranCount = 0) COMMIT;
+        IF (@tranCount = 0) COMMIT;
     END TRY
     BEGIN CATCH
-        IF (@TranCount = 0)
+        IF (@tranCount = 0)
             ROLLBACK TRANSACTION;
         THROW;
     END CATCH;

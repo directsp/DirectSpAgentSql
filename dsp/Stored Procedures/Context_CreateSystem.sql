@@ -2,5 +2,5 @@
     @SystemContext TCONTEXT OUT
 AS
 BEGIN
-    EXEC dsp.Context_Create @UserId = '$', @Context = @SystemContext OUT, @IsCaptcha = 1;
+    EXEC dsp.Context_Create @userId = '$', @context = @SystemContext OUT, @isCaptcha = 1;
 END;

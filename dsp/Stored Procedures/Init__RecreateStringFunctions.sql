@@ -6,12 +6,12 @@ BEGIN
 	SET NOCOUNT ON;
 	DECLARE @FunctionBody TSTRING =
 		'
-CREATE FUNCTION @SchemaName.@KeyColumnValue() 
+CREATE FUNCTION @schemaName.@KeyColumnValue() 
 RETURNS TSTRING
 AS 
 BEGIN
 	RETURN dsp.StringTable_Value(''@KeyColumnValue'');
 END';
 
-	EXEC dsp.Init_RecreateEnumFunctions @SchemaName = 'str', @TableSchemaName = 'dsp', @TableName = 'StringTable', @KeyColumnName = 'StringId', @TextColumnName = 'StringValue', @FunctionBody = @FunctionBody;
+	EXEC dsp.Init_RecreateEnumFunctions @schemaName = 'str', @tableSchemaName = 'dsp', @tableName = 'StringTable', @keyColumnName = 'StringId', @textColumnName = 'StringValue', @functionBody = @FunctionBody;
 END;

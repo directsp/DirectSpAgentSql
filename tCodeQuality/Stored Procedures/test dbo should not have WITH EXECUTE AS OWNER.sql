@@ -8,7 +8,7 @@ BEGIN
 	DECLARE @ProcedureName TSTRING;
 
 	-- Getting list all procedures with pagination
-	EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = N'Getting list all procedures with pagination';
+	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with pagination';
 	DECLARE @t TABLE (SchemaName TSTRING,
 		ProcedureName TSTRING,
 		Script TBIGSTRING);
@@ -18,7 +18,7 @@ BEGIN
 	WHERE	PD.SchemaName IN ( 'dbo', 'dsp', 'perm' );
 
 	-- Looking for "With Execute AS Owner" phrase
-	EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = N'Looking for "With Execute AS Owner" phrase';
+	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "With Execute AS Owner" phrase';
 	SELECT	@ProcedureName = SchemaName + '.' + ProcedureName
 	FROM	@t
 	WHERE	CHARINDEX(@Pattern_WithExecuteASOwner, Script) > 0 OR	CHARINDEX(@Pattern_WithExecASOwner, Script) > 0;

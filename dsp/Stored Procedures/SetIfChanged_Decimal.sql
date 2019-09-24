@@ -8,7 +8,7 @@ BEGIN
         RETURN;
 
     IF (@HasAccess = 0) --
-        EXEC err.ThrowAccessDeniedOrObjectNotExists @ProcId = @ProceId, @Message = 'PropName: {0}', @Param0 = @PropName;
+        EXEC err.ThrowAccessDeniedOrObjectNotExists @procId = @ProceId, @message = 'PropName: {0}', @param0 = @PropName;
 
     SET @IsUpdated = 1;
     SET @OldValue = @NewValue;

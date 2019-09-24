@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dsp].[Init_$Cleanup]
-    @IsProductionEnvironment BIT OUT, @IsWithCleanup BIT OUT
+    @isProductionEnvironment BIT OUT, @isWithCleanup BIT OUT
 AS
 BEGIN
     -- Set IsProductionEnvironment after creating Setting and Initializing Exceptions and Strings 
@@ -7,22 +7,22 @@ BEGIN
     EXEC dsp.Setting_Props @IsProductionEnvironment = @OldIsProductionEnvironment OUTPUT;
 
     -- Find IsProductionEnvironment and IsWithCleanup default depending of current state
-    SET @IsProductionEnvironment = ISNULL(@IsProductionEnvironment, @OldIsProductionEnvironment); -- Don't change IsProductionEnvironment if it is not changed
-    IF (@IsWithCleanup IS NULL)
-        SET @IsWithCleanup = IIF(@IsProductionEnvironment = 1, 0, 1);
+    SET @isProductionEnvironment = ISNULL(@isProductionEnvironment, @OldIsProductionEnvironment); -- Don't change IsProductionEnvironment if it is not changed
+    IF (@isWithCleanup IS NULL)
+        SET @isWithCleanup = IIF(@isProductionEnvironment = 1, 0, 1);
 
     -- validate arguments    
-    IF (@IsProductionEnvironment = 0 AND @OldIsProductionEnvironment = 1) --
-        EXEC err.ThrowGeneralException @ProcId = @@PROCID, @Message = 'dsp.Init cannot unset IsProductionEnvironment setting!';
+    IF (@isProductionEnvironment = 0 AND @OldIsProductionEnvironment = 1) --
+        EXEC err.ThrowGeneralException @procId = @@PROCID, @message = 'dsp.Init cannot unset IsProductionEnvironment setting!';
 
-    IF (@IsProductionEnvironment = 1 AND @IsWithCleanup = 1) --
-        EXEC err.ThrowGeneralException @ProcId = @@PROCID, @Message = 'Could not execute Cleanup in production environment!';
+    IF (@isProductionEnvironment = 1 AND @isWithCleanup = 1) --
+        EXEC err.ThrowGeneralException @procId = @@PROCID, @message = 'Could not execute Cleanup in production environment!';
 
     -- Update IsProductionEnvironment
-    EXEC dsp.Setting_PropsSet @IsProductionEnvironment = @IsProductionEnvironment;
+    EXEC dsp.Setting_PropsSet @IsProductionEnvironment = @isProductionEnvironment;
 
     -- Raise error in production environment if IsWithCleanup is set
-    IF (@IsWithCleanup = 0) --
+    IF (@isWithCleanup = 0) --
         RETURN;
 
     -- Make sure dbo.Init_Cleanup has production protection
@@ -34,7 +34,7 @@ BEGIN
     BEGIN TRY
         EXEC dsp.Setting_PropsSet @IsProductionEnvironment = 1;
         EXEC dbo.Init_Cleanup;
-        EXEC err.ThrowGeneralException @ProcId = @@PROCID, @Message = 'Could not detect dbo.Init_Cleanup protection control for production environment';
+        EXEC err.ThrowGeneralException @procId = @@PROCID, @message = 'Could not detect dbo.Init_Cleanup protection control for production environment';
     END TRY
     BEGIN CATCH
         ROLLBACK TRANSACTION Test;
@@ -47,7 +47,7 @@ BEGIN
 
     -- Read CleanUp
     DECLARE @DataBaseName TSTRING = DB_NAME();
-    EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'Cleaning "{1}" database of "{0}"', @Param0 = @@SERVERNAME, @Param1 = @DataBaseName;
+    EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Cleaning "{1}" database of "{0}"', @param0 = @@SERVERNAME, @param1 = @DataBaseName;
 
     -- CleanUp dspAuth if exists
     IF (dsp.Metadata_IsObjectExists('dspAuth', 'Init_Cleanup', 'P') = 1) EXEC ('EXEC dspAuth.Init_Cleanup');

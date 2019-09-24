@@ -6,7 +6,7 @@ BEGIN
 	DECLARE @ProcedureName TSTRING;
 
 	-- Getting list all procedures with pagination
-	EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = N'Getting list all procedures with api schema';
+	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with api schema';
 	DECLARE @t TABLE (SchemaName TSTRING,
 		ProcedureName TSTRING,
 		Script TBIGSTRING);
@@ -16,7 +16,7 @@ BEGIN
 	WHERE	VPD.Type = 'P'
 
 	-- Looking for "Context_Verify" in api procedure
-	EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = N' Looking for "Context_Verify" in api procedure';
+	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N' Looking for "Context_Verify" in api procedure';
 	SELECT	@ProcedureName = SchemaName + '.' + ProcedureName
 	FROM	@t
 	WHERE	(SchemaName IN ( 'api' )) AND	Script NOT LIKE N'%dsp.Context_Verify%';

@@ -1,29 +1,29 @@
 ﻿
 --todo: refactor to String_Format
 CREATE FUNCTION [dsp].[Formatter_FormatMessage] (
-	@Message TSTRING,
-	@Param0 TSTRING = '<notset>',
-	@Param1 TSTRING = '<notset>',
-	@Param2 TSTRING = '<notset>',
-	@Param3 TSTRING = '<notset>')
+	@message TSTRING,
+	@param0 TSTRING = '<notset>',
+	@param1 TSTRING = '<notset>',
+	@param2 TSTRING = '<notset>',
+	@param3 TSTRING = '<notset>')
 RETURNS TSTRING
 AS
 BEGIN
 
 	-- Validate Params
-	SET @Param0 = dsp.Formatter_FormatParam(@Param0);
-	SET @Param1 = dsp.Formatter_FormatParam(@Param1);
-	SET @Param2 = dsp.Formatter_FormatParam(@Param2);
-	SET @Param3 = dsp.Formatter_FormatParam(@Param3);
+	SET @param0 = dsp.Formatter_FormatParam(@param0);
+	SET @param1 = dsp.Formatter_FormatParam(@param1);
+	SET @param2 = dsp.Formatter_FormatParam(@param2);
+	SET @param3 = dsp.Formatter_FormatParam(@param3);
 
 	-- Replace Message
-	SET @Message = dsp.Formatter_FormatString(@Message);
-	SET @Message = REPLACE(@Message, '{0}', @Param0);
-	SET @Message = REPLACE(@Message, '{1}', @Param1);
-	SET @Message = REPLACE(@Message, '{2}', @Param2);
-	SET @Message = REPLACE(@Message, '{3}', @Param3);
+	SET @message = dsp.Formatter_FormatString(@message);
+	SET @message = REPLACE(@message, '{0}', @param0);
+	SET @message = REPLACE(@message, '{1}', @param1);
+	SET @message = REPLACE(@message, '{2}', @param2);
+	SET @message = REPLACE(@message, '{3}', @param3);
 
-	RETURN @Message;
+	RETURN @message;
 
 END;
 

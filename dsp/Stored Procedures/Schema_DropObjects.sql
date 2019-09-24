@@ -1,45 +1,45 @@
 ﻿-- @ObjectType Can be 'FN' or 'P'
 CREATE PROC [dsp].[Schema_DropObjects]
-	@SchemaName TSTRING, @DropFunctions BIT = 0, @DropProcedures BIT = 0
+	@schemaName TSTRING, @dropFunctions BIT = 0, @dropProcedures BIT = 0
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SET @DropFunctions = ISNULL(@DropFunctions, 0);
-	SET @DropProcedures = ISNULL(@DropProcedures, 0);
+	SET @dropFunctions = ISNULL(@dropFunctions, 0);
+	SET @dropProcedures = ISNULL(@dropProcedures, 0);
 
-	DECLARE @ObjectName TSTRING;
-	DECLARE @ObjectType TSTRING;
-	DECLARE @DdlText TSTRING;
+	DECLARE @objectName TSTRING;
+	DECLARE @objectType TSTRING;
+	DECLARE @ddlText TSTRING;
 
 	--Drop String Functions
-	DECLARE DropCursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR
+	DECLARE dropCursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR
 	SELECT	O.name, O.type
 	FROM	sys.objects AS O
 			INNER JOIN sys.schemas AS S ON S.schema_id = O.schema_id
-	WHERE	S.name = @SchemaName
+	WHERE	S.name = @schemaName
 			AND O.type IN ( 'FN', 'P', 'IF', 'TF' );
 
-	OPEN DropCursor;
-	FETCH NEXT FROM DropCursor
-	INTO @ObjectName, @ObjectType;
+	OPEN dropCursor;
+	FETCH NEXT FROM dropCursor
+	INTO @objectName, @objectType;
 	WHILE (@@FETCH_STATUS = 0)
 	BEGIN
-		IF (@DropFunctions = 1 AND @ObjectType IN ('FN', 'IF', 'TF'))
+		IF (@dropFunctions = 1 AND @objectType IN ('FN', 'IF', 'TF'))
 		BEGIN
-			SET @DdlText = 'DROP FUNCTION ' + @SchemaName + '.' + @ObjectName;
-			EXEC sys.sp_executesql @DdlText;
+			SET @ddlText = 'DROP FUNCTION ' + @schemaName + '.' + @objectName;
+			EXEC sys.sp_executesql @stmt = @ddlText;
 		END;
 
-		IF (@DropProcedures = 1 AND @ObjectType = 'P')
+		IF (@dropProcedures = 1 AND @objectType = 'P')
 		BEGIN
-			SET @DdlText = 'DROP PROCEDURE ' + @SchemaName + '.' + @ObjectName;
-			EXEC sys.sp_executesql @DdlText;
+			SET @ddlText = 'DROP PROCEDURE ' + @schemaName + '.' + @objectName;
+			EXEC sys.sp_executesql @stmt = @ddlText;
 		END;
 
-		FETCH NEXT FROM DropCursor
-		INTO @ObjectName, @ObjectType;
+		FETCH NEXT FROM dropCursor
+		INTO @objectName, @objectType;
 	END;
-	CLOSE DropCursor;
-	DEALLOCATE DropCursor;
+	CLOSE dropCursor;
+	DEALLOCATE dropCursor;
 
 END;

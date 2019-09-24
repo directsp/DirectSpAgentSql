@@ -1,13 +1,13 @@
 ﻿CREATE PROCEDURE [dsp].[Context_Create]
-    @UserId TSTRING, @IsCaptcha INT = 0, @Context TCONTEXT = NULL OUT
+    @userId TSTRING, @isCaptcha INT = 0, @context TCONTEXT = NULL OUT
 AS
 BEGIN
-    DECLARE @AppName TSTRING;
-    DECLARE @AppVersion TSTRING;
-    EXEC dsp.Setting_Props @AppName = @AppName OUTPUT, @AppVersion = @AppVersion OUTPUT;
+    DECLARE @appName TSTRING;
+    DECLARE @appVersion TSTRING;
+    EXEC dsp.Setting_Props @appName = @appName OUTPUT, @appVersion = @appVersion OUTPUT;
 
-    SET @Context = NULL;
-    EXEC dsp.Context_PropsSet @Context = @Context OUTPUT, @UserId = @UserId, @AppName = @AppName, @AppVersion = @AppVersion, @IsCaptcha = @IsCaptcha;
+    SET @context = NULL;
+    EXEC dsp.Context_PropsSet @context = @context OUTPUT, @userId = @userId, @appName = @appName, @appVersion = @appVersion, @isCaptcha = @isCaptcha;
 END;
 
 

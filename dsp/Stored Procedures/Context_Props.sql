@@ -1,24 +1,24 @@
 ﻿CREATE PROCEDURE [dsp].[Context_Props]
-    @Context TCONTEXT OUT, @AppName TSTRING = N'<notset>' OUT, @AuthUserId TSTRING = N'<notset>' OUT, @UserId TSTRING = N'<notset>' OUT,
-    @Audience TSTRING = N'<notset>' OUT, @IsCaptcha INT = -1 OUT, @RecordCount INT = -1 OUT, @RecordIndex INT = -1 OUT,
+    @context TCONTEXT OUT, @appName TSTRING = N'<notset>' OUT, @AuthUserId TSTRING = N'<notset>' OUT, @userId TSTRING = N'<notset>' OUT,
+    @audience TSTRING = N'<notset>' OUT, @isCaptcha INT = -1 OUT, @RecordCount INT = -1 OUT, @RecordIndex INT = -1 OUT,
     @ClientVersion TSTRING = N'<notset>' OUT, @MoneyConversionRate FLOAT = -1 OUT, @InvokerAppVersion TSTRING = NULL OUT, @IsReadonlyIntent BIT = NULL OUT, @IsInvokedByMidware BIT = NULL OUT
 AS
 BEGIN
     -- General
-    IF (@AppName IS NULL OR @AppName <> N'<notset>')
-        SET @AppName = JSON_VALUE(@Context, N'$.AppName');
+    IF (@appName IS NULL OR @appName <> N'<notset>')
+        SET @appName = JSON_VALUE(@context, N'$.AppName');
 
     IF (@AuthUserId IS NULL OR  @AuthUserId <> N'<notset>')
-        SET @AuthUserId = JSON_VALUE(@Context, N'$.AuthUserId');
+        SET @AuthUserId = JSON_VALUE(@context, N'$.AuthUserId');
 
-    IF (@UserId IS NULL OR  @UserId <> N'<notset>')
-        SET @UserId = JSON_VALUE(@Context, N'$.UserId');
+    IF (@userId IS NULL OR  @userId <> N'<notset>')
+        SET @userId = JSON_VALUE(@context, N'$.UserId');
 
-    IF (@Audience IS NULL OR @Audience <> N'<notset>')
-        SET @Audience = JSON_VALUE(@Context, N'$.Audience');
+    IF (@audience IS NULL OR @audience <> N'<notset>')
+        SET @audience = JSON_VALUE(@context, N'$.Audience');
 
     -- InvokeOptions
-    DECLARE @InvokeOptions TJSON = JSON_QUERY(@Context, N'$.InvokeOptions');
+    DECLARE @InvokeOptions TJSON = JSON_QUERY(@context, N'$.InvokeOptions');
 
     IF (@ClientVersion IS NULL OR   @ClientVersion <> N'<notset>')
         SET @ClientVersion = JSON_VALUE(@InvokeOptions, N'$.ClientVersion');
@@ -26,8 +26,8 @@ BEGIN
     IF (@MoneyConversionRate IS NULL OR @MoneyConversionRate <> -1)
         SET @MoneyConversionRate = ISNULL(JSON_VALUE(@InvokeOptions, N'$.MoneyConversionRate'), 1);
 
-    IF (@IsCaptcha IS NULL OR   @IsCaptcha <> -1)
-        SET @IsCaptcha = ISNULL(CAST(JSON_VALUE(@InvokeOptions, '$.IsCaptcha') AS BIT), 0);
+    IF (@isCaptcha IS NULL OR   @isCaptcha <> -1)
+        SET @isCaptcha = ISNULL(CAST(JSON_VALUE(@InvokeOptions, '$.IsCaptcha') AS BIT), 0);
 
     IF (@IsReadonlyIntent IS NULL OR   @IsReadonlyIntent <> -1)
         SET @IsReadonlyIntent = ISNULL(CAST(JSON_VALUE(@InvokeOptions, '$.IsReadonlyIntent') AS BIT), 0);

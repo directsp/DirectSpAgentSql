@@ -1,20 +1,20 @@
 ﻿
 -- Create Procedure RecreatePermissionFunctions
 CREATE PROC [dsp].[Init_RecreateEnumFunctions]
-	@SchemaName TSTRING, @TableSchemaName TSTRING = 'dbo', @TableName TSTRING, @KeyColumnName TSTRING, @TextColumnName TSTRING, @FunctionBody TSTRING = NULL, @FunctionNamePostfix TSTRING = NULL
+	@schemaName TSTRING, @tableSchemaName TSTRING = 'dbo', @tableName TSTRING, @keyColumnName TSTRING, @textColumnName TSTRING, @functionBody TSTRING = NULL, @functionNamePostfix TSTRING = NULL
 AS
 BEGIN
 	SET NOCOUNT ON;
-	DECLARE @KeyColumnValue TSTRING;
-	DECLARE @TextColumnValue TSTRING;
-	DECLARE @Sql TSTRING;
-	SET @FunctionNamePostfix = ISNULL(@FunctionNamePostfix, '');
+	DECLARE @keyColumnValue TSTRING;
+	DECLARE @textColumnValue TSTRING;
+	DECLARE @sql TSTRING;
+	SET @functionNamePostfix = ISNULL(@functionNamePostfix, '');
 
 	-- Set default function body
-	IF (@FunctionBody IS NULL)
+	IF (@functionBody IS NULL)
 	BEGIN
-		SET @FunctionBody = '
-CREATE FUNCTION @SchemaName.@TextColumnValue@FunctionNamePostfix()
+		SET @functionBody = '
+CREATE FUNCTION @schemaName.@textColumnValue@functionNamePostfix()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN
@@ -22,20 +22,20 @@ BEGIN
 END
 '	;
 	END;
-	SET @FunctionBody = REPLACE(@FunctionBody, '@SchemaName', @SchemaName);
-	SET @FunctionBody = REPLACE(@FunctionBody, '@FunctionNamePostfix', @FunctionNamePostfix);
+	SET @functionBody = REPLACE(@functionBody, '@schemaName', @schemaName);
+	SET @functionBody = REPLACE(@functionBody, '@functionNamePostfix', @functionNamePostfix);
 
-	-- Drop const Functions
-	EXEC dsp.Schema_DropObjects @SchemaName = @SchemaName, @DropFunctions = 1;
+	-- Drop Functions
+	EXEC dsp.Schema_DropObjects @schemaName = @schemaName, @dropFunctions = 1;
 
 	CREATE TABLE #EnumIdName (ObjectId NVARCHAR(/*Ignore code quality*/ 500),
 		ObjectName NVARCHAR(/*Ignore code quality*/ 500));
-	SET @Sql = 'INSERT INTO #EnumIdName (ObjectId, ObjectName) SELECT @KeyColumnName, @TextColumnName FROM @TableSchemaName.@TableName';
-	SET @Sql = REPLACE(@Sql, '@TableSchemaName', @TableSchemaName);
-	SET @Sql = REPLACE(@Sql, '@TableName', @TableName);
-	SET @Sql = REPLACE(@Sql, '@KeyColumnName', @KeyColumnName);
-	SET @Sql = REPLACE(@Sql, '@TextColumnName', @TextColumnName);
-	EXEC (@Sql);
+	SET @sql = 'INSERT INTO #EnumIdName (ObjectId, ObjectName) SELECT @KeyColumnName, @TextColumnName FROM @TableSchemaName.@TableName';
+	SET @sql = REPLACE(@sql, '@TableSchemaName', @tableSchemaName);
+	SET @sql = REPLACE(@sql, '@TableName', @tableName);
+	SET @sql = REPLACE(@sql, '@KeyColumnName', @keyColumnName);
+	SET @sql = REPLACE(@sql, '@TextColumnName', @textColumnName);
+	EXEC sys.sp_executesql @stmt = @sql;
 
 	-- Recreate Permissions Functions
 	DECLARE LocalCursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR SELECT E.ObjectId, E.ObjectName FROM #EnumIdName AS E;
@@ -43,16 +43,16 @@ END
 	WHILE (1 = 1)
 	BEGIN
 		FETCH NEXT FROM LocalCursor
-		INTO @KeyColumnValue, @TextColumnValue;
+		INTO @keyColumnValue, @textColumnValue;
 		IF (@@FETCH_STATUS <> 0)
 			BREAK;
 
-		SET @Sql = @FunctionBody;
+		SET @sql = @functionBody;
 
-		SET @Sql = REPLACE(@Sql, '@TextColumnValue', @TextColumnValue);
-		SET @Sql = REPLACE(@Sql, '@KeyColumnValue', @KeyColumnValue);
+		SET @sql = REPLACE(@sql, '@textColumnValue', @textColumnValue);
+		SET @sql = REPLACE(@sql, '@KeyColumnValue', @keyColumnValue);
 
-		EXEC (@Sql);
+		EXEC sys.sp_executesql @stmt = @sql;
 	END;
 	CLOSE LocalCursor;
 	DEALLOCATE LocalCursor;

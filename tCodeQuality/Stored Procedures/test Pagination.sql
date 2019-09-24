@@ -16,7 +16,7 @@ BEGIN
 	DECLARE @ProcedureName TSTRING;
 
 	-- Getting list all procedures with pagination
-	EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = N'Getting list all procedures with pagination';
+	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with pagination';
 	DECLARE @t TABLE (SchemaName TSTRING,
 		ProcedureName TSTRING,
 		Script TBIGSTRING);
@@ -28,7 +28,7 @@ BEGIN
 
 
 	-- Checking implementation paging in api and dbo StoreProcedure
-	EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = N'Checking implementation paging in api and dbo StoreProcedure';
+	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Checking implementation paging in api and dbo StoreProcedure';
 	SELECT	@ProcedureName = SchemaName + '.' + ProcedureName
 	FROM	@t
 	WHERE	(	CHARINDEX(@Pattern_PageIndex, Script) > 0 --  Wrapper Phrase: (@RecordIndex = @RecordIndex) 

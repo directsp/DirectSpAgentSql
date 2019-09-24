@@ -8,21 +8,23 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{0f3e33ed-980a-4c93-83d4-5d13909cbbc8}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql140DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
     <RootNamespace>DirectSpAgent</RootNamespace>
     <AssemblyName>DirectSpAgent</AssemblyName>
-    <ModelCollation>1033, CI</ModelCollation>
+    <ModelCollation>1033,CS</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <TargetFrameworkProfile />
+    <DefaultCollation>SQL_Latin1_General_CP1_CS_AS</DefaultCollation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -46,6 +48,8 @@
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <SuppressTSqlWarnings>
+    </SuppressTSqlWarnings>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
@@ -66,9 +70,12 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\User Defined Types" />
     <Folder Include="Security" />
+    <Folder Include="dbo\Tables" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="api\" />
+    <Folder Include="api\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dsp\Functions\Const_Algorithm_PBKDF2_SHA512.sql" />
     <Build Include="dsp\Functions\Const_MaintenanceMode_Block.sql" />
     <Build Include="dsp\Functions\Const_MaintenanceMode_None.sql" />
     <Build Include="dsp\Functions\Const_MaintenanceMode_Readonly.sql" />
@@ -142,14 +149,14 @@
     <Build Include="dsp\Stored Procedures\Context_PropsSet.sql" />
     <Build Include="dsp\Stored Procedures\Context_Verify.sql" />
     <Build Include="dsp\Stored Procedures\Crypt_CreatePassword.sql" />
-    <Build Include="dsp\Stored Procedures\Database_InitInMemoryDatabase.sql" />
-    <Build Include="dsp\Stored Procedures\Database_ServerName.sql" />
     <Build Include="dsp\Stored Procedures\Init.sql" />
     <Build Include="dsp\Stored Procedures\Init__CreateCommonExceptions.sql" />
-    <Build Include="dsp\Stored Procedures\Init__InitSettings.sql" />
+    <Build Include="dsp\Stored Procedures\Init__InitSettings.sql">
+      <SuppressTSqlWarnings>
+      </SuppressTSqlWarnings>
+    </Build>
     <Build Include="dsp\Stored Procedures\Init__RecreateExceptionFunctions.sql" />
     <Build Include="dsp\Stored Procedures\Init__RecreateStringFunctions.sql" />
-    <Build Include="dsp\Stored Procedures\Init__SetUp.sql" />
     <Build Include="dsp\Stored Procedures\Init__Start.sql" />
     <Build Include="dsp\Stored Procedures\Init_Cleanup.sql" />
     <Build Include="dsp\Stored Procedures\Init_RecreateEnumFunctions.sql" />
@@ -183,17 +190,15 @@
     <Build Include="dsp\Stored Procedures\Synonym_Create.sql" />
     <Build Include="dsp\Stored Procedures\System_Api.sql" />
     <Build Include="dsp\Stored Procedures\Table_CompareData.sql" />
-    <Build Include="dsp\Stored Procedures\Table_InitTemporal.sql" />
     <Build Include="dsp\Stored Procedures\Table_UpdateToUseBlobForFields.sql" />
-    <Build Include="dsp\Stored Procedures\ThrowAccessDeniedOrObjectNotExists.sql" />
-    <Build Include="dsp\Stored Procedures\ThrowAppException.sql" />
-    <Build Include="dsp\Stored Procedures\ThrowException.sql" />
-    <Build Include="dsp\Stored Procedures\ThrowInvalidArgument.sql" />
+    <Build Include="dsp\Stored Procedures\Exception_ThrowAccessDeniedOrObjectNotExists.sql" />
+    <Build Include="dsp\Stored Procedures\Exception_ThrowApp.sql" />
+    <Build Include="dsp\Stored Procedures\Exception_Throw.sql" />
+    <Build Include="dsp\Stored Procedures\Exception_ThrowInvalidArgument.sql" />
     <Build Include="dsp\Stored Procedures\Util_CreateRandomString.sql" />
     <Build Include="dsp\Stored Procedures\Util_ProtectProductionEnvironment.sql" />
     <Build Include="dsp\Stored Procedures\Util_VerifyServerName.sql" />
     <Build Include="dsp\Stored Procedures\Validate_CheckNotNull.sql" />
-    <Build Include="dsp\Stored Procedures\ValidateFunctionNameAndReturnValue.sql" />
     <Build Include="dsp\Tables\Exception.sql" />
     <Build Include="dsp\Tables\LogFilterSetting.sql" />
     <Build Include="dsp\Tables\LogUser.sql" />
@@ -210,7 +215,6 @@
     <Build Include="tCodeQuality\Stored Procedures\test Declare BIGINT.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Declare generic types INT, TSTRING.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Description must be nvarchar_max_.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test find wrong use of Private class.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test None of tests should have RETURN phrase.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Pagination.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Relations for ForeignKeys.sql" />
@@ -223,26 +227,67 @@
     <Build Include="dbo\User Defined Types\TSTRING.sql" />
     <Build Include="dbo\User Defined Types\TSTRINGA.sql" />
     <Build Include="Security\api.sql" />
-    <Build Include="Security\const.sql" />
     <Build Include="Security\dsp.sql" />
     <Build Include="Security\err.sql" />
     <Build Include="Security\str.sql" />
     <Build Include="Security\tCodeQuality.sql" />
     <Build Include="dsp\Stored Procedures\Init__Cleanup.sql" />
+    <Build Include="dsp\Functions\ExceptionId_Maintenance.sql" />
+    <Build Include="dsp\Functions\ExceptionId_MaintenanceReadOnly.sql" />
+    <Build Include="dsp\Functions\ExceptionId_InvalidParamSignature.sql" />
+    <Build Include="dsp\Functions\ExceptionId_TooManyRequest.sql" />
+    <Build Include="dsp\Functions\ExceptionId_InvokerAppVersion.sql" />
+    <Build Include="dsp\Functions\ExceptionId_BatchIsNotAllowed.sql" />
+    <Build Include="dsp\Functions\ExceptionId_AuthUserNotFound.sql" />
+    <Build Include="dsp\Functions\ExceptionId_ValidationError.sql" />
+    <Build Include="dsp\Functions\ExceptionId_UserIsDisabled.sql" />
+    <Build Include="dsp\Functions\ExceptionId_PageSizeTooLarge.sql" />
+    <Build Include="dsp\Functions\ExceptionId_ObjectIsInUse.sql" />
+    <Build Include="dsp\Functions\ExceptionId_ObjectAlreadyExists.sql" />
+    <Build Include="dsp\Functions\ExceptionId_NotSupported.sql" />
+    <Build Include="dsp\Functions\ExceptionId_NotImplemented.sql" />
+    <Build Include="dsp\Functions\ExceptionId_NoOperation.sql" />
+    <Build Include="dsp\Functions\ExceptionId_LockFailed.sql" />
+    <Build Include="dsp\Functions\ExceptionId_InvalidOperation.sql" />
+    <Build Include="dsp\Functions\ExceptionId_InvalidCaptcha.sql" />
+    <Build Include="dsp\Functions\ExceptionId_InvalidArgument.sql" />
+    <Build Include="dsp\Functions\ExceptionId_General.sql" />
+    <Build Include="dsp\Functions\ExceptionId_FatalError.sql" />
+    <Build Include="dsp\Functions\ExceptionId_Ambiguous.sql" />
+    <Build Include="dsp\Functions\ExceptionId_AccessDeniedOrObjectNotExists.sql" />
+    <Build Include="dbo\Tables\Setting.sql" />
+    <Build Include="dbo\Stored Procedures\User_UserIdByAuthUserId.sql" />
+    <Build Include="dbo\Stored Procedures\Setting_PropsSet.sql" />
+    <Build Include="dbo\Stored Procedures\Setting_Props.sql" />
+    <Build Include="dbo\Stored Procedures\Init_FillStrings.sql" />
+    <Build Include="dbo\Stored Procedures\Init_FillLookups.sql" />
+    <Build Include="dbo\Stored Procedures\Init_FillExceptions.sql" />
+    <Build Include="dbo\Stored Procedures\Init_FillData.sql" />
+    <Build Include="dbo\Stored Procedures\Init_Cleanup.sql" />
+    <Build Include="dbo\Stored Procedures\Context_Update.sql" />
+    <Build Include="api\Stored Procedures\User_CreateOrUpdateByAuthClaims.sql" />
+    <Build Include="api\Stored Procedures\System_Api.sql" />
+    <Build Include="dsp\Stored Procedures\Exception_ThrowGeneral.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SqlSchemaCompare.scmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\130\SqlSchemas\master.dacpac">
-      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\130\SqlSchemas\master.dacpac</HintPath>
-      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+    <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>True</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
-    <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\130\SqlSchemas\msdb.dacpac">
-      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\130\SqlSchemas\msdb.dacpac</HintPath>
-      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+    <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\msdb.dacpac">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\msdb.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>True</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>msdb</DatabaseVariableLiteralValue>
     </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="Test">
+      <DefaultValue>Test</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="DirectSpAgentSql.refactorlog" />
   </ItemGroup>
 </Project>

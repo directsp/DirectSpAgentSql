@@ -1,53 +1,37 @@
 ﻿CREATE	PROC [dsp].[Init_$Start]
-	@IsProductionEnvironment BIT = NULL, @IsWithCleanup BIT = NULL, @Reserved BIT = NULL
+	@isProductionEnvironment BIT = NULL, @isWithCleanup BIT = NULL, @reserved BIT = NULL
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SET @Reserved = ISNULL(@Reserved, 1);
-
-	-- SetUp DirectSp procedures and tables
-	EXEC dsp.[Init_$SetUp];
+	SET @reserved = ISNULL(@reserved, 1);
 
 	----------------
 	-- Check Production Environment and Run Cleanup
 	----------------
 	EXEC dsp.[Init_$InitSettings];
-	EXEC dsp.[Init_$Cleanup] @IsProductionEnvironment = @IsProductionEnvironment OUT, @IsWithCleanup = @IsWithCleanup OUT;
+	EXEC dsp.[Init_$Cleanup] @isProductionEnvironment = @isProductionEnvironment OUT, @isWithCleanup = @isWithCleanup OUT;
 	EXEC dsp.[Init_$InitSettings];
 
 	----------------
 	-- Recreate Strings
 	----------------
-	IF (@Reserved = 1) EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'Recreating strings';
-	DELETE	dsp.StringTable;
+	IF (@reserved = 1) EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Recreating strings';
+	DELETE	dsp.StringTable WHERE 1=1;
 	EXEC dbo.Init_FillStrings;
 	EXEC dsp.[Init_$RecreateStringFunctions];
 
-	-- Check is internal databse
-	DECLARE @IsInternalDatabase BIT = 0;
-	SELECT	@IsInternalDatabase = 1
-	FROM	dsp.StringTable AS ST
-	WHERE	ST.StringId = 'IsDirectSpInternal';
-	
 	----------------
 	-- Recreate Exceptions 
 	----------------
-	IF (@Reserved = 1) EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'Recreating exception';
-	DELETE	dsp.Exception;
+	IF (@reserved = 1) EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Recreating exception';
+	DELETE	dsp.Exception WHERE 1=1;
 	EXEC dbo.Init_FillExceptions;
 
 	-- make sure there is no invalid Exception Id for general application
-	IF (@IsInternalDatabase = 0 AND EXISTS (SELECT		1
+	IF (EXISTS (SELECT		1
 												FROM	dsp.Exception AS E
 												WHERE	E.ExceptionId < 56000))
-		EXEC dsp.ThrowAppException @ProcId = @@PROCID, @ExceptionId = 55001, @Message = 'Application ExceptionId cannot be less than 56000!';
-
-	-- make sure there is no invalid Exception Id for DirectSpInternal
-	IF (@IsInternalDatabase = 1 AND EXISTS (SELECT		1
-												FROM	dsp.Exception AS E
-												WHERE	E.ExceptionId < 55700 OR E.ExceptionId >= 56000))
-		EXEC dsp.ThrowAppException @ProcId = @@PROCID, @ExceptionId = 55001, @Message = 'DirectSpInternal ExceptionId must asigned between 55700 and 56000!';
-
+		EXEC dsp.Exception_ThrowApp @procId = @@PROCID, @exceptionId = 55001, @message = 'Application exceptionId cannot be less than 56000!';
 
 	EXEC dsp.[Init_$CreateCommonExceptions];
 	EXEC dsp.[Init_$RecreateExceptionFunctions];
@@ -55,18 +39,18 @@ BEGIN
 	----------------
 	-- Lookups
 	----------------
-	IF (@Reserved = 1) --
-		EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'Filling lookups';
+	IF (@reserved = 1) --
+		EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Filling lookups';
 	EXEC dbo.Init_FillLookups;
 
-	IF (@Reserved = 1) EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'Filling data';
+	IF (@reserved = 1) EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Filling data';
 	EXEC dbo.Init_FillData;
 
 	-- Call Init again to make sure it can be called without cleanup
-	IF (@IsProductionEnvironment = 0 AND @IsWithCleanup = 1 AND @Reserved = 1)
+	IF (@isProductionEnvironment = 0 AND @isWithCleanup = 1 AND @reserved = 1)
 	BEGIN
-		EXEC dsp.[Init_$Start] @IsProductionEnvironment = 0, @IsWithCleanup = 0, @Reserved = 0;
-		RETURN;
+		EXEC dsp.[Init_$Start] @isProductionEnvironment = 0, @isWithCleanup = 0, @reserved = 0;
+		RETURN 0;
 	END;
 
 
@@ -74,7 +58,7 @@ BEGIN
 	EXEC dsp.Table_UpdateToUseBlobForFields;
 
 	-- Report it is done
-	EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'Init has been completed.';
+	EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Init has been completed.';
 
 END;
 

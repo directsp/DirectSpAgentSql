@@ -9,7 +9,7 @@ BEGIN
     IF (NOT EXISTS (SELECT  1 FROM  dsp.Setting))
     BEGIN
         -- Report it is done
-        EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'Creating default dsp.Settings';
+        EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Creating default dsp.Settings';
         INSERT  dsp.Setting (SettingId)
         VALUES (1);
     END;
@@ -19,8 +19,8 @@ BEGIN
     ----------------
     IF (NOT EXISTS (SELECT  1 FROM  dbo.Setting))
     BEGIN
-        EXEC dsp.Log_Trace @ProcId = @@PROCID, @Message = 'Creating default dbo.Settings';
-        INSERT  dbo.Setting (SettingId)
+        EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Creating default dbo.Settings';
+        INSERT  dbo.Setting ([settingId])
         VALUES (1);
     END;
 
