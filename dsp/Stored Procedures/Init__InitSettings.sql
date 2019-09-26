@@ -10,7 +10,7 @@ BEGIN
     BEGIN
         -- Report it is done
         EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Creating default dsp.Settings';
-        INSERT  dsp.Setting (SettingId)
+        INSERT  dsp.Setting (settingId)
         VALUES (1);
     END;
 

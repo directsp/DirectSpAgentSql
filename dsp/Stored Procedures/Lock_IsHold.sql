@@ -1,14 +1,14 @@
 ﻿CREATE	PROCEDURE [dsp].[Lock_IsHold]
-	@ObjectTypeName TSTRING, @ObjectName TSTRING = NULL, @IsTransactionMode BIT = 1, @IsLockHold BIT = NULL OUT
+	@objectTypeName TSTRING, @objectName TSTRING = NULL, @isTransactionMode BIT = 1, @isLockHold BIT = NULL OUT
 AS
 BEGIN
-	SET @ObjectName = ISNULL(@ObjectName, '');
-	SET @IsTransactionMode = ISNULL(@IsTransactionMode, 0);
-	DECLARE @LockName TSTRING = @ObjectTypeName + @ObjectName;
-	DECLARE @LockOwner TSTRING = IIF(@IsTransactionMode = 1, 'Transaction', 'Session');
+	SET @objectName = ISNULL(@objectName, '');
+	SET @isTransactionMode = ISNULL(@isTransactionMode, 0);
+	DECLARE @lockName TSTRING = @objectTypeName + @objectName;
+	DECLARE @lockOwner TSTRING = IIF(@isTransactionMode = 1, 'Transaction', 'Session');
 
 	-- Check that Session in Lock
-	SET @IsLockHold = IIF(APPLOCK_TEST('public', @LockName, 'Exclusive', @LockOwner) = 1, 0, 1);
+	SET @isLockHold = IIF(APPLOCK_TEST('public', @lockName, 'Exclusive', @lockOwner) = 1, 0, 1);
 END;
 
 

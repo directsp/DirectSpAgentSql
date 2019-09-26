@@ -1,8 +1,8 @@
 ﻿CREATE FUNCTION [dsp].[Formatter_FormatEmail] (
-	@Email TSTRING)
+	@email TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
-	SET @Email = dsp.Formatter_FormatString(@Email);
-	RETURN IIF(dsp.Validate_IsValidEmail(@Email) = 1, @Email, NULL);
+	SET @email = dsp.Formatter_FormatString(@email);
+	RETURN IIF(dsp.Validate_IsValidEmail(@email) = 1, @email, NULL);
 END;

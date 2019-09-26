@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dsp].[StringTable] (
-    [StringId]    NVARCHAR (100) NOT NULL,
-    [StringValue] NVARCHAR (MAX) NOT NULL,
-    [LocaleName]  NVARCHAR (10)  NULL,
-    [Description] NVARCHAR (MAX) NULL,
-    CONSTRAINT [PK_StringTable_Name] PRIMARY KEY CLUSTERED ([StringId] ASC)
+    [stringId]    NVARCHAR (100) NOT NULL,
+    [stringValue] NVARCHAR (MAX) NOT NULL,
+    [culture]  NVARCHAR (10)  NULL,
+    [description] NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_StringTable] PRIMARY KEY CLUSTERED ([stringId] ASC)
 );
 

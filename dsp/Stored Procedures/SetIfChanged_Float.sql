@@ -1,16 +1,16 @@
 ﻿CREATE PROCEDURE [dsp].[SetIfChanged_Float]
-    @procId INT, @PropName TSTRING, @NewValue FLOAT, @OldValue FLOAT OUT, @HasAccess BIT = 1, @NullAsNotSet BIT = 0, @IsUpdated BIT OUT
+    @procId INT, @propName TSTRING, @newValue FLOAT, @oldValue FLOAT OUT, @hasAccess BIT = 1, @nullAsNotSet BIT = 0, @isUpdated BIT OUT
 AS
 BEGIN
-    SET @HasAccess = ISNULL(@HasAccess, 1);
-    IF (dsp.Param_IsChanged(@OldValue, @NewValue, @NullAsNotSet) = 0)
-        RETURN;
+    SET @hasAccess = ISNULL(@hasAccess, 1);
+    IF (dsp.Param_IsChanged(@oldValue, @newValue, @nullAsNotSet) = 0)
+        RETURN 0;
 
-    IF (@HasAccess = 0) --
-        EXEC err.ThrowAccessDeniedOrObjectNotExists @procId = @procId, @message = 'PropName: {0}', @param0 = @PropName;
+    IF (@hasAccess = 0) --
+        EXEC dsp.Exception_ThrowAccessDeniedOrObjectNotExists @procId = @procId, @message = 'propName: {0}', @param0 = @propName;
 
-    SET @IsUpdated = 1;
-    SET @OldValue = @NewValue;
+    SET @isUpdated = 1;
+    SET @oldValue = @newValue;
 END;
 
 

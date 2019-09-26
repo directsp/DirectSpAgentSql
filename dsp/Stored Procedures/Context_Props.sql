@@ -1,48 +1,45 @@
 ﻿CREATE PROCEDURE [dsp].[Context_Props]
-    @context TCONTEXT OUT, @appName TSTRING = N'<notset>' OUT, @AuthUserId TSTRING = N'<notset>' OUT, @userId TSTRING = N'<notset>' OUT,
-    @audience TSTRING = N'<notset>' OUT, @isCaptcha INT = -1 OUT, @RecordCount INT = -1 OUT, @RecordIndex INT = -1 OUT,
-    @ClientVersion TSTRING = N'<notset>' OUT, @MoneyConversionRate FLOAT = -1 OUT, @InvokerAppVersion TSTRING = NULL OUT, @IsReadonlyIntent BIT = NULL OUT, @IsInvokedByMidware BIT = NULL OUT
+    @context TCONTEXT OUT, @appName TSTRING = N'<notset>' OUT, @authUserId TSTRING = N'<notset>' OUT, @userId TSTRING = N'<notset>' OUT,
+    @audience TSTRING = N'<notset>' OUT, @isCaptcha INT = -1 OUT, @recordCount INT = -1 OUT, @recordIndex INT = -1 OUT,
+    @clientVersion TSTRING = N'<notset>' OUT, @invokerAppVersion TSTRING = NULL OUT, @isReadonlyIntent BIT = NULL OUT, @isInvokedByMidware BIT = NULL OUT
 AS
 BEGIN
     -- General
     IF (@appName IS NULL OR @appName <> N'<notset>')
-        SET @appName = JSON_VALUE(@context, N'$.AppName');
+        SET @appName = JSON_VALUE(@context, N'$.appName');
 
-    IF (@AuthUserId IS NULL OR  @AuthUserId <> N'<notset>')
-        SET @AuthUserId = JSON_VALUE(@context, N'$.AuthUserId');
+    IF (@authUserId IS NULL OR  @authUserId <> N'<notset>')
+        SET @authUserId = JSON_VALUE(@context, N'$.authUserId');
 
     IF (@userId IS NULL OR  @userId <> N'<notset>')
-        SET @userId = JSON_VALUE(@context, N'$.UserId');
+        SET @userId = JSON_VALUE(@context, N'$.userId');
 
     IF (@audience IS NULL OR @audience <> N'<notset>')
-        SET @audience = JSON_VALUE(@context, N'$.Audience');
+        SET @audience = JSON_VALUE(@context, N'$.audience');
 
     -- InvokeOptions
-    DECLARE @InvokeOptions TJSON = JSON_QUERY(@context, N'$.InvokeOptions');
+    DECLARE @invokeOptions TJSON = JSON_QUERY(@context, N'$.invokeOptions');
 
-    IF (@ClientVersion IS NULL OR   @ClientVersion <> N'<notset>')
-        SET @ClientVersion = JSON_VALUE(@InvokeOptions, N'$.ClientVersion');
-
-    IF (@MoneyConversionRate IS NULL OR @MoneyConversionRate <> -1)
-        SET @MoneyConversionRate = ISNULL(JSON_VALUE(@InvokeOptions, N'$.MoneyConversionRate'), 1);
+    IF (@clientVersion IS NULL OR   @clientVersion <> N'<notset>')
+        SET @clientVersion = JSON_VALUE(@invokeOptions, N'$.clientVersion');
 
     IF (@isCaptcha IS NULL OR   @isCaptcha <> -1)
-        SET @isCaptcha = ISNULL(CAST(JSON_VALUE(@InvokeOptions, '$.IsCaptcha') AS BIT), 0);
+        SET @isCaptcha = ISNULL(CAST(JSON_VALUE(@invokeOptions, '$.isCaptcha') AS BIT), 0);
 
-    IF (@IsReadonlyIntent IS NULL OR   @IsReadonlyIntent <> -1)
-        SET @IsReadonlyIntent = ISNULL(CAST(JSON_VALUE(@InvokeOptions, '$.IsReadonlyIntent') AS BIT), 0);
+    IF (@isReadonlyIntent IS NULL OR   @isReadonlyIntent <> -1)
+        SET @isReadonlyIntent = ISNULL(CAST(JSON_VALUE(@invokeOptions, '$.isReadonlyIntent') AS BIT), 0);
 
-    IF ((@RecordCount IS NULL OR @RecordCount <> -1) OR (@RecordIndex IS NULL OR @RecordIndex <> -1))
+    IF ((@recordCount IS NULL OR @recordCount <> -1) OR (@recordIndex IS NULL OR @recordIndex <> -1))
     BEGIN
-        SET @RecordCount = JSON_VALUE(@InvokeOptions, N'$.RecordCount');
-        SET @RecordIndex = JSON_VALUE(@InvokeOptions, N'$.RecordIndex');
-        EXEC dsp.[Context_$ValidatePagination] @RecordCount = @RecordCount OUTPUT, @RecordIndex = @RecordIndex OUTPUT;
+        SET @recordCount = JSON_VALUE(@invokeOptions, N'$.recordCount');
+        SET @recordIndex = JSON_VALUE(@invokeOptions, N'$.recordIndex');
+        EXEC dsp.[Context_$ValidatePagination] @recordCount = @recordCount OUTPUT, @recordIndex = @recordIndex OUTPUT;
     END;
 
-    IF (@InvokerAppVersion IS NULL OR   @InvokerAppVersion <> -1)
-        SET @InvokerAppVersion = JSON_VALUE(@InvokeOptions, N'$.InvokerAppVersion');
+    IF (@invokerAppVersion IS NULL OR   @invokerAppVersion <> -1)
+        SET @invokerAppVersion = JSON_VALUE(@invokeOptions, N'$.invokerAppVersion');
 
-	SET @IsInvokedByMidware = IIF (@InvokerAppVersion IS NOT NULL, 1, 0);
+	SET @isInvokedByMidware = IIF (@invokerAppVersion IS NOT NULL, 1, 0);
 
 END;
 

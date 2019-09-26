@@ -3,8 +3,8 @@
 -- 1: Index not exists
 -- 2: IndexName is incorrect 
 CREATE FUNCTION [dsp].[Table_IndexName] (
-	@TableName TSTRING,
-	@ColumnName TSTRING)
+	@tableName TSTRING,
+	@columnName TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
@@ -17,8 +17,8 @@ BEGIN
 									AND ic.column_id = col.column_id
 			INNER JOIN sys.tables t ON ind.object_id = t.object_id
 	WHERE	ind.is_primary_key = 0
-			AND t.name = @TableName
-			AND col.name = @ColumnName;
+			AND t.name = @tableName
+			AND col.name = @columnName;
 
 	RETURN @IndexName;
 END;

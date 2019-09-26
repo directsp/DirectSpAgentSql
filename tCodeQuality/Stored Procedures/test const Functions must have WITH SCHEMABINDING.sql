@@ -3,30 +3,30 @@ AS
 BEGIN
 
 	-- Declaring pattern
-	DECLARE @Pattern_Context TCONTEXT = dsp.String_RemoveWhitespaces('WITH SCHEMABINDING');
+	DECLARE @pattern_Context TCONTEXT = dsp.String_RemoveWhitespaces('WITH SCHEMABINDING');
 
 	DECLARE @msg TSTRING;
-	DECLARE @FunctionName TSTRING;
+	DECLARE @functionName TSTRING;
 
 	-- Getting list all procedures with pagination
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all functions with const schema';
-	DECLARE @t TABLE (SchemaName TSTRING,
-		FunctionName TSTRING,
-		Script TBIGSTRING);
+	DECLARE @t TABLE (schemaName TSTRING NULL,
+		FunctionName TSTRING NULL,
+		script TBIGSTRING NULL);
 	INSERT INTO @t
-	SELECT	PD.SchemaName, PD.ObjectName, dsp.String_RemoveWhitespaces(PD.Script)
+	SELECT	PD.schemaName, PD.objectName, dsp.String_RemoveWhitespaces(PD.script)
 	FROM	dsp.Metadata_ProceduresDefination() AS PD
-	WHERE	PD.SchemaName = 'const';
+	WHERE	PD.schemaName = 'const';
 
 	-- Looking for "@context TCONTEXT OUT" phrase
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "WITH SCHEMABINDING" phrase';
-	SELECT	@FunctionName = SchemaName + '.' + FunctionName
+	SELECT	@functionName = schemaName + '.' + FunctionName
 	FROM	@t
-	WHERE	CHARINDEX(@Pattern_Context, Script) < 1 AND CHARINDEX('TSTRING', Script) = 0;
+	WHERE	CHARINDEX(@pattern_Context, script) < 1 AND CHARINDEX('TSTRING', script) = 0;
 
-	IF (@FunctionName IS NOT NULL)
+	IF (@functionName IS NOT NULL)
 	BEGIN
-		SET @msg = '"WITH SCHEMABINDING" phrase was not found in Function: ' + @FunctionName;
-		EXEC tSQLt.Fail @Message0 = @msg;
+		SET @msg = '"WITH SCHEMABINDING" phrase was not found in Function: ' + @functionName;
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
 	END;
 END;

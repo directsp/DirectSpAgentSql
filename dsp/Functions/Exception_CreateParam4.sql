@@ -1,4 +1,4 @@
-﻿CREATE	FUNCTION [dsp].[Exception_BuildMessageParam4] (@procId INT,
+﻿CREATE	FUNCTION [dsp].[Exception_CreateParam4] (@procId INT,
 	@exceptionId  INT,
 	@message TSTRING = NULL,
 	@param0 TSTRING = '<notset>',
@@ -12,14 +12,14 @@ BEGIN
 	DECLARE @description TSTRING;
 	DECLARE @exceptionName TSTRING;
 
-	SELECT	@description = Description, @exceptionName = ExceptionName
+	SELECT	@description = [description], @exceptionName = [exceptionName]
 	FROM	dsp.Exception
-	WHERE	ExceptionId = @exceptionId ;
+	WHERE	[exceptionId] = @exceptionId ;
 
 	-- validate exception Id
 	IF (@exceptionName IS NULL)
 	BEGIN
-		SET @message = 'Inavlid AppExceptionId; ExceptionId: {0}';
+		SET @message = 'Inavlid AppExceptionId; exceptionId: {0}';
 		SET @param0 = @exceptionId ;
 		SET @exceptionId  = dsp.ExceptionId_General();
 	END;

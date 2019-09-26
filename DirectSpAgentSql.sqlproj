@@ -84,7 +84,6 @@
     <Build Include="dsp\Functions\Convert_BinaryToBase64.sql" />
     <Build Include="dsp\Functions\Convert_ToSqlvariant.sql" />
     <Build Include="dsp\Functions\Convert_ToString.sql" />
-    <Build Include="dsp\Functions\CRYPT_PBKDF2_VARBINARY_SHA512.sql" />
     <Build Include="dsp\Functions\Database_IsReadOnly.sql" />
     <Build Include="dsp\Functions\DateTime_EndOfDayTime.sql" />
     <Build Include="dsp\Functions\DateTime_FisrtNextDayOfWeek.sql" />
@@ -94,9 +93,8 @@
     <Build Include="dsp\Functions\DateTime_HasTimePart.sql" />
     <Build Include="dsp\Functions\DateTime_StartOfDayTime.sql" />
     <Build Include="dsp\Functions\DateTime_ToUnixTimeStamp.sql" />
-    <Build Include="dsp\Functions\Exception_BuildInvalidArgument.sql" />
-    <Build Include="dsp\Functions\Exception_BuildMessage.sql" />
-    <Build Include="dsp\Functions\Exception_BuildMessageParam4.sql" />
+    <Build Include="dsp\Functions\Exception_Create.sql" />
+    <Build Include="dsp\Functions\Exception_CreateParam4.sql" />
     <Build Include="dsp\Functions\Exception_InvalidArgumentName.sql" />
     <Build Include="dsp\Functions\Formatter_FormatCardNumber.sql" />
     <Build Include="dsp\Functions\Formatter_FormatEmail.sql" />
@@ -148,14 +146,12 @@
     <Build Include="dsp\Stored Procedures\Context_Props.sql" />
     <Build Include="dsp\Stored Procedures\Context_PropsSet.sql" />
     <Build Include="dsp\Stored Procedures\Context_Verify.sql" />
-    <Build Include="dsp\Stored Procedures\Crypt_CreatePassword.sql" />
     <Build Include="dsp\Stored Procedures\Init.sql" />
     <Build Include="dsp\Stored Procedures\Init__CreateCommonExceptions.sql" />
     <Build Include="dsp\Stored Procedures\Init__InitSettings.sql">
       <SuppressTSqlWarnings>
       </SuppressTSqlWarnings>
     </Build>
-    <Build Include="dsp\Stored Procedures\Init__RecreateExceptionFunctions.sql" />
     <Build Include="dsp\Stored Procedures\Init__RecreateStringFunctions.sql" />
     <Build Include="dsp\Stored Procedures\Init__Start.sql" />
     <Build Include="dsp\Stored Procedures\Init_Cleanup.sql" />
@@ -192,8 +188,8 @@
     <Build Include="dsp\Stored Procedures\Table_CompareData.sql" />
     <Build Include="dsp\Stored Procedures\Table_UpdateToUseBlobForFields.sql" />
     <Build Include="dsp\Stored Procedures\Exception_ThrowAccessDeniedOrObjectNotExists.sql" />
-    <Build Include="dsp\Stored Procedures\Exception_ThrowApp.sql" />
     <Build Include="dsp\Stored Procedures\Exception_Throw.sql" />
+    <Build Include="dsp\Stored Procedures\Exception_ThrowJson.sql" />
     <Build Include="dsp\Stored Procedures\Exception_ThrowInvalidArgument.sql" />
     <Build Include="dsp\Stored Procedures\Util_CreateRandomString.sql" />
     <Build Include="dsp\Stored Procedures\Util_ProtectProductionEnvironment.sql" />
@@ -214,7 +210,7 @@
     <Build Include="tCodeQuality\Stored Procedures\test dbo should not have WITH EXECUTE AS OWNER.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Declare BIGINT.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Declare generic types INT, TSTRING.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Description must be nvarchar_max_.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\test description must be nvarchar_max_.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test None of tests should have RETURN phrase.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Pagination.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Relations for ForeignKeys.sql" />
@@ -228,7 +224,6 @@
     <Build Include="dbo\User Defined Types\TSTRINGA.sql" />
     <Build Include="Security\api.sql" />
     <Build Include="Security\dsp.sql" />
-    <Build Include="Security\err.sql" />
     <Build Include="Security\str.sql" />
     <Build Include="Security\tCodeQuality.sql" />
     <Build Include="dsp\Stored Procedures\Init__Cleanup.sql" />
@@ -247,7 +242,6 @@
     <Build Include="dsp\Functions\ExceptionId_NotSupported.sql" />
     <Build Include="dsp\Functions\ExceptionId_NotImplemented.sql" />
     <Build Include="dsp\Functions\ExceptionId_NoOperation.sql" />
-    <Build Include="dsp\Functions\ExceptionId_LockFailed.sql" />
     <Build Include="dsp\Functions\ExceptionId_InvalidOperation.sql" />
     <Build Include="dsp\Functions\ExceptionId_InvalidCaptcha.sql" />
     <Build Include="dsp\Functions\ExceptionId_InvalidArgument.sql" />

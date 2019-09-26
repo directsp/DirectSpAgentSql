@@ -4,8 +4,8 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @IsProductionEnvironment BIT;
-    EXEC dsp.Setting_Props @IsProductionEnvironment = @IsProductionEnvironment OUTPUT;
-    IF (@IsProductionEnvironment = 1) --
-        EXEC err.ThrowAccessDeniedOrObjectNotExists @procId = @@PROCID, @message = 'This operation can not be executed in ProductionEnvironment!';
+    DECLARE @isProductionEnvironment BIT;
+    EXEC dsp.Setting_Props @isProductionEnvironment = @isProductionEnvironment OUTPUT;
+    IF (@isProductionEnvironment = 1) --
+        EXEC dsp.Exception_ThrowAccessDeniedOrObjectNotExists @procId = @@PROCID, @message = 'This operation can not be executed in ProductionEnvironment!';
 END;

@@ -3,27 +3,28 @@ CREATE PROCEDURE [tCodeQuality].[test API must have Context_Verify]
 AS
 BEGIN
 	DECLARE @msg TSTRING;
-	DECLARE @ProcedureName TSTRING;
+	DECLARE @procedureName TSTRING;
 
 	-- Getting list all procedures with pagination
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with api schema';
-	DECLARE @t TABLE (SchemaName TSTRING,
-		ProcedureName TSTRING,
-		Script TBIGSTRING);
+	DECLARE @t TABLE (schemaName TSTRING NULL,
+		procedureName TSTRING NULL,
+		script TBIGSTRING NULL);
+
 	INSERT INTO @t
-	SELECT	VPD.SchemaName, VPD.ObjectName, VPD.Script
+	SELECT	VPD.schemaName, VPD.objectName, VPD.script
 	FROM	dsp.Metadata_ProceduresDefination() AS VPD
 	WHERE	VPD.Type = 'P'
 
 	-- Looking for "Context_Verify" in api procedure
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N' Looking for "Context_Verify" in api procedure';
-	SELECT	@ProcedureName = SchemaName + '.' + ProcedureName
+	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
-	WHERE	(SchemaName IN ( 'api' )) AND	Script NOT LIKE N'%dsp.Context_Verify%';
+	WHERE	(schemaName IN ( 'api' )) AND	script NOT LIKE N'%dsp.Context_Verify%';
 
-	IF (@ProcedureName IS NOT NULL)
+	IF (@procedureName IS NOT NULL)
 	BEGIN
-		SET @msg = 'Code should contain dsp.Context_Verify in procedure: ' + @ProcedureName;
-		EXEC tSQLt.Fail @Message0 = @msg;
+		SET @msg = 'Code should contain dsp.Context_Verify in procedure: ' + @procedureName;
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
 	END;
 END;

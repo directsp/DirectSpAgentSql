@@ -3,43 +3,43 @@ AS
 BEGIN
 	-- Declaring pattern
 	DECLARE @schemaName TSTRING;
-	DECLARE @ObjectName TSTRING;
-	DECLARE @Script TBIGSTRING;
-	DECLARE @ClassName TSTRING;
+	DECLARE @objectName TSTRING;
+	DECLARE @script TBIGSTRING;
+	DECLARE @className TSTRING;
 
 	-- Get procedures and find className
-	DECLARE Procedures_Cursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR --
-	SELECT	PD.SchemaName, PD.ObjectName, REPLACE(REPLACE(REPLACE(PD.Script, CHAR(10), ''), CHAR(13), ''), CHAR(9), ' '), --
-		SUBSTRING(PD.ObjectName, 1, CHARINDEX('_', PD.ObjectName) - 1) AS ClassName
+	DECLARE _cursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR --
+	SELECT	PD.schemaName, PD.objectName, REPLACE(REPLACE(REPLACE(PD.script, CHAR(10), ''), CHAR(13), ''), CHAR(9), ' '), --
+		SUBSTRING(PD.objectName, 1, CHARINDEX('_', PD.objectName) - 1) AS ClassName
 	FROM	dsp.Metadata_ProceduresDefination() AS PD
-	WHERE	PD.ObjectName NOT LIKE '%test%' AND CHARINDEX('_', PD.ObjectName) > 0 AND	CHARINDEX('_$', PD.Script) > 0 AND	CHARINDEX('_$', PD.ObjectName) = 0;
+	WHERE	PD.objectName NOT LIKE '%test%' AND CHARINDEX('_', PD.objectName) > 0 AND	CHARINDEX('_$', PD.script) > 0 AND	CHARINDEX('_$', PD.objectName) = 0;
 
-	OPEN Procedures_Cursor;
+	OPEN _cursor;
 
-	FETCH NEXT FROM Procedures_Cursor
-	INTO @schemaName, @ObjectName, @Script, @ClassName;
+	FETCH NEXT FROM _cursor
+	INTO @schemaName, @objectName, @script, @className;
 
-	SET @ClassName = REPLACE(@ClassName, '[', '');
-	DECLARE @Msg TSTRING;
+	SET @className = REPLACE(@className, '[', '');
+	DECLARE @msg TSTRING;
 	
 	WHILE (@@FETCH_STATUS = 0)
 	BEGIN
-		DECLARE @HasWrongClassName BIT = 0;
-		SELECT @HasWrongClassName = 1
-		FROM	STRING_SPLIT(@Script, ' ') AS SS
-		WHERE	CHARINDEX('_$', SS.value) > 0 AND	REPLACE(SS.value, '[', '') NOT LIKE '%.' + @ClassName + '_$%';
+		DECLARE @hasWrongClassName BIT = 0;
+		SELECT @hasWrongClassName = 1
+		FROM	STRING_SPLIT(@script, ' ') AS SS
+		WHERE	CHARINDEX('_$', SS.value) > 0 AND	REPLACE(SS.value, '[', '') NOT LIKE '%.' + @className + '_$%';
 
-		EXEC @Msg = dsp.Formatter_FormatMessage @message = 'ObjectName: [{0}].[{1}]', @param0 = @schemaName, @param1 = @ObjectName;
-		IF (@HasWrongClassName = 1) --
-			EXEC tSQLt.Fail @Message0 = @Msg;
+		EXEC @msg = dsp.Formatter_FormatMessage @message = 'objectName: [{0}].[{1}]', @param0 = @schemaName, @param1 = @objectName;
+		IF (@hasWrongClassName = 1) --
+			EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
 
 		-- fetch next record
-		FETCH NEXT FROM Procedures_Cursor
-		INTO @schemaName, @ObjectName, @Script, @ClassName;
+		FETCH NEXT FROM _cursor
+		INTO @schemaName, @objectName, @script, @className;
 	END;
 
-	CLOSE Procedures_Cursor;
-	DEALLOCATE Procedures_Cursor;
+	CLOSE _cursor;
+	DEALLOCATE _cursor;
 
 
 END;

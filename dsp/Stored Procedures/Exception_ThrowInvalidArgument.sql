@@ -14,10 +14,10 @@ BEGIN
 		SET @argMessage = JSON_MODIFY(@argMessage, '$.message', @message);
 
 	DECLARE @exceptionId INT = dsp.ExceptionId_InvalidArgument();
-	DECLARE @exception TJSON = dsp.Exception_BuildMessage(@procId, @exceptionId, @argMessage);
+	DECLARE @exception TJSON = dsp.[Exception_Create](@procId, @exceptionId, @argMessage);
 
 	-- throw the exception
-	EXEC dsp.Exception_Throw @exception = @exception;
+	EXEC dsp.Exception_ThrowJson @exception = @exception;
 END;
 
 

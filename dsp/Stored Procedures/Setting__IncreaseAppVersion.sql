@@ -1,32 +1,32 @@
 ﻿CREATE PROC [dsp].[Setting_$IncreaseAppVersion]
-    @appVersion TSTRING OUT, @ForceIncrease INT
+    @appVersion TSTRING OUT, @forceIncrease INT
 AS
 BEGIN
-    DECLARE @Position INT;
-    DECLARE @Part1 TSTRING;
-    DECLARE @Part2 TSTRING;
-    DECLARE @Part3 TSTRING;
-    EXEC dsp.String_Tokenize @Expression = @appVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part1 OUTPUT;
-    EXEC dsp.String_Tokenize @Expression = @appVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part2 OUTPUT;
-    EXEC dsp.String_Tokenize @Expression = @appVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @Part3 OUTPUT;
+    DECLARE @position INT;
+    DECLARE @part1 TSTRING;
+    DECLARE @part2 TSTRING;
+    DECLARE @part3 TSTRING;
+    EXEC dsp.String_Tokenize @expression = @appVersion, @delimeter = N'.', @position = @position OUTPUT, @token = @part1 OUTPUT;
+    EXEC dsp.String_Tokenize @expression = @appVersion, @delimeter = N'.', @position = @position OUTPUT, @token = @part2 OUTPUT;
+    EXEC dsp.String_Tokenize @expression = @appVersion, @delimeter = N'.', @position = @position OUTPUT, @token = @part3 OUTPUT;
 
-    SET @Position = NULL;
-    DECLARE @OldPart1 TSTRING;
-    DECLARE @OldPart2 TSTRING;
-    DECLARE @OldPart3 TSTRING;
-    DECLARE @OldAppVersion TSTRING;
-    EXEC dsp.Setting_Props @appVersion = @OldAppVersion OUT;
-    EXEC dsp.String_Tokenize @Expression = @OldAppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @OldPart1 OUTPUT;
-    EXEC dsp.String_Tokenize @Expression = @OldAppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @OldPart2 OUTPUT;
-    EXEC dsp.String_Tokenize @Expression = @OldAppVersion, @Delimeter = N'.', @Position = @Position OUTPUT, @Token = @OldPart3 OUTPUT;
+    SET @position = NULL;
+    DECLARE @oldPart1 TSTRING;
+    DECLARE @oldPart2 TSTRING;
+    DECLARE @oldPart3 TSTRING;
+    DECLARE @oldAppVersion TSTRING;
+    EXEC dsp.Setting_Props @appVersion = @oldAppVersion OUT;
+    EXEC dsp.String_Tokenize @expression = @oldAppVersion, @delimeter = N'.', @position = @position OUTPUT, @token = @oldPart1 OUTPUT;
+    EXEC dsp.String_Tokenize @expression = @oldAppVersion, @delimeter = N'.', @position = @position OUTPUT, @token = @oldPart2 OUTPUT;
+    EXEC dsp.String_Tokenize @expression = @oldAppVersion, @delimeter = N'.', @position = @position OUTPUT, @token = @oldPart3 OUTPUT;
 
 	-- Check Star
-    IF (@Part3 = N'*' OR @ForceIncrease = 1)
+    IF (@part3 = N'*' OR @forceIncrease = 1)
 	BEGIN
-		SET @Part3 = ISNULL(@OldPart3, N'0');
-        SET @Part3 = dsp.Convert_ToString(CAST(@Part3 AS INT) + 1);
+		SET @part3 = ISNULL(@oldPart3, N'0');
+        SET @part3 = dsp.Convert_ToString(CAST(@part3 AS INT) + 1);
 	END
 
     -- Check format
-    SET @appVersion = @Part1 + '.' + @Part2 + '.' + @Part3;
+    SET @appVersion = @part1 + '.' + @part2 + '.' + @part3;
 END;

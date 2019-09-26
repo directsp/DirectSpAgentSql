@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [dsp].[Exception] (
-    [ExceptionId]   INT            NOT NULL,
-    [ExceptionName] NVARCHAR (100) NOT NULL,
-    [StringId]      NVARCHAR (100) NULL,
-    [Description]   NVARCHAR (MAX) NULL,
-    CONSTRAINT [PK_Exception] PRIMARY KEY CLUSTERED ([ExceptionId] ASC),
-    CONSTRAINT [FK_Exception_StringTable_StringId] FOREIGN KEY ([StringId]) REFERENCES [dsp].[StringTable] ([StringId])
+    [exceptionId]   INT            NOT NULL,
+    [exceptionName] NVARCHAR (100) NOT NULL,
+    [stringId]      NVARCHAR (100) NULL,
+    [description]   NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_Exception] PRIMARY KEY CLUSTERED ([exceptionId] ASC),
+    CONSTRAINT [FK_Exception_StringTable_stringId] FOREIGN KEY ([stringId]) REFERENCES [dsp].[StringTable] ([stringId])
 );
 
 

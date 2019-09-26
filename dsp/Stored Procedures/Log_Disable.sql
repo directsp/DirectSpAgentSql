@@ -4,9 +4,9 @@ AS
 BEGIN
 	
 	-- Set enable flag
-	UPDATE dsp.LogUser SET	IsEnabled = 0 WHERE UserName = SYSTEM_USER;
+	UPDATE dsp.LogUser SET	[isEnabled] = 0 WHERE [userName] = SYSTEM_USER;
 	PRINT 'LogSystem> LogSystem has been disbaled.';
 
-	EXEC sp_set_session_context 'dsp.Log_IsEnabled', 0, @read_only = 0;
+	EXEC sys.sp_set_session_context @key = 'dsp.Log_IsEnabled', @value = 0, @read_only = 0;
 
 END

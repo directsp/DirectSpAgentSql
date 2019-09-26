@@ -13,17 +13,17 @@ BEGIN
         RETURN 0;
 
     -- Format Message
-    DECLARE @Msg TSTRING = dsp.Log_FormatMessage2(@procId, @message, @elipse, @param0, @param1, @param2, @param3, @param4, @param5);
+    DECLARE @msg TSTRING = dsp.Log_FormatMessage2(@procId, @message, @elipse, @param0, @param1, @param2, @param3, @param4, @param5);
 
     -- Manage header
     IF (@isHeader = 1)
-        SET @Msg = dsp.String_ReplaceEnter(N'\n-----------------------\n-- ' + @Msg + N'\n-----------------------');
+        SET @msg = dsp.String_ReplaceEnter(N'\n-----------------------\n-- ' + @msg + N'\n-----------------------');
 
-    -- Check Filter
-    IF (dsp.Log_$CheckFilters(@Msg) = 0)
+    -- Check filter
+    IF (dsp.Log_$CheckFilters(@msg) = 0)
         RETURN 0;
 
     -- Print with Black Color
-    -- PRINT @Msg;
-    RAISERROR(@Msg, 0, 1) WITH NOWAIT; -- force to flush the buffer
+    -- PRINT @msg;
+    RAISERROR(@msg, 0, 1) WITH NOWAIT; -- force to flush the buffer
 END;

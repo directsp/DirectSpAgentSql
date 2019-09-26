@@ -29,16 +29,16 @@ END
 	EXEC dsp.Schema_DropObjects @schemaName = @schemaName, @dropFunctions = 1;
 
 	CREATE TABLE #EnumIdName (ObjectId NVARCHAR(/*Ignore code quality*/ 500),
-		ObjectName NVARCHAR(/*Ignore code quality*/ 500));
-	SET @sql = 'INSERT INTO #EnumIdName (ObjectId, ObjectName) SELECT @KeyColumnName, @TextColumnName FROM @TableSchemaName.@TableName';
+		objectName NVARCHAR(/*Ignore code quality*/ 500));
+	SET @sql = 'INSERT INTO #EnumIdName (ObjectId, objectName) SELECT @KeyColumnName, @TextColumnName FROM @TableSchemaName.@tableName';
 	SET @sql = REPLACE(@sql, '@TableSchemaName', @tableSchemaName);
-	SET @sql = REPLACE(@sql, '@TableName', @tableName);
+	SET @sql = REPLACE(@sql, '@tableName', @tableName);
 	SET @sql = REPLACE(@sql, '@KeyColumnName', @keyColumnName);
 	SET @sql = REPLACE(@sql, '@TextColumnName', @textColumnName);
 	EXEC sys.sp_executesql @stmt = @sql;
 
 	-- Recreate Permissions Functions
-	DECLARE LocalCursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR SELECT E.ObjectId, E.ObjectName FROM #EnumIdName AS E;
+	DECLARE LocalCursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR SELECT E.ObjectId, E.objectName FROM #EnumIdName AS E;
 	OPEN LocalCursor;
 	WHILE (1 = 1)
 	BEGIN

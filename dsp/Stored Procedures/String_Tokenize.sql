@@ -1,23 +1,23 @@
 ﻿CREATE PROCEDURE [dsp].[String_Tokenize]
-	@Expression TSTRING, @Delimeter TSTRING, @Position INT OUTPUT, @Token TSTRING OUTPUT
+	@expression TSTRING, @delimeter TSTRING, @position INT OUTPUT, @token TSTRING OUTPUT
 AS
 BEGIN
-	IF (@Position = 0)
+	IF (@position = 0)
 	BEGIN
-		SET @Token = NULL;
-		RETURN;
+		SET @token = NULL;
+		RETURN 0;
 	END;
 	
-	SET @Delimeter = ISNULL(@Delimeter, '/');
+	SET @delimeter = ISNULL(@delimeter, '/');
 	
-	SET @Position = ISNULL(@Position, 1);
-	DECLARE @DelimiterIndex INT = CHARINDEX(@Delimeter, @Expression, @Position);
-	IF (@DelimiterIndex = 0)
-		SET @DelimiterIndex = LEN(@Expression) - @DelimiterIndex + 1;
+	SET @position = ISNULL(@position, 1);
+	DECLARE @delimiterIndex INT = CHARINDEX(@delimeter, @expression, @position);
+	IF (@delimiterIndex = 0)
+		SET @delimiterIndex = LEN(@expression) - @delimiterIndex + 1;
 
-	SET @Token = SUBSTRING(@Expression, @Position, @DelimiterIndex - @Position);
+	SET @token = SUBSTRING(@expression, @position, @delimiterIndex - @position);
 	
-	SET @Position = @DelimiterIndex + 1;
-	IF (@Position > LEN(@Expression))
-		SET @Position = 0;
+	SET @position = @delimiterIndex + 1;
+	IF (@position > LEN(@expression))
+		SET @position = 0;
 END;

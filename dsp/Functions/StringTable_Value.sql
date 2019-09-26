@@ -1,13 +1,13 @@
 ﻿
-CREATE FUNCTION [dsp].[StringTable_Value] (@StringId TSTRING)
+CREATE FUNCTION [dsp].[StringTable_Value] (@stringId TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
     DECLARE @Value TSTRING;
 
-    SELECT  @Value = ST.StringValue
+    SELECT  @Value = ST.stringValue
       FROM  dsp.StringTable AS ST
-     WHERE  ST.StringId = @StringId;
+     WHERE  ST.stringId = @stringId;
 
     RETURN dsp.String_ReplaceEnter(@Value);
 END;

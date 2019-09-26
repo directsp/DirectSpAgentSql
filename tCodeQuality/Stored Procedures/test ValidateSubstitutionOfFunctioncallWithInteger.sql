@@ -4,61 +4,61 @@ BEGIN
     SET NOCOUNT ON;
     -- Getting Stored Procedures and Functions definition
     EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting Stored Procedures definition';
-    DECLARE Text_Cursor CURSOR FAST_FORWARD FORWARD_ONLY FORWARD_ONLY LOCAL FOR
-    SELECT  PD.SchemaName, PD.ObjectName, PD.Script
+    DECLARE _cursor CURSOR FAST_FORWARD FORWARD_ONLY FORWARD_ONLY LOCAL FOR
+    SELECT  PD.schemaName, PD.objectName, PD.script
       FROM  dsp.Metadata_ProceduresDefination() AS PD
-     WHERE  PD.SchemaName IN ( 'api', 'dbo' );
+     WHERE  PD.schemaName IN ( 'api', 'dbo' );
 
-    OPEN Text_Cursor;
+    OPEN _cursor;
 
-    DECLARE @Script TBIGSTRING;
-    DECLARE @ObjectName TSTRING;
+    DECLARE @script TBIGSTRING;
+    DECLARE @objectName TSTRING;
     DECLARE @schemaName TSTRING;
-    DECLARE @Pattern TSTRING = '/*co' + 'nst.';
+    DECLARE @pattern TSTRING = '/*co' + 'nst.';
 
     WHILE (1 = 1)
     BEGIN
-        FETCH NEXT FROM Text_Cursor
-         INTO @schemaName, @ObjectName, @Script;
+        FETCH NEXT FROM _cursor
+         INTO @schemaName, @objectName, @script;
         IF (@@FETCH_STATUS <> 0)
             BREAK;
 
         -- Removing Space, Tab, line feed
-        SET @Script = dsp.String_RemoveWhitespacesBig(@Script);
+        SET @script = dsp.String_RemoveWhitespacesBig(@script);
 
         -- Cutting out text before /*co+nst
-        DECLARE @StartIndex INT = CHARINDEX(@Pattern, @Script);
-        SET @Script = SUBSTRING(@Script, @StartIndex - 1, (LEN(@Script) - @StartIndex) + 1);
+        DECLARE @startIndex INT = CHARINDEX(@pattern, @script);
+        SET @script = SUBSTRING(@script, @startIndex - 1, (LEN(@script) - @startIndex) + 1);
 
-        IF (CHARINDEX(@Pattern, @Script) = 0)
+        IF (CHARINDEX(@pattern, @script) = 0)
             CONTINUE;
 
         -- Validate Function Id with Corresponding value
-        WHILE (CHARINDEX(@Pattern, @Script) > 0)
+        WHILE (CHARINDEX(@pattern, @script) > 0)
         BEGIN
-            DECLARE @ConstFunctionName TSTRING;
-            DECLARE @ConstValueInFunction INT;
-            DECLARE @ConstValueInScript INT;
-            DECLARE @IsMatch BIT;
-            EXEC tCodeQuality.Private_CompareConstFunctionReturnValueWithScriptValue @Script = @Script OUTPUT, @ConstFunctionName = @ConstFunctionName OUTPUT,
-                @ConstValueInFunction = @ConstValueInFunction OUTPUT, @ConstValueInScript = @ConstValueInScript OUTPUT, @IsMatch = @IsMatch OUTPUT;
+            DECLARE @constFunctionName TSTRING;
+            DECLARE @constValueInFunction INT;
+            DECLARE @constValueInScript INT;
+            DECLARE @isMatch BIT;
+            EXEC tCodeQuality.Private_CompareConstFunctionReturnValueWithScriptValue @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
+                @constValueInFunction = @constValueInFunction OUTPUT, @constValueInScript = @constValueInScript OUTPUT, @isMatch = @isMatch OUTPUT;
 
-            IF (@IsMatch = 0)
+            IF (@isMatch = 0)
             BEGIN
                 DECLARE @message TSTRING;
-                DECLARE @FullObjectName TSTRING = @schemaName + '.' + @ObjectName;
+                DECLARE @FullObjectName TSTRING = @schemaName + '.' + @objectName;
                 EXEC @message = dsp.Formatter_FormatMessage @message = N'ConstValueInFunction({0}) and ConstValueInScript({1}) are inconsistence; the function name is: {2} in the SP: {3}',
-                    @param0 = @ConstValueInFunction, @param1 = @ConstValueInScript, @param2 = @ConstFunctionName, @param3 = @FullObjectName;
-                EXEC tSQLt.Fail @Message0 = @message;
+                    @param0 = @constValueInFunction, @param1 = @constValueInScript, @param2 = @constFunctionName, @param3 = @FullObjectName;
+                EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @message;
             END;
 
-            SET @StartIndex = CHARINDEX(@Pattern, @Script);
-            SET @Script = SUBSTRING(@Script, @StartIndex, (LEN(@Script) - @StartIndex) + 1);
+            SET @startIndex = CHARINDEX(@pattern, @script);
+            SET @script = SUBSTRING(@script, @startIndex, (LEN(@script) - @startIndex) + 1);
         END;
     END;
 
-    CLOSE Text_Cursor;
-    DEALLOCATE Text_Cursor;
+    CLOSE _cursor;
+    DEALLOCATE _cursor;
 END;
 
 

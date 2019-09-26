@@ -2,18 +2,18 @@
 RETURNS TSTRING
 AS
 BEGIN
-	DECLARE @SystemName TSTRING = @TypeName;
+	DECLARE @systemName TSTRING = @TypeName;
 
 	IF EXISTS (SELECT		1
 					FROM	sys.types AS T
-				WHERE	T.name = @SystemName AND T.is_user_defined = 1)
+				WHERE	T.name = @systemName AND T.is_user_defined = 1)
 	BEGIN
-		SELECT	DISTINCT @SystemName = bt.name
+		SELECT	DISTINCT @systemName = bt.name
 		FROM	sys.syscolumns c
 				INNER JOIN sys.systypes st ON st.xusertype = c.xusertype
 				INNER JOIN sys.systypes bt ON bt.xusertype = c.xtype
 		WHERE	st.name = @TypeName;
 	END;
 
-	RETURN @SystemName;
+	RETURN @systemName;
 END;

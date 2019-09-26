@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dsp].[Context_CreateSystem]
-    @SystemContext TCONTEXT OUT
+    @systemContext TCONTEXT OUT
 AS
 BEGIN
-    EXEC dsp.Context_Create @userId = '$', @context = @SystemContext OUT, @isCaptcha = 1;
+    EXEC dsp.Context_Create @userId = '$', @context = @systemContext OUT, @isCaptcha = 1;
 END;

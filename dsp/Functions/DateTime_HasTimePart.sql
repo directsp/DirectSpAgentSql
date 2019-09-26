@@ -1,6 +1,6 @@
-﻿create FUNCTION [dsp].[DateTime_HasTimePart] (@Time DATETIME)
+﻿create FUNCTION [dsp].[DateTime_HasTimePart] (@time DATETIME)
 RETURNS BIT
 AS
 BEGIN
-	RETURN IIF(@Time = CAST(@Time AS DATE), 0, 1);
+	RETURN IIF(@time = CAST(@time AS DATE), 0, 1);
 END;

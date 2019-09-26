@@ -1,9 +1,9 @@
 ﻿CREATE PROC [dsp].[Util_VerifyServerName]
-	@ConfirmServerName TSTRING
+	@confirmServerName TSTRING
 AS
 BEGIN
-	DECLARE @ServerName TSTRING = @@SERVERNAME;
-	IF (@ConfirmServerName IS NULL OR	LOWER(@ConfirmServerName) != LOWER(@@SERVERNAME))
-		EXEC err.ThrowGeneralException @procId = @@PROCID, @message = N'ConfirmServerName must be set to ''{0}''!',
-			@param0 = @ServerName;
+	DECLARE @serverName TSTRING = @@SERVERNAME;
+	IF (@confirmServerName IS NULL OR	LOWER(@confirmServerName) != LOWER(@@SERVERNAME))
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = N'confirmServerName must be set to ''{0}''!',
+			@param0 = @serverName;
 END;

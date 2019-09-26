@@ -1,23 +1,24 @@
 ﻿CREATE PROCEDURE [dsp].[Lock_Create]
-	@ObjectTypeName TSTRING, @ObjectName TSTRING = NULL, @IsTransactionMode BIT = 1, @LockId TSTRING = NULL OUT
+	@objectTypeName TSTRING, @objectName TSTRING = NULL, @isTransactionMode BIT = 1, @lockId TSTRING = NULL OUT
 AS
 BEGIN
-	SET @LockId = N'{}';
-	SET @ObjectName = ISNULL(@ObjectName, '');
-	SET @IsTransactionMode = ISNULL(@IsTransactionMode, 1);
-	DECLARE @LockName TSTRING = @ObjectTypeName + @ObjectName;
-	DECLARE @LockOwner TSTRING = IIF(@IsTransactionMode = 1, 'Transaction', 'Session');
+	SET @lockId = N'{}';
+	SET @objectName = ISNULL(@objectName, '');
+	SET @isTransactionMode = ISNULL(@isTransactionMode, 1);
+	
+	DECLARE @lockName TSTRING = @objectTypeName + @objectName;
+	DECLARE @lockOwner TSTRING = IIF(@isTransactionMode = 1, 'Transaction', 'Session');
 
 	-- Getting Lock
-	DECLARE @Result INT;
-	EXEC @Result = sys.sp_getapplock @Resource = @LockName, @LockMode = 'Exclusive', @LockOwner = @LockOwner;
+	DECLARE @result INT;
+	EXEC @result = sys.sp_getapplock @Resource = @lockName, @LockMode = 'Exclusive', @LockOwner = @lockOwner;
 
 	-- throw error for error result
-	IF (@Result < 0) 
-		EXEC Exception_ThrowGeneral @procId = @@PROCID, @message = N'Get AppLock Error! ErrorNumber: {0}', @param0 = @Result;
+	IF (@result < 0) 
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = N'Get AppLock Error! ErrorNumber: {0}', @param0 = @result;
 
-	SET @LockId = JSON_MODIFY(@LockId, '$.LockOwner', @LockOwner);
-	SET @LockId = JSON_MODIFY(@LockId, '$.LockName', @LockName);
+	SET @lockId = JSON_MODIFY(@lockId, '$.lockOwner', @lockOwner);
+	SET @lockId = JSON_MODIFY(@lockId, '$.lockName', @lockName);
 END;
 
 

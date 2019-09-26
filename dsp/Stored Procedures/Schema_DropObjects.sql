@@ -12,15 +12,15 @@ BEGIN
 	DECLARE @ddlText TSTRING;
 
 	--Drop String Functions
-	DECLARE dropCursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR
+	DECLARE _cursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR
 	SELECT	O.name, O.type
 	FROM	sys.objects AS O
 			INNER JOIN sys.schemas AS S ON S.schema_id = O.schema_id
 	WHERE	S.name = @schemaName
 			AND O.type IN ( 'FN', 'P', 'IF', 'TF' );
 
-	OPEN dropCursor;
-	FETCH NEXT FROM dropCursor
+	OPEN _cursor;
+	FETCH NEXT FROM _cursor
 	INTO @objectName, @objectType;
 	WHILE (@@FETCH_STATUS = 0)
 	BEGIN
@@ -36,10 +36,10 @@ BEGIN
 			EXEC sys.sp_executesql @stmt = @ddlText;
 		END;
 
-		FETCH NEXT FROM dropCursor
+		FETCH NEXT FROM _cursor
 		INTO @objectName, @objectType;
 	END;
-	CLOSE dropCursor;
-	DEALLOCATE dropCursor;
+	CLOSE _cursor;
+	DEALLOCATE _cursor;
 
 END;

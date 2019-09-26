@@ -1,27 +1,28 @@
-﻿CREATE PROCEDURE [tCodeQuality].[test DataAccessMode annotation existance in proc]
+﻿CREATE PROCEDURE [tCodeQuality].[test dataAccessMode annotation existance in proc]
 AS
 BEGIN
     DECLARE @msg TBIGSTRING = --
-            (   SELECT  CHAR(10) + VPD.SchemaName + '.' + VPD.ObjectName
+            (   SELECT  CHAR(10) + VPD.schemaName + '.' + VPD.objectName
                   FROM  dsp.Metadata_ProceduresDefination() AS VPD
-                 WHERE  VPD.Type = 'P' AND  VPD.SchemaName = 'api' AND --
-                        JSON_VALUE(dsp.Metadata_StoreProcedureAnnotation(VPD.SchemaName + '.' + VPD.ObjectName), '$.DataAccessMode') IS NULL
+                 WHERE  VPD.Type = 'P' AND  VPD.schemaName = 'api' AND --
+                        JSON_VALUE(dsp.Metadata_StoreProcedureAnnotation(VPD.schemaName + '.' + VPD.objectName), '$.dataAccessMode') IS NULL
                 FOR XML PATH(''));
 
-    DECLARE @msg2 TBIGSTRING = --
-            (   SELECT  CHAR(10) + VPD.SchemaName + '.' + VPD.ObjectName
+	IF (@msg IS NOT NULL) --		
+        EXEC dsp.Exception_ThrowGeneral @message = @msg;
+
+
+    SET @msg = --
+            (   SELECT  CHAR(10) + VPD.schemaName + '.' + VPD.objectName
                   FROM  dsp.Metadata_ProceduresDefination() AS VPD
-                 WHERE  VPD.Type = 'P' AND  VPD.SchemaName = 'api' --
-                    AND JSON_VALUE(dsp.Metadata_StoreProcedureAnnotation(VPD.SchemaName + '.' + VPD.ObjectName), '$.DataAccessMode') IS NOT NULL --
-                    AND JSON_VALUE(dsp.Metadata_StoreProcedureAnnotation(VPD.SchemaName + '.' + VPD.ObjectName), '$.DataAccessMode') NOT IN ( 'Read', 'Write',
-        'ReadSnapshot' )
+                 WHERE  VPD.Type = 'P' AND  VPD.schemaName = 'api' --
+                    AND JSON_VALUE(dsp.Metadata_StoreProcedureAnnotation(VPD.schemaName + '.' + VPD.objectName), '$.dataAccessMode') IS NOT NULL --
+                    AND JSON_VALUE(dsp.Metadata_StoreProcedureAnnotation(VPD.schemaName + '.' + VPD.objectName), '$.dataAccessMode') NOT IN ( 'read', 'write', 'readSnapshot' )
                 FOR XML PATH(''));
 
-    IF (@msg IS NOT NULL) --		
-        EXEC tSQLt.Fail @Message0 = @msg;
 
-	IF (@msg2 IS NOT NULL)
-	    EXEC tSQLt.Fail @Message0 = N'Procedures with wrong value of DataAccessMode', @Message1 = @msg2
+	IF (@msg IS NOT NULL)
+		EXEC dsp.Exception_ThrowGeneral @message = @msg;
 END;
 
 

@@ -25,9 +25,9 @@ BEGIN
 	-- Set minute if needed
 	IF (CHARINDEX('s', @Format) > 0)
 	BEGIN
-		DECLARE @Seconds INT = @Millisecond / (1 * 1000);
-		SET @Format = REPLACE(@Format, 's', FORMAT(@Seconds, '0#'))
-		SET @Millisecond = @Millisecond - (@Seconds * 1 * 1000)
+		DECLARE @seconds INT = @Millisecond / (1 * 1000);
+		SET @Format = REPLACE(@Format, 's', FORMAT(@seconds, '0#'))
+		SET @Millisecond = @Millisecond - (@seconds * 1 * 1000)
 	END
     
 	-- Set second if needed

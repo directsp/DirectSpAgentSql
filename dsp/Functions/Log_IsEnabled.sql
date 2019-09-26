@@ -8,9 +8,9 @@ BEGIN
     IF (@Log_IsEnabled IS NOT NULL)
         RETURN @Log_IsEnabled;
 
-    SELECT  @Log_IsEnabled = LU.IsEnabled
+    SELECT  @Log_IsEnabled = LU.[isEnabled]
       FROM  dsp.LogUser AS LU
-     WHERE  LU.UserName = SYSTEM_USER;
+     WHERE  LU.[userName] = SYSTEM_USER;
 
     SET @Log_IsEnabled = ISNULL(@Log_IsEnabled, 0);
     EXEC sys.sp_set_session_context 'dsp.Log_IsEnabled', @Log_IsEnabled, @read_only = 0;

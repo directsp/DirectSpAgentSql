@@ -1,31 +1,31 @@
 ﻿CREATE PROC [tCodeQuality].[Private_CompareConstFunctionReturnValueWithScriptValue]
-	@Script TBIGSTRING OUT, @ConstFunctionName TSTRING OUT, @ConstValueInFunction INT OUT, @ConstValueInScript INT OUT, @IsMatch BIT OUT
+	@script TBIGSTRING OUT, @constFunctionName TSTRING OUT, @constValueInFunction INT OUT, @constValueInScript INT OUT, @isMatch BIT OUT
 AS
 BEGIN
-	DECLARE @StartStrCharIndex INT;
-	DECLARE @EndStrCharIndex INT;
-	DECLARE @StartNumPadIndex INT;
-	DECLARE @EndStrNumdIndex INT;
+	DECLARE @startStrCharIndex INT;
+	DECLARE @endStrCharIndex INT;
+	DECLARE @startNumPadIndex INT;
+	DECLARE @endStrNumdIndex INT;
 
-	SET @IsMatch = 0;
-	SET @ConstValueInScript = NULL;
-	SET @ConstValueInFunction = NULL;
+	SET @isMatch = 0;
+	SET @constValueInScript = NULL;
+	SET @constValueInFunction = NULL;
 
 	-- Getting Function Name
-	SET @StartStrCharIndex = CHARINDEX('/*co' + 'nst.', @Script);
-	IF (@StartStrCharIndex = 0)
-		RETURN;
+	SET @startStrCharIndex = CHARINDEX('/*co' + 'nst.', @script);
+	IF (@startStrCharIndex = 0)
+		RETURN 0;
 
-	SET @EndStrCharIndex = CHARINDEX('()*/', @Script, @StartStrCharIndex) + 2;
-	SET @StartStrCharIndex = @StartStrCharIndex + 2;
-	SET @ConstFunctionName = SUBSTRING(@Script, @StartStrCharIndex, @EndStrCharIndex - @StartStrCharIndex);
+	SET @endStrCharIndex = CHARINDEX('()*/', @script, @startStrCharIndex) + 2;
+	SET @startStrCharIndex = @startStrCharIndex + 2;
+	SET @constFunctionName = SUBSTRING(@script, @startStrCharIndex, @endStrCharIndex - @startStrCharIndex);
 	
 	-- Getting Function Value
 	BEGIN TRY
-		SET @Script = SUBSTRING(@Script, @EndStrCharIndex + 2, LEN(@Script));
-		SET @StartNumPadIndex = PATINDEX('%[0-9]%', @Script);
-		SET @EndStrNumdIndex = PATINDEX('%[^0-9]%', @Script);
-		SET @ConstValueInScript = CAST(SUBSTRING(@Script, @StartNumPadIndex, @EndStrNumdIndex - @StartNumPadIndex) AS INT);
+		SET @script = SUBSTRING(@script, @endStrCharIndex + 2, LEN(@script));
+		SET @startNumPadIndex = PATINDEX('%[0-9]%', @script);
+		SET @endStrNumdIndex = PATINDEX('%[^0-9]%', @script);
+		SET @constValueInScript = CAST(SUBSTRING(@script, @startNumPadIndex, @endStrNumdIndex - @startNumPadIndex) AS INT);
 	END TRY
 	BEGIN CATCH
 		EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'ConstFunctionValue has written before ConstFunctionName!';
@@ -33,16 +33,16 @@ BEGIN
 
 	-- Getting Function Id
 	BEGIN TRY
-		DECLARE @SqlQuery TSTRING = 'SET @Id = ' + @ConstFunctionName;
-		EXEC sys.sp_executesql @SqlQuery, N'@Id INT OUTPUT', @ConstValueInFunction OUTPUT;
-		SET @IsMatch = IIF(@ConstValueInFunction = @ConstValueInScript, 1, 0);
+		DECLARE @sqlQuery TSTRING = 'SET @Id = ' + @constFunctionName;
+		EXEC sys.sp_executesql @stmt = @sqlQuery, @params = N'@Id INT OUTPUT', @param1 = @constValueInFunction OUTPUT;
+		SET @isMatch = IIF(@constValueInFunction = @constValueInScript, 1, 0);
 	END TRY
 	BEGIN CATCH
 	END CATCH;
 
-	DECLARE @StartIndex INT = @EndStrCharIndex - @StartStrCharIndex;
+	DECLARE @startIndex INT = @endStrCharIndex - @startStrCharIndex;
 	
-	SET @Script = SUBSTRING(@Script, @StartIndex, (LEN(@Script)))
+	SET @script = SUBSTRING(@script, @startIndex, (LEN(@script)))
 END;
 
 

@@ -1,59 +1,59 @@
 ﻿
 CREATE PROC [dsp].[Setting_PropsSet]
-    @appName TSTRING = N'<notset>', @appVersion TSTRING = N'<notset>', @SystemUserId TSTRING = N'<notset>', @AppUserId TSTRING = N'<notset>',
-    @PaginationDefaultRecordCount INT = -1, @PaginationMaxRecordCount INT = -1, @IsProductionEnvironment INT = -1, @IsUnitTestMode INT = -1,
-    @ConfirmServerName TSTRING = NULL, @MaintenanceMode INT = -1
+    @appName TSTRING = N'<notset>', @appVersion TSTRING = N'<notset>', @systemUserId TSTRING = N'<notset>', @appUserId TSTRING = N'<notset>',
+    @paginationDefaultRecordCount INT = -1, @paginationMaxRecordCount INT = -1, @isProductionEnvironment INT = -1, @isUnitTestMode INT = -1,
+    @confirmServerName TSTRING = NULL, @maintenanceMode INT = -1
 AS
 BEGIN
 
-    IF (dsp.Param_IsSet(@IsProductionEnvironment) = 1)
+    IF (dsp.Param_IsSet(@isProductionEnvironment) = 1)
     BEGIN
-        -- Verify server name if the IsProductionEnvironment is going to unset
+        -- Verify server name if the isProductionEnvironment is going to unset
         DECLARE @OldIsProductionEnvironment INT;
-        EXEC dsp.Setting_Props @IsProductionEnvironment = @OldIsProductionEnvironment OUTPUT;
-        IF (@IsProductionEnvironment = 0 AND @OldIsProductionEnvironment = 1) --
-            EXEC dsp.Util_VerifyServerName @ConfirmServerName = @ConfirmServerName;
+        EXEC dsp.Setting_Props @isProductionEnvironment = @OldIsProductionEnvironment OUTPUT;
+        IF (@isProductionEnvironment = 0 AND @OldIsProductionEnvironment = 1) --
+            EXEC dsp.Util_VerifyServerName @confirmServerName = @confirmServerName;
 
-        -- Update IsProductionEnvironment
+        -- Update isProductionEnvironment
         UPDATE  dsp.Setting
-           SET  IsProductionEnvironment = @IsProductionEnvironment;
+           SET  isProductionEnvironment = @isProductionEnvironment WHERE 1 = 1;
     END;
 
     IF (dsp.Param_IsSet(@appName) = 1)
         UPDATE  dsp.Setting
-           SET  AppName = @appName;
+           SET  appName = @appName WHERE 1 = 1;
 
     IF (dsp.Param_IsSet(@appVersion) = 1)
     BEGIN
-        EXEC dsp.[Setting_$IncreaseAppVersion] @appVersion = @appVersion OUTPUT, @ForceIncrease = 0;
+        EXEC dsp.[Setting_$IncreaseAppVersion] @appVersion = @appVersion OUTPUT, @forceIncrease = 0;
         IF (@appVersion IS NULL) --
-            EXEC err.ThrowGeneralException @procId = @@PROCID, @message = 'AppVersion contains an invalid value!';
+            EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = 'appVersion contains an invalid value!';
         UPDATE  dsp.Setting
-           SET  AppVersion = @appVersion;
+           SET  appVersion = @appVersion WHERE 1 = 1;
     END;
 
-    IF (dsp.Param_IsSet(@PaginationDefaultRecordCount) = 1)
+    IF (dsp.Param_IsSet(@paginationDefaultRecordCount) = 1)
         UPDATE  dsp.Setting
-           SET  PaginationDefaultRecordCount = @PaginationDefaultRecordCount;
+           SET  paginationDefaultRecordCount = @paginationDefaultRecordCount WHERE 1 = 1;
 
-    IF (dsp.Param_IsSet(@PaginationMaxRecordCount) = 1)
-        UPDATE  dsp.Setting
-           SET  PaginationMaxRecordCount = @PaginationMaxRecordCount;
+    IF (dsp.Param_IsSet(@paginationMaxRecordCount) = 1)
+        UPDATE dsp.Setting
+           SET  paginationMaxRecordCount = @paginationMaxRecordCount WHERE 1 = 1;
 
-    IF (dsp.Param_IsSet(@IsUnitTestMode) = 1)
+    IF (dsp.Param_IsSet(@isUnitTestMode) = 1)
         UPDATE  dsp.Setting
-           SET  IsUnitTestMode = @IsUnitTestMode;
+           SET  isUnitTestMode = @isUnitTestMode WHERE 1 = 1;
 
-    IF (dsp.Param_IsSet(@SystemUserId) = 1)
+    IF (dsp.Param_IsSet(@systemUserId) = 1)
         UPDATE  dsp.Setting
-           SET  SystemUserId = @SystemUserId;
+           SET  systemUserId = @systemUserId WHERE 1 = 1;
 
-    IF (dsp.Param_IsSet(@AppUserId) = 1)
+    IF (dsp.Param_IsSet(@appUserId) = 1)
         UPDATE  dsp.Setting
-           SET  AppUserId = @AppUserId;
+           SET  appUserId = @appUserId WHERE 1 = 1;
 
-    IF (dsp.Param_IsSet(@MaintenanceMode) = 1)
+    IF (dsp.Param_IsSet(@maintenanceMode) = 1)
         UPDATE  dsp.Setting
-           SET  MaintenanceMode = @MaintenanceMode;
+           SET  maintenanceMode = @maintenanceMode WHERE 1 = 1;
 
 END;

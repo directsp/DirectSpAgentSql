@@ -1,8 +1,8 @@
 ﻿
 CREATE PROC [dsp].[Validate_CheckNotNull]
-	@procId INT, @ArgumentName TSTRING, @ArgumentValue TSTRING
+	@procId INT, @argumentName TSTRING, @argumentValue TSTRING
 AS
 BEGIN
-	IF (@ArgumentValue IS NULL) --
-		EXEC dsp.[Exception_ThrowInvalidArgument] @procId = @procId, @argumentName = @ArgumentName, @argumentValue = @ArgumentValue;
+	IF (@argumentValue IS NULL) --
+		EXEC dsp.[Exception_ThrowInvalidArgument] @procId = @procId, @argumentName = @argumentName, @argumentValue = @argumentValue;
 END;

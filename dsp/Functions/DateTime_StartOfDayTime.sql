@@ -1,8 +1,8 @@
-﻿CREATE FUNCTION [dsp].[DateTime_StartOfDayTime] (@Time DATETIME)
+﻿CREATE FUNCTION [dsp].[DateTime_StartOfDayTime] (@time DATETIME)
 RETURNS DATETIME
 AS
 BEGIN
-	DECLARE @PreviousDay DATETIME = CAST(CAST(@Time AS DATE) AS DATETIME);
+	DECLARE @PreviousDay DATETIME = CAST(CAST(@time AS DATE) AS DATETIME);
 
 	RETURN @PreviousDay;
 END;

@@ -1,23 +1,26 @@
 ﻿CREATE	PROCEDURE [dsp].[Context_$ValidatePagination]
-	@RecordCount INT OUT, @RecordIndex INT OUT
+	@recordCount INT OUT, @recordIndex INT OUT
 AS
 BEGIN
 	-- Get RecordCount and RecordIndex from Context
-	SET @RecordIndex = ISNULL(@RecordIndex, 0);
+	SET @recordIndex = ISNULL(@recordIndex, 0);
 
-	DECLARE @PaginationMaxRecordCount INT;
-	DECLARE @PaginationDefaultRecordCount INT;
-	EXEC dsp.Setting_Props @PaginationDefaultRecordCount = @PaginationDefaultRecordCount OUTPUT,
-		@PaginationMaxRecordCount = @PaginationMaxRecordCount OUTPUT;
+	DECLARE @paginationMaxRecordCount INT;
+	DECLARE @paginationDefaultRecordCount INT;
+	EXEC dsp.Setting_Props @paginationDefaultRecordCount = @paginationDefaultRecordCount OUTPUT,
+		@paginationMaxRecordCount = @paginationMaxRecordCount OUTPUT;
 
 	-- Set Default
-	IF (dsp.Param_IsSetOrNotNull(@RecordCount) = 0)
-		SET @RecordCount = @PaginationDefaultRecordCount;
+	IF (dsp.Param_IsSetOrNotNull(@recordCount) = 0)
+		SET @recordCount = @paginationDefaultRecordCount;
 
 	-- Set Max
-	IF (@RecordCount = -2)
-		SET @RecordCount = @PaginationMaxRecordCount;
+	IF (@recordCount = -2)
+		SET @recordCount = @paginationMaxRecordCount;
 
-	IF (@RecordCount > @PaginationMaxRecordCount) --
-		EXEC err.ThrowPageSizeTooLarge @procId = @@PROCID;
+	IF (@recordCount > @paginationMaxRecordCount) --
+	BEGIN
+		DECLARE @exceptionId INT = dsp.ExceptionId_PageSizeTooLarge();
+		EXEC dsp.Exception_Throw @procId = @@PROCID, @exceptionId = @exceptionId;
+	END
 END;

@@ -1,7 +1,7 @@
 ﻿CREATE FUNCTION [dsp].[Log_FormatMessage] (
 	@procId INT,
 	@message TSTRING,
-	@Elipsis BIT = 0,
+	@elipsis BIT = 0,
 	@param0 TSTRING = '<notset>',
 	@param1 TSTRING = '<notset>',
 	@param2 TSTRING = '<notset>',
@@ -10,16 +10,16 @@ RETURNS TSTRING
 AS
 BEGIN
 	-- Validate Inputs
-	SET @Elipsis = ISNULL(@Elipsis, 0);
+	SET @elipsis = ISNULL(@elipsis, 0);
 
 	-- Format Message
 	SET @message = dsp.Formatter_FormatMessage(@message, @param0, @param1, @param2, @param3);
 
-	-- Put Elipsis
-	IF (@Elipsis = 1)
+	-- Put elipsis
+	IF (@elipsis = 1)
 	BEGIN
-		DECLARE @LastString TSTRING = SUBSTRING(@message, LEN(@message), 1);
-		IF (@LastString NOT LIKE '[.?!:>;]')
+		DECLARE @lastString TSTRING = SUBSTRING(@message, LEN(@message), 1);
+		IF (@lastString NOT LIKE '[.?!:>;]')
 			SET @message = @message + ' ...';
 	END;
 

@@ -1,15 +1,15 @@
 ﻿CREATE PROCEDURE [dsp].[Log_TraceTime]
-	@Time AS DATETIME OUT, @Tag TSTRING
+	@time AS DATETIME OUT, @tag TSTRING
 AS
 BEGIN
-	SET @Time = ISNULL(@Time, GETDATE());
-	DECLARE @TimeDiff INT = DATEDIFF(MILLISECOND, @Time, GETDATE());
+	SET @time = ISNULL(@time, GETDATE());
+	DECLARE @timeDiff INT = DATEDIFF(MILLISECOND, @time, GETDATE());
 
-	DECLARE @Msg TSTRING;
-	EXEC @Msg = dsp.Log_FormatMessage2 @procId = @@PROCID, @message = '{0}: {1}', @param0 = @Tag, @param1 = @TimeDiff, @Elipsis = 0;
-    RAISERROR(@Msg, 0, 1) WITH NOWAIT; -- force to flush the buffer
+	DECLARE @msg TSTRING;
+	EXEC @msg = dsp.Log_FormatMessage2 @procId = @@PROCID, @message = '{0}: {1}', @param0 = @tag, @param1 = @timeDiff, @elipsis = 0;
+    RAISERROR(@msg, 0, 1) WITH NOWAIT; -- force to flush the buffer
 
-	SET @Time = GETDATE();
+	SET @time = GETDATE();
 END;
 
 

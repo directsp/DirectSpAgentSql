@@ -30,11 +30,10 @@ BEGIN
 	-- make sure there is no invalid Exception Id for general application
 	IF (EXISTS (SELECT		1
 												FROM	dsp.Exception AS E
-												WHERE	E.ExceptionId < 56000))
-		EXEC dsp.Exception_ThrowApp @procId = @@PROCID, @exceptionId = 55001, @message = 'Application exceptionId cannot be less than 56000!';
+												WHERE	E.[exceptionId] < 56000))
+		EXEC dsp.Exception_Throw @procId = @@PROCID, @exceptionId = 55001, @message = 'Application exceptionId cannot be less than 56000!';
 
 	EXEC dsp.[Init_$CreateCommonExceptions];
-	EXEC dsp.[Init_$RecreateExceptionFunctions];
 
 	----------------
 	-- Lookups

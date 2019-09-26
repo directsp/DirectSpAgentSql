@@ -2,7 +2,7 @@
 AS
 BEGIN
     DECLARE @exceptionId  INT = dsp.ExceptionId_General();
-    EXEC dsp.Exception_ThrowApp @procId = @procId, @exceptionId = @exceptionId , @message = @message, @param0 = @param0, @param1 = @param1,
+    EXEC dsp.Exception_Throw @procId = @procId, @exceptionId = @exceptionId , @message = @message, @param0 = @param0, @param1 = @param1,
         @param2 = @param2, @param3 = @param3;
 END
 GO

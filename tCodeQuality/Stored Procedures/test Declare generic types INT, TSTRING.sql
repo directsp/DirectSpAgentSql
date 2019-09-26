@@ -2,41 +2,41 @@
 AS
 BEGIN
 	DECLARE @msg TSTRING;
-	DECLARE @ProcedureName TSTRING;
+	DECLARE @procedureName TSTRING;
 
 	-- Getting list all procedures with pagination
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with api schema';
-	DECLARE @t TABLE (SchemaName TSTRING,
-		ProcedureName TSTRING,
-		Script TBIGSTRING);
+	DECLARE @t TABLE (schemaName TSTRING,
+		procedureName TSTRING,
+		script TBIGSTRING);
 	INSERT INTO @t
-	SELECT	PD.SchemaName, PD.ObjectName, PD.Script
+	SELECT	PD.schemaName, PD.objectName, PD.script
 	FROM	dsp.Metadata_ProceduresDefination() AS PD
-	WHERE	PD.ObjectName NOT IN ('Convert_ToString', 'Convert_ToSqlvariant', 'CRYPT_PBKDF2_VARBINARY_SHA512');
+	WHERE	PD.objectName NOT IN ('Convert_ToString', 'Convert_ToSqlvariant', 'CRYPT_PBKDF2_VARBINARY_SHA512');
 
 	-- Looking for "tinyint and smallint" phrase
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "tinyint and smallint" phrase';
-	SET @ProcedureName = NULL;
-	SELECT	@ProcedureName = SchemaName + '.' + ProcedureName
+	SET @procedureName = NULL;
+	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
-	WHERE	(SchemaName IN ( 'dbo', 'api', 'dsp' )) AND (CHARINDEX('tinyint', Script) > 0 OR	CHARINDEX('smallint', Script) > 0);
-	IF (@ProcedureName IS NOT NULL)
+	WHERE	(schemaName IN ( 'dbo', 'api', 'dsp' )) AND (CHARINDEX('tinyint', script) > 0 OR	CHARINDEX('smallint', script) > 0);
+	IF (@procedureName IS NOT NULL)
 	BEGIN
-		SET @msg = 'Code should not contains SMALLINT or TINYINT in procedure: ' + @ProcedureName;
-		EXEC tSQLt.Fail @Message0 = @msg;
+		SET @msg = 'Code should not contains SMALLINT or TINYINT in procedure: ' + @procedureName;
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
 	END;
 
 	-- Looking for "NVARCHAR(MAX)" phrase
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "NVARCHAR(MAX)" phrase';
-	SET @ProcedureName = NULL;
-	SELECT	@ProcedureName = SchemaName + '.' + ProcedureName
+	SET @procedureName = NULL;
+	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
-	WHERE	(SchemaName IN ( 'dbo', 'api', 'dsp' )) AND (Script LIKE '%VARCHAR([0-9]%' OR Script LIKE '%VARCHAR(MAX)%');
+	WHERE	(schemaName IN ( 'dbo', 'api', 'dsp' )) AND (script LIKE '%VARCHAR([0-9]%' OR script LIKE '%VARCHAR(MAX)%');
 
-	IF (@ProcedureName IS NOT NULL)
+	IF (@procedureName IS NOT NULL)
 	BEGIN
-		SET @msg = 'Code should not contains NVARCHAR(XX) in procedure: ' + @ProcedureName;
-		EXEC tSQLt.Fail @Message0 = @msg;
+		SET @msg = 'Code should not contains NVARCHAR(XX) in procedure: ' + @procedureName;
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
 	END;
 
 END;

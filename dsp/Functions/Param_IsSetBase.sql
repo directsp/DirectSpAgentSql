@@ -1,9 +1,9 @@
 ﻿CREATE	FUNCTION [dsp].[Param_IsSetBase] (@Value SQL_VARIANT,
-	@NullAsNotSet BIT)
+	@nullAsNotSet BIT)
 RETURNS BIT WITH SCHEMABINDING
 AS
 BEGIN
-	IF (@Value IS NULL AND @NullAsNotSet = 1)
+	IF (@Value IS NULL AND @nullAsNotSet = 1)
 		RETURN 0;
 
 	DECLARE @Type NVARCHAR(/*NoCodeChecker*/ 20) = CAST(SQL_VARIANT_PROPERTY(@Value, 'BaseType') AS NVARCHAR(/*NoCodeChecker*/ 20));

@@ -1,14 +1,14 @@
 ﻿CREATE PROCEDURE [dsp].[Log_Filter]
-	@Filter TSTRING = NULL
+	@filter TSTRING = NULL
 AS
 BEGIN
-	SET @Filter = NULLIF(@Filter, '');
+	SET @filter = NULLIF(@filter, '');
 
 	-- remove all old filters
-	EXEC dsp.Log_RemoveFilter @Filter = NULL;
-	IF (@Filter IS NULL)
-		RETURN;
+	EXEC dsp.Log_RemoveFilter @filter = NULL;
+	IF (@filter IS NULL)
+		RETURN 0;
 
 	-- set new filter
-	EXEC dsp.Log_AddFilter @Filter = @Filter, @IsExclude = 0;
+	EXEC dsp.Log_AddFilter @filter = @filter, @isExclude = 0;
 END;

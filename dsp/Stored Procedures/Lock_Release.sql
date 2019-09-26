@@ -1,28 +1,28 @@
 ﻿create PROCEDURE [dsp].[Lock_Release]
-	@LockId TSTRING
+	@lockId TSTRING
 	AS
 BEGIN
 	-- Ignore if no lock obtained
-	IF (@LockId IS NULL)
-		RETURN;
+	IF (@lockId IS NULL)
+		RETURN 0;
 
-	DECLARE @LockName TSTRING = JSON_VALUE(@LockId, '$.LockName');
-	DECLARE @LockOwner TSTRING = JSON_VALUE(@LockId, '$.LockOwner');
+	DECLARE @lockName TSTRING = JSON_VALUE(@lockId, '$.lockName');
+	DECLARE @lockOwner TSTRING = JSON_VALUE(@lockId, '$.lockOwner');
 
 	-- Don't release lock for transaction to prevent release on uncommitted lock
-	IF (@LockOwner = 'Transaction')
+	IF (@lockOwner = 'Transaction')
 	BEGIN
-		SET @LockId = NULL;
-		RETURN;
+		SET @lockId = NULL;
+		RETURN 0;
 	END;
 
 	-- Release the lock
-	DECLARE @Result INT;
-	EXEC @Result = sys.sp_releaseapplock @Resource = @LockName, @LockOwner = @LockOwner;
+	DECLARE @result INT;
+	EXEC @result = sys.sp_releaseapplock @Resource = @lockName, @lockOwner = @lockOwner;
 
 	-- throw error for error result
-	IF (@Result < 0) --
-		EXEC err.ThrowGeneralException @procId = @@PROCID, @message = N'Release AppLock Error! ErrorNumber: {0}', @param0 = @Result;
+	IF (@result < 0) --
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = N'Release AppLock Error! ErrorNumber: {0}', @param0 = @result;
 	
-	SET @LockId = NULL;
+	SET @lockId = NULL;
 END;

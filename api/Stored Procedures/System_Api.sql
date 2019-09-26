@@ -2,12 +2,12 @@
 /*
 #MetaStart
 {
-	"DataAccessMode": "ReadSnapshot"
+	"dataAccessMode": "readSnapshot"
 } 
 #MetaEnd
 */
 CREATE PROCEDURE [api].[System_Api]
-	@context TCONTEXT OUTPUT, @Api TJSON = NULL OUT
+	@context TCONTEXT OUTPUT, @api TJSON = NULL OUT
 WITH EXECUTE AS OWNER
 AS
 BEGIN
@@ -17,5 +17,5 @@ BEGIN
 	-- Any user should have access to this procedure
 
 	-- Call dsp
-	EXEC dsp.System_Api @Api = @Api OUTPUT;
+	EXEC dsp.System_Api @api = @api OUTPUT;
 END;

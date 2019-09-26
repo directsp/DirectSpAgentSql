@@ -1,6 +1,6 @@
-﻿-- @Filter if NULL then all filter will be removed
+﻿-- @filter if NULL then all filter will be removed
 CREATE PROCEDURE [dsp].[Log_RemoveFilter]
-    @Filter TSTRING = NULL
+    @filter TSTRING = NULL
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -9,21 +9,21 @@ BEGIN
         EXEC dsp.Log_Enable;
 
 	-- Remove all filters
-    IF ( @Filter IS NULL )
+    IF ( @filter IS NULL )
     BEGIN
         DELETE  dsp.LogFilterSetting
-        WHERE   UserName = SYSTEM_USER;
+        WHERE   [userName] = SYSTEM_USER;
         PRINT 'LogSystem> All filters have been removed.';
-        RETURN;
+        RETURN 0;
     END;
 	
 	-- Remove the existing filter
-    IF EXISTS ( SELECT 1 FROM dsp.LogFilterSetting AS LFS WHERE LFS.Log_Filter = @Filter AND LFS.UserName = SYSTEM_USER )
+    IF EXISTS ( SELECT 1 FROM dsp.LogFilterSetting AS LFS WHERE LFS.[filter] = @filter AND LFS.[userName] = SYSTEM_USER )
     BEGIN
-        DELETE  LogFilterSetting
-        WHERE   Log_Filter = @Filter AND UserName = SYSTEM_USER;
-        PRINT 'LogSystem> Filter has been removed.';
-        RETURN;
+        DELETE  dsp.LogFilterSetting 
+        WHERE   [filter] = @filter AND [userName] = SYSTEM_USER;
+        PRINT 'LogSystem> filter has been removed.';
+        RETURN 0;
     END;
 	
 	-- Print not-find message

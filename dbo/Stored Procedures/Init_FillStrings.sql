@@ -5,7 +5,7 @@ BEGIN
     SET NOCOUNT ON;
 
 	-- Delclare your application strings here
-	INSERT	dsp.StringTable (StringId, StringValue)
+	INSERT	dsp.StringTable (stringId, stringValue)
 	VALUES 
 		(N'String1', N'string 1'),
 		(N'String2', N'string 2');

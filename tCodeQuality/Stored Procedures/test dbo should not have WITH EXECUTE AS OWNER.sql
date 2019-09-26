@@ -2,30 +2,31 @@
 AS
 BEGIN
 	-- Declaring pattern
-	DECLARE @Pattern_WithExecuteASOwner TSTRING = dsp.String_RemoveWhitespaces('WITH EXECUTE AS OWNER');
-	DECLARE @Pattern_WithExecASOwner TSTRING = dsp.String_RemoveWhitespaces('WITH EXEC AS OWNER');
+	DECLARE @pattern_WithExecuteASOwner TSTRING = dsp.String_RemoveWhitespaces('WITH EXECUTE AS OWNER');
+	DECLARE @pattern_WithExecASOwner TSTRING = dsp.String_RemoveWhitespaces('WITH EXEC AS OWNER');
 	DECLARE @msg TSTRING;
-	DECLARE @ProcedureName TSTRING;
+	DECLARE @procedureName TSTRING;
 
 	-- Getting list all procedures with pagination
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with pagination';
-	DECLARE @t TABLE (SchemaName TSTRING,
-		ProcedureName TSTRING,
-		Script TBIGSTRING);
+	DECLARE @t TABLE (schemaName TSTRING NULL,
+		procedureName TSTRING NULL,
+		script TBIGSTRING NULL);
+
 	INSERT INTO @t
-	SELECT	PD.SchemaName, PD.ObjectName, PD.Script
+	SELECT	PD.schemaName, PD.objectName, PD.script
 	FROM	dsp.Metadata_ProceduresDefination() AS PD
-	WHERE	PD.SchemaName IN ( 'dbo', 'dsp', 'perm' );
+	WHERE	PD.schemaName IN ( 'dbo', 'dsp', 'perm' );
 
-	-- Looking for "With Execute AS Owner" phrase
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "With Execute AS Owner" phrase';
-	SELECT	@ProcedureName = SchemaName + '.' + ProcedureName
+	-- Looking for "With Execute AS owner" phrase
+	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "With Execute AS owner" phrase';
+	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
-	WHERE	CHARINDEX(@Pattern_WithExecuteASOwner, Script) > 0 OR	CHARINDEX(@Pattern_WithExecASOwner, Script) > 0;
+	WHERE	CHARINDEX(@pattern_WithExecuteASOwner, script) > 0 OR	CHARINDEX(@pattern_WithExecASOwner, script) > 0;
 
-	IF (@ProcedureName IS NOT NULL)
+	IF (@procedureName IS NOT NULL)
 	BEGIN
-		SET @msg = '"With Execute AS Owner" phrase was found in procedure: ' + @ProcedureName;
-		EXEC tSQLt.Fail @Message0 = @msg;
+		SET @msg = '"With Execute AS owner" phrase was found in procedure: ' + @procedureName;
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
 	END;
 END;

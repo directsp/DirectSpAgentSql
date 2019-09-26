@@ -4,5 +4,5 @@
 RETURNS TSTRING
 AS
 BEGIN
-	RETURN JSON_VALUE(JSON_VALUE(@ErrorMessage, '$.errorMessage'), '$.ArgumentName');
+	RETURN JSON_VALUE(JSON_VALUE(@ErrorMessage, '$.errorMessage'), '$.argumentName');
 END;

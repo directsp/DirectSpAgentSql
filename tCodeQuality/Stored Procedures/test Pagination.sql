@@ -1,42 +1,42 @@
 ﻿/*
 	One of the following phrase must exits 
-	1) @RecordIndex = @RecordIndex (Means the procedure is a wrapper)
+	1) @recordIndex = @recordIndex (Means the procedure is a wrapper)
 	OR 
-	1) EXEC dbo.Validate_RecordCount @RecordCount = @RecordCount OUT
-	2) OFFSET @RecordIndex ROWS FETCH NEXT @RecordCount ROWS ONLY
+	1) EXEC dbo.Validate_RecordCount @recordCount = @recordCount OUT
+	2) OFFSET @recordIndex ROWS FETCH NEXT @recordCount ROWS ONLY
 */
 CREATE PROCEDURE [tCodeQuality].[test Pagination]
 AS
 BEGIN
 	-- Declaring pattern
-	DECLARE @Pattern_Offset TSTRING = dsp.String_RemoveWhitespaces('OFFSET @RecordIndex ROWS FETCH NEXT @RecordCount ROWS ONLY');
-	DECLARE @Pattern_PageIndex TSTRING = dsp.String_RemoveWhitespaces('@RecordIndex = @RecordIndex');
-	DECLARE @CurrentProcedure TSTRING;
+	DECLARE @pattern_Offset TSTRING = dsp.String_RemoveWhitespaces('OFFSET @recordIndex ROWS FETCH NEXT @recordCount ROWS ONLY');
+	DECLARE @pattern_PageIndex TSTRING = dsp.String_RemoveWhitespaces('@recordIndex = @recordIndex');
 	DECLARE @msg TSTRING;
-	DECLARE @ProcedureName TSTRING;
+	DECLARE @procedureName TSTRING;
 
 	-- Getting list all procedures with pagination
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with pagination';
-	DECLARE @t TABLE (SchemaName TSTRING,
-		ProcedureName TSTRING,
-		Script TBIGSTRING);
+	DECLARE @t TABLE (schemaName TSTRING NULL,
+		procedureName TSTRING NULL,
+		script TBIGSTRING NULL);
+
 	INSERT INTO @t
-	SELECT	PD.SchemaName, PD.ObjectName, PD.Script
+	SELECT	PD.schemaName, PD.objectName, PD.script
 	FROM	dsp.Metadata_ProceduresDefination() AS PD
-	WHERE	CHARINDEX('@RecordIndex', PD.Script) > 0 AND CHARINDEX('@RecordCount', PD.Script) > 0 AND
-			PD.ObjectName NOT IN ( 'Context_ValidatePagination', 'Context_Verify' );
+	WHERE	CHARINDEX('@recordIndex', PD.script) > 0 AND CHARINDEX('@recordCount', PD.script) > 0 AND
+			PD.objectName NOT IN ( 'Context_ValidatePagination', 'Context_Verify' );
 
 
 	-- Checking implementation paging in api and dbo StoreProcedure
 	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Checking implementation paging in api and dbo StoreProcedure';
-	SELECT	@ProcedureName = SchemaName + '.' + ProcedureName
+	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
-	WHERE	(	CHARINDEX(@Pattern_PageIndex, Script) > 0 --  Wrapper Phrase: (@RecordIndex = @RecordIndex) 
-				AND CHARINDEX(@Pattern_Offset, Script) = 0); --ValidatePage size must exists if it not wrapper
+	WHERE	(	CHARINDEX(@pattern_PageIndex, script) > 0 --  Wrapper Phrase: (@recordIndex = @recordIndex) 
+				AND CHARINDEX(@pattern_Offset, script) = 0); --ValidatePage size must exists if it not wrapper
 
-	IF (@ProcedureName IS NOT NULL)
+	IF (@procedureName IS NOT NULL)
 	BEGIN
-		SET @msg = 'Paging is not implemented properly in procedure: ' + @ProcedureName;
-		EXEC tSQLt.Fail @Message0 = @msg;
+		SET @msg = 'Paging is not implemented properly in procedure: ' + @procedureName;
+		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
 	END;
 END;
