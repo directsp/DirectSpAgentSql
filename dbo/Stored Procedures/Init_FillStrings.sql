@@ -7,7 +7,7 @@ BEGIN
 	-- Delclare your application strings here
 	INSERT	dsp.StringTable (stringId, stringValue)
 	VALUES 
-		(N'String1', N'string 1'),
-		(N'String2', N'string 2');
+		(N'string1', N'string 1'),
+		(N'string2', N'string 2');
 
 END
