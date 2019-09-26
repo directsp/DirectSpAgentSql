@@ -4,8 +4,8 @@
 AS
 BEGIN
     -- check is log enbaled (fast)
-    DECLARE @Log_IsEnabled BIT = CAST(SESSION_CONTEXT(N'dsp.Log_IsEnabled') AS BIT);
-    IF (@Log_IsEnabled IS NOT NULL AND   @Log_IsEnabled = 0)
+    DECLARE @log_IsEnabled BIT = CAST(SESSION_CONTEXT(N'dsp.Log_IsEnabled') AS BIT);
+    IF (@log_IsEnabled IS NOT NULL AND   @log_IsEnabled = 0)
         RETURN 0;
 
     -- check is log enbaled

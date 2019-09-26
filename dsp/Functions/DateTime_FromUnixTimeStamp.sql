@@ -1,10 +1,10 @@
 ﻿CREATE FUNCTION [dsp].[DateTime_FromUnixTimeStamp] (
-@UnixTime BIGINT
+@unixTime BIGINT
 )
 RETURNS datetime
 AS
 BEGIN
 
-  RETURN DATEADD(S,@UnixTime,'1970-01-01')
+  RETURN DATEADD(S,@unixTime,'1970-01-01')
 
 END

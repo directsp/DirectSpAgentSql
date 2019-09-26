@@ -1,31 +1,31 @@
-﻿CREATE FUNCTION [dsp].[Formatter_FormatMobileNumber] ( @MobileNumber TSTRING )
+﻿CREATE FUNCTION [dsp].[Formatter_FormatMobileNumber] ( @mobileNumber TSTRING )
 RETURNS TSTRING
 BEGIN
-    SET @MobileNumber = REPLACE(@MobileNumber, ' ', '');
-    SET @MobileNumber = REPLACE(@MobileNumber, '-', '');
-    SET @MobileNumber = REPLACE(@MobileNumber, '.', '');
+    SET @mobileNumber = REPLACE(@mobileNumber, ' ', '');
+    SET @mobileNumber = REPLACE(@mobileNumber, '-', '');
+    SET @mobileNumber = REPLACE(@mobileNumber, '.', '');
     
 	-- 9124445566
-    IF ( LEN(@MobileNumber) = 10 )
-        SET @MobileNumber = '+98' + @MobileNumber;
+    IF ( LEN(@mobileNumber) = 10 )
+        SET @mobileNumber = '+98' + @mobileNumber;
 
 	-- 09124445566
-    IF ( LEN(@MobileNumber) = 11 AND SUBSTRING(@MobileNumber, 1, 1) = '0' )
-        SET @MobileNumber = '+98' + SUBSTRING(@MobileNumber, 2, 10);
+    IF ( LEN(@mobileNumber) = 11 AND SUBSTRING(@mobileNumber, 1, 1) = '0' )
+        SET @mobileNumber = '+98' + SUBSTRING(@mobileNumber, 2, 10);
 
 	-- 989124445566
-    IF ( LEN(@MobileNumber) > 10 AND SUBSTRING(@MobileNumber, 1, 1) <> '+' )
-        SET @MobileNumber = '+' + @MobileNumber;
+    IF ( LEN(@mobileNumber) > 10 AND SUBSTRING(@mobileNumber, 1, 1) <> '+' )
+        SET @mobileNumber = '+' + @mobileNumber;
 
 	-- Remove plus
-    SET @MobileNumber = SUBSTRING(@MobileNumber, 2, LEN(@MobileNumber) - 1);
+    SET @mobileNumber = SUBSTRING(@mobileNumber, 2, LEN(@mobileNumber) - 1);
 
 	-- checking length >=11 amd <=13
-    IF ( LEN(@MobileNumber) NOT BETWEEN 11 AND 13 )
+    IF ( LEN(@mobileNumber) NOT BETWEEN 11 AND 13 )
         RETURN NULL;
 
-    IF ( @MobileNumber LIKE '%[^0-9]%'  )
-        SET @MobileNumber = NULL;
+    IF ( @mobileNumber LIKE '%[^0-9]%'  )
+        SET @mobileNumber = NULL;
 
-    RETURN @MobileNumber;
+    RETURN @mobileNumber;
 END;

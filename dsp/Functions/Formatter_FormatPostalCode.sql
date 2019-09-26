@@ -1,7 +1,7 @@
-﻿CREATE FUNCTION [dsp].[Formatter_FormatPostalCode] (@PostalCode TSTRING)
+﻿CREATE FUNCTION [dsp].[Formatter_FormatPostalCode] (@postalCode TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
-	SET @PostalCode = dsp.Formatter_FormatString(@PostalCode);
-	RETURN IIF(ISNUMERIC(@PostalCode) = 1 AND LEN(@PostalCode) = 10, @PostalCode, NULL);
+	SET @postalCode = dsp.Formatter_FormatString(@postalCode);
+	RETURN IIF(ISNUMERIC(@postalCode) = 1 AND LEN(@postalCode) = 10, @postalCode, NULL);
 END;

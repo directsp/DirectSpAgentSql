@@ -9,9 +9,9 @@ BEGIN
     IF (dsp.Param_IsSet(@isProductionEnvironment) = 1)
     BEGIN
         -- Verify server name if the isProductionEnvironment is going to unset
-        DECLARE @OldIsProductionEnvironment INT;
-        EXEC dsp.Setting_Props @isProductionEnvironment = @OldIsProductionEnvironment OUTPUT;
-        IF (@isProductionEnvironment = 0 AND @OldIsProductionEnvironment = 1) --
+        DECLARE @oldIsProductionEnvironment INT;
+        EXEC dsp.Setting_Props @isProductionEnvironment = @oldIsProductionEnvironment OUTPUT;
+        IF (@isProductionEnvironment = 0 AND @oldIsProductionEnvironment = 1) --
             EXEC dsp.Util_VerifyServerName @confirmServerName = @confirmServerName;
 
         -- Update isProductionEnvironment

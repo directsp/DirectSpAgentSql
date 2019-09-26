@@ -20,7 +20,7 @@ BEGIN
     BEGIN
         FETCH NEXT FROM _cursor
          INTO @schemaName, @objectName, @script;
-        IF (@@FETCH_STATUS <> 0)
+        IF (@@fETCH_STATUS <> 0)
             BREAK;
 
         -- Removing Space, Tab, line feed
@@ -46,9 +46,9 @@ BEGIN
             IF (@isMatch = 0)
             BEGIN
                 DECLARE @message TSTRING;
-                DECLARE @FullObjectName TSTRING = @schemaName + '.' + @objectName;
+                DECLARE @fullObjectName TSTRING = @schemaName + '.' + @objectName;
                 EXEC @message = dsp.Formatter_FormatMessage @message = N'ConstValueInFunction({0}) and ConstValueInScript({1}) are inconsistence; the function name is: {2} in the SP: {3}',
-                    @param0 = @constValueInFunction, @param1 = @constValueInScript, @param2 = @constFunctionName, @param3 = @FullObjectName;
+                    @param0 = @constValueInFunction, @param1 = @constValueInScript, @param2 = @constFunctionName, @param3 = @fullObjectName;
                 EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @message;
             END;
 

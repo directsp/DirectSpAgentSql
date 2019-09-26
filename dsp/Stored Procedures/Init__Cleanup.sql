@@ -47,7 +47,7 @@ BEGIN
 
     -- Read CleanUp
     DECLARE @dataBaseName TSTRING = DB_NAME();
-    EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Cleaning "{1}" database of "{0}"', @param0 = @@SERVERNAME, @param1 = @dataBaseName;
+    EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Cleaning "{1}" database of "{0}"', @param0 = @@sERVERNAME, @param1 = @dataBaseName;
 
     -- CleanUp dspAuth if exists
     IF (dsp.Metadata_IsObjectExists('dspAuth', 'Init_Cleanup', 'P') = 1) EXEC sys.sp_executesql @stmt='EXEC dspAuth.Init_Cleanup';

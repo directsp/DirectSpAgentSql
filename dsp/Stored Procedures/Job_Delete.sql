@@ -13,7 +13,7 @@ BEGIN
 	FETCH NEXT FROM _cursor
 	INTO @jobName;
 
-	WHILE (@@FETCH_STATUS = 0)
+	WHILE (@@fETCH_STATUS = 0)
 	BEGIN
 		BEGIN TRY
 			EXEC msdb.dbo.sp_delete_job @job_name = @jobName;

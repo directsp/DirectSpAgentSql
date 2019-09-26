@@ -1,8 +1,8 @@
 ﻿
 
-CREATE FUNCTION [dsp].[Convert_ToSqlvariant] (@Value TBIGSTRING)
+CREATE FUNCTION [dsp].[Convert_ToSqlvariant] (@value TBIGSTRING)
 RETURNS SQL_VARIANT
 AS
 BEGIN
-	RETURN CAST(@Value AS NVARCHAR(4000));
+	RETURN CAST(@value AS NVARCHAR(4000));
 END;

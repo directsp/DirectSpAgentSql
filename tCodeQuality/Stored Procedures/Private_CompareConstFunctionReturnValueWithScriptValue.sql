@@ -33,8 +33,8 @@ BEGIN
 
 	-- Getting Function Id
 	BEGIN TRY
-		DECLARE @sqlQuery TSTRING = 'SET @Id = ' + @constFunctionName;
-		EXEC sys.sp_executesql @stmt = @sqlQuery, @params = N'@Id INT OUTPUT', @param1 = @constValueInFunction OUTPUT;
+		DECLARE @sqlQuery TSTRING = 'SET @id = ' + @constFunctionName;
+		EXEC sys.sp_executesql @stmt = @sqlQuery, @params = N'@id INT OUTPUT', @param1 = @constValueInFunction OUTPUT;
 		SET @isMatch = IIF(@constValueInFunction = @constValueInScript, 1, 0);
 	END TRY
 	BEGIN CATCH

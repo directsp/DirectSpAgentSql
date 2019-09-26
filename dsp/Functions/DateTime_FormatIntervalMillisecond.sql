@@ -1,40 +1,40 @@
-﻿CREATE FUNCTION [dsp].[DateTime_FormatIntervalMillisecond] (@Millisecond BIGINT,
-    @Format TSTRING)
+﻿CREATE FUNCTION [dsp].[DateTime_FormatIntervalMillisecond] (@millisecond BIGINT,
+    @format TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
 	-- Set default format
-	SET @Format = ISNULL(@Format, N'h:m:s.t')
+	SET @format = ISNULL(@format, N'h:m:s.t')
 
 	-- Set hour if needed
-	IF (CHARINDEX('h', @Format) > 0)
+	IF (CHARINDEX('h', @format) > 0)
 	BEGIN
-		DECLARE @Hours BIGINT = @Millisecond / (3600 * 1000);
-		SET @Format = REPLACE(@Format, 'h', FORMAT(@Hours, '0#'))
-		SET @Millisecond = @Millisecond - (@Hours * 3600 * 1000)
+		DECLARE @hours BIGINT = @millisecond / (3600 * 1000);
+		SET @format = REPLACE(@format, 'h', FORMAT(@hours, '0#'))
+		SET @millisecond = @millisecond - (@hours * 3600 * 1000)
 	END
 	
 	-- Set minute if needed
-	IF (CHARINDEX('m', @Format) > 0)
+	IF (CHARINDEX('m', @format) > 0)
 	BEGIN
-		DECLARE @Minutes BIGINT = @Millisecond / (60 * 1000);
-		SET @Format = REPLACE(@Format, 'm', FORMAT(@Minutes, '0#'))
-		SET @Millisecond = @Millisecond - (@Minutes * 60 * 1000)
+		DECLARE @minutes BIGINT = @millisecond / (60 * 1000);
+		SET @format = REPLACE(@format, 'm', FORMAT(@minutes, '0#'))
+		SET @millisecond = @millisecond - (@minutes * 60 * 1000)
 	END
 
 	-- Set minute if needed
-	IF (CHARINDEX('s', @Format) > 0)
+	IF (CHARINDEX('s', @format) > 0)
 	BEGIN
-		DECLARE @seconds INT = @Millisecond / (1 * 1000);
-		SET @Format = REPLACE(@Format, 's', FORMAT(@seconds, '0#'))
-		SET @Millisecond = @Millisecond - (@seconds * 1 * 1000)
+		DECLARE @seconds INT = @millisecond / (1 * 1000);
+		SET @format = REPLACE(@format, 's', FORMAT(@seconds, '0#'))
+		SET @millisecond = @millisecond - (@seconds * 1 * 1000)
 	END
     
 	-- Set second if needed
-	IF (CHARINDEX('t', @Format) > 0)
-		SET @Format = REPLACE(@Format, 't', FORMAT(@Millisecond, '00#'))
+	IF (CHARINDEX('t', @format) > 0)
+		SET @format = REPLACE(@format, 't', FORMAT(@millisecond, '00#'))
 
-    RETURN @Format
+    RETURN @format
 END;
 
 

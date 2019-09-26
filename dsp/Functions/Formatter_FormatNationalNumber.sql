@@ -1,8 +1,8 @@
 ﻿CREATE FUNCTION [dsp].[Formatter_FormatNationalNumber] (
-	@NationalNumber TSTRING)
+	@nationalNumber TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
-	SET @NationalNumber = REPLACE(dsp.Formatter_FormatString(@NationalNumber), '-', '');
-	RETURN IIF(ISNUMERIC(@NationalNumber) = 1 AND LEN(@NationalNumber) = 10, @NationalNumber, NULL);
+	SET @nationalNumber = REPLACE(dsp.Formatter_FormatString(@nationalNumber), '-', '');
+	RETURN IIF(ISNUMERIC(@nationalNumber) = 1 AND LEN(@nationalNumber) = 10, @nationalNumber, NULL);
 END;

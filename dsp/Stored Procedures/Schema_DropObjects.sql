@@ -1,4 +1,4 @@
-﻿-- @ObjectType Can be 'FN' or 'P'
+﻿-- @objectType Can be 'FN' or 'P'
 CREATE PROC [dsp].[Schema_DropObjects]
 	@schemaName TSTRING, @dropFunctions BIT = 0, @dropProcedures BIT = 0
 AS
@@ -22,7 +22,7 @@ BEGIN
 	OPEN _cursor;
 	FETCH NEXT FROM _cursor
 	INTO @objectName, @objectType;
-	WHILE (@@FETCH_STATUS = 0)
+	WHILE (@@fETCH_STATUS = 0)
 	BEGIN
 		IF (@dropFunctions = 1 AND @objectType IN ('FN', 'IF', 'TF'))
 		BEGIN

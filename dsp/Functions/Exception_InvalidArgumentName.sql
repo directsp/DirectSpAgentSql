@@ -1,8 +1,8 @@
 ﻿CREATE FUNCTION [dsp].[Exception_InvalidArgumentName] (
-	@ErrorMessage TSTRING
+	@errorMessage TSTRING
 )
 RETURNS TSTRING
 AS
 BEGIN
-	RETURN JSON_VALUE(JSON_VALUE(@ErrorMessage, '$.errorMessage'), '$.argumentName');
+	RETURN JSON_VALUE(JSON_VALUE(@errorMessage, '$.errorMessage'), '$.argumentName');
 END;

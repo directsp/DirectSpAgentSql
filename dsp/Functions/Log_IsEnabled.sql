@@ -4,16 +4,16 @@ CREATE FUNCTION [dsp].[Log_IsEnabled] ()
 RETURNS BIT
 AS
 BEGIN
-    DECLARE @Log_IsEnabled BIT = CAST(SESSION_CONTEXT(N'dsp.Log_IsEnabled') AS BIT);
-    IF (@Log_IsEnabled IS NOT NULL)
-        RETURN @Log_IsEnabled;
+    DECLARE @log_IsEnabled BIT = CAST(SESSION_CONTEXT(N'dsp.Log_IsEnabled') AS BIT);
+    IF (@log_IsEnabled IS NOT NULL)
+        RETURN @log_IsEnabled;
 
-    SELECT  @Log_IsEnabled = LU.[isEnabled]
+    SELECT  @log_IsEnabled = LU.[isEnabled]
       FROM  dsp.LogUser AS LU
      WHERE  LU.[userName] = SYSTEM_USER;
 
-    SET @Log_IsEnabled = ISNULL(@Log_IsEnabled, 0);
-    EXEC sys.sp_set_session_context 'dsp.Log_IsEnabled', @Log_IsEnabled, @read_only = 0;
+    SET @log_IsEnabled = ISNULL(@log_IsEnabled, 0);
+    EXEC sys.sp_set_session_context @key = 'dsp.Log_IsEnabled', @value = @log_IsEnabled, @read_only = 0;
 
-    RETURN @Log_IsEnabled;
+    RETURN @log_IsEnabled;
 END;

@@ -17,10 +17,10 @@ BEGIN
 	FETCH NEXT FROM _cursor
 	INTO @tableName;
 
-	WHILE (@@FETCH_STATUS = 0)
+	WHILE (@@fETCH_STATUS = 0)
 	BEGIN
 		IF (@tableName IS NOT NULL) --
-			EXEC sys.sp_tableoption @TableNamePattern = @tableName, @OptionName = 'large value types out of row', @OptionValue = 'ON';
+			EXEC sys.sp_tableoption @TableNamePattern = @tableName, @optionName = 'large value types out of row', @optionValue = 'ON';
 		FETCH NEXT FROM _cursor
 		INTO @tableName;
 	END;

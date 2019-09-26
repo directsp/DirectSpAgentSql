@@ -26,7 +26,7 @@ BEGIN
 	BEGIN
 		FETCH NEXT FROM _cusrsor
 		INTO @tableName, @columnName, @major_id, @minor_id;
-		IF (@@FETCH_STATUS <> 0)
+		IF (@@fETCH_STATUS <> 0)
 			BREAK;
 
 		DECLARE @description TSTRING = NULL

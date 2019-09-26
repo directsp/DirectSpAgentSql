@@ -18,7 +18,7 @@ BEGIN
 
 	-- Release the lock
 	DECLARE @result INT;
-	EXEC @result = sys.sp_releaseapplock @Resource = @lockName, @lockOwner = @lockOwner;
+	EXEC @result = sys.sp_releaseapplock @Resource = @lockName, @LockOwner = @lockOwner;
 
 	-- throw error for error result
 	IF (@result < 0) --

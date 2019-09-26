@@ -1,12 +1,12 @@
 ﻿CREATE FUNCTION [dsp].[Formatter_RemoveLikeInjection] (
-	@Value TSTRING)
+	@value TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
-	SET @Value = dsp.Formatter_FormatString(@Value);
-	SET @Value = REPLACE(@Value, '%', '');
-	SET @Value = REPLACE(@Value, '[', '');
-	SET @Value = REPLACE(@Value, '_', '[_]');
+	SET @value = dsp.Formatter_FormatString(@value);
+	SET @value = REPLACE(@value, '%', '');
+	SET @value = REPLACE(@value, '[', '');
+	SET @value = REPLACE(@value, '_', '[_]');
 
-	RETURN @Value;
+	RETURN @value;
 END;

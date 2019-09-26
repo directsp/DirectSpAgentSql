@@ -8,8 +8,8 @@ CREATE FUNCTION [dsp].[Table_IndexName] (
 RETURNS TSTRING
 AS
 BEGIN
-	DECLARE @IndexName TSTRING;
-	SELECT	@IndexName = ind.name
+	DECLARE @indexName TSTRING;
+	SELECT	@indexName = ind.name
 	FROM		sys.indexes ind
 			INNER JOIN sys.index_columns ic ON ind.object_id = ic.object_id
 										AND ind.index_id = ic.index_id
@@ -20,5 +20,5 @@ BEGIN
 			AND t.name = @tableName
 			AND col.name = @columnName;
 
-	RETURN @IndexName;
+	RETURN @indexName;
 END;

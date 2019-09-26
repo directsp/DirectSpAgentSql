@@ -1,6 +1,6 @@
 ﻿CREATE	FUNCTION [dsp].[Metadata_IsObjectExists] (@schemaName TSTRING,
 	@objectName TSTRING,
-	@TypeName TSTRING)
+	@typeName TSTRING)
 RETURNS BIT
 BEGIN
 
@@ -11,7 +11,7 @@ BEGIN
 AS		S ON O.schema_id = S.schema_id
 	WHERE	S.name = @schemaName --
 		AND O.name = @objectName --
-		AND O.type = @TypeName;
+		AND O.type = @typeName;
 	RETURN @isExist;
 
 END;

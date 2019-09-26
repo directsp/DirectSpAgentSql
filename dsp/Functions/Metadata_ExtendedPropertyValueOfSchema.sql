@@ -3,11 +3,11 @@
 RETURNS SQL_VARIANT
 AS
 BEGIN
-	DECLARE @Value SQL_VARIANT;
+	DECLARE @value SQL_VARIANT;
 
-	SELECT	@Value = value
+	SELECT	@value = value
 	FROM	sys.fn_listextendedproperty(NULL, 'SCHEMA', NULL, NULL, NULL, NULL, NULL)
 	WHERE	objname = @schemaName AND	name = @extendedPropertyName;
 
-	RETURN @Value;
+	RETURN @value;
 END;

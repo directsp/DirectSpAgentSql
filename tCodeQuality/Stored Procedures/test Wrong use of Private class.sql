@@ -22,7 +22,7 @@ BEGIN
 	SET @className = REPLACE(@className, '[', '');
 	DECLARE @msg TSTRING;
 	
-	WHILE (@@FETCH_STATUS = 0)
+	WHILE (@@fETCH_STATUS = 0)
 	BEGIN
 		DECLARE @hasWrongClassName BIT = 0;
 		SELECT @hasWrongClassName = 1

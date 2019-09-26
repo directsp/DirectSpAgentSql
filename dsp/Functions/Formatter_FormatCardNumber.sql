@@ -1,11 +1,11 @@
 ﻿CREATE FUNCTION [dsp].[Formatter_FormatCardNumber] (
-	@CardNumber TSTRING)
+	@cardNumber TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
-	SET @CardNumber = dsp.Formatter_FormatString(@CardNumber);
-	SET @CardNumber = REPLACE(@CardNumber, ' ', '');
-	SET @CardNumber = REPLACE(@CardNumber, '-', '');
-	SET @CardNumber = REPLACE(@CardNumber, '$', '');
-	RETURN IIF(ISNUMERIC(@CardNumber) = 1 AND (LEN(@CardNumber) = 16 OR LEN(@CardNumber) = 20), @CardNumber, NULL);
+	SET @cardNumber = dsp.Formatter_FormatString(@cardNumber);
+	SET @cardNumber = REPLACE(@cardNumber, ' ', '');
+	SET @cardNumber = REPLACE(@cardNumber, '-', '');
+	SET @cardNumber = REPLACE(@cardNumber, '$', '');
+	RETURN IIF(ISNUMERIC(@cardNumber) = 1 AND (LEN(@cardNumber) = 16 OR LEN(@cardNumber) = 20), @cardNumber, NULL);
 END;

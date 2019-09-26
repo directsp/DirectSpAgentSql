@@ -1,29 +1,29 @@
-﻿CREATE	FUNCTION [dsp].[Param_IsSetBase] (@Value SQL_VARIANT,
+﻿CREATE	FUNCTION [dsp].[Param_IsSetBase] (@value SQL_VARIANT,
 	@nullAsNotSet BIT)
 RETURNS BIT WITH SCHEMABINDING
 AS
 BEGIN
-	IF (@Value IS NULL AND @nullAsNotSet = 1)
+	IF (@value IS NULL AND @nullAsNotSet = 1)
 		RETURN 0;
 
-	DECLARE @Type NVARCHAR(/*NoCodeChecker*/ 20) = CAST(SQL_VARIANT_PROPERTY(@Value, 'BaseType') AS NVARCHAR(/*NoCodeChecker*/ 20));
+	DECLARE @type NVARCHAR(/*NoCodeChecker*/ 20) = CAST(SQL_VARIANT_PROPERTY(@value, 'BaseType') AS NVARCHAR(/*NoCodeChecker*/ 20));
 
-	IF (@Type LIKE '%int%' AND CAST(@Value AS INT) = -1)
+	IF (@type LIKE '%int%' AND CAST(@value AS INT) = -1)
 		RETURN 0;
 
-	IF (@Type LIKE '%char%' AND (CAST(@Value AS NVARCHAR(/*NoCodeChecker*/ 10)) = '<notset>' OR CAST(@Value AS NVARCHAR(/*NoCodeChecker*/ 10)) = '<noaccess>'))
+	IF (@type LIKE '%char%' AND (CAST(@value AS NVARCHAR(/*NoCodeChecker*/ 10)) = '<notset>' OR CAST(@value AS NVARCHAR(/*NoCodeChecker*/ 10)) = '<noaccess>'))
 		RETURN 0;
 
-	IF (@Type LIKE '%date%' AND CAST(@Value AS DATETIME) = '1753-01-01')
+	IF (@type LIKE '%date%' AND CAST(@value AS DATETIME) = '1753-01-01')
 		RETURN 0;
 
-	IF (@Type LIKE '%decimal%' AND CAST(@Value AS DECIMAL) = -1)
+	IF (@type LIKE '%decimal%' AND CAST(@value AS DECIMAL) = -1)
 		RETURN 0;
 
-	IF (@Type LIKE '%money%' AND CAST(@Value AS MONEY) = -1)
+	IF (@type LIKE '%money%' AND CAST(@value AS MONEY) = -1)
 		RETURN 0;
 
-	IF (@Type LIKE '%float%' AND CAST(@Value AS FLOAT) = -1)
+	IF (@type LIKE '%float%' AND CAST(@value AS FLOAT) = -1)
 		RETURN 0;
 
 	RETURN 1;

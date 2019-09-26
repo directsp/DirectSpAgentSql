@@ -18,7 +18,7 @@ CREATE FUNCTION @schemaName.@textColumnValue@functionNamePostfix()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN
-	RETURN @KeyColumnValue;  
+	RETURN @keyColumnValue;  
 END
 '	;
 	END;
@@ -30,10 +30,10 @@ END
 
 	CREATE TABLE #EnumIdName (ObjectId NVARCHAR(/*Ignore code quality*/ 500),
 		objectName NVARCHAR(/*Ignore code quality*/ 500));
-	SET @sql = 'INSERT INTO #EnumIdName (ObjectId, objectName) SELECT @KeyColumnName, @TextColumnName FROM @TableSchemaName.@tableName';
+	SET @sql = 'INSERT INTO #EnumIdName (ObjectId, objectName) SELECT @keyColumnName, @TextColumnName FROM @TableSchemaName.@tableName';
 	SET @sql = REPLACE(@sql, '@TableSchemaName', @tableSchemaName);
 	SET @sql = REPLACE(@sql, '@tableName', @tableName);
-	SET @sql = REPLACE(@sql, '@KeyColumnName', @keyColumnName);
+	SET @sql = REPLACE(@sql, '@keyColumnName', @keyColumnName);
 	SET @sql = REPLACE(@sql, '@TextColumnName', @textColumnName);
 	EXEC sys.sp_executesql @stmt = @sql;
 
@@ -44,13 +44,13 @@ END
 	BEGIN
 		FETCH NEXT FROM LocalCursor
 		INTO @keyColumnValue, @textColumnValue;
-		IF (@@FETCH_STATUS <> 0)
+		IF (@@fETCH_STATUS <> 0)
 			BREAK;
 
 		SET @sql = @functionBody;
 
 		SET @sql = REPLACE(@sql, '@textColumnValue', @textColumnValue);
-		SET @sql = REPLACE(@sql, '@KeyColumnValue', @keyColumnValue);
+		SET @sql = REPLACE(@sql, '@keyColumnValue', @keyColumnValue);
 
 		EXEC sys.sp_executesql @stmt = @sql;
 	END;

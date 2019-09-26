@@ -1,7 +1,7 @@
 ﻿-- Create Function String
-CREATE FUNCTION [dsp].[String_ReplaceEnter] (@Value TSTRING)
+CREATE FUNCTION [dsp].[String_ReplaceEnter] (@value TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
-	RETURN REPLACE(@Value, N'\n', CHAR(/*No Codequality Error*/13) + CHAR(/*No Codequality Error*/10));
+	RETURN REPLACE(@value, N'\n', CHAR(/*No Codequality Error*/13) + CHAR(/*No Codequality Error*/10));
 END;

@@ -3,11 +3,11 @@ CREATE FUNCTION [dsp].[StringTable_Value] (@stringId TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
-    DECLARE @Value TSTRING;
+    DECLARE @value TSTRING;
 
-    SELECT  @Value = ST.stringValue
+    SELECT  @value = ST.stringValue
       FROM  dsp.StringTable AS ST
      WHERE  ST.stringId = @stringId;
 
-    RETURN dsp.String_ReplaceEnter(@Value);
+    RETURN dsp.String_ReplaceEnter(@value);
 END;

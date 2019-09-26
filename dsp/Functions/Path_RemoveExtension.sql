@@ -1,6 +1,6 @@
 ﻿CREATE FUNCTION [dsp].[Path_RemoveExtension] (
-	@Path TSTRING)
+	@path TSTRING)
 RETURNS TSTRING
 BEGIN
-	RETURN LEFT(@Path, LEN(@Path) - CHARINDEX('.', REVERSE(@Path)));
+	RETURN LEFT(@path, LEN(@path) - CHARINDEX('.', REVERSE(@path)));
 END;
