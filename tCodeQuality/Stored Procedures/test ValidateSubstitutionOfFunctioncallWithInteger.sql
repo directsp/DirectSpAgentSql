@@ -3,7 +3,6 @@ AS
 BEGIN
     SET NOCOUNT ON;
     -- Getting Stored Procedures and Functions definition
-    EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting Stored Procedures definition';
     DECLARE _cursor CURSOR FAST_FORWARD FORWARD_ONLY FORWARD_ONLY LOCAL FOR
     SELECT  PD.schemaName, PD.objectName, PD.script
       FROM  dsp.Metadata_ProceduresDefination() AS PD
@@ -40,7 +39,7 @@ BEGIN
             DECLARE @constValueInFunction INT;
             DECLARE @constValueInScript INT;
             DECLARE @isMatch BIT;
-            EXEC tCodeQuality.Private_CompareConstFunctionReturnValueWithScriptValue @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
+            EXEC tCodeQuality.[Test_$CompareConstFunctionReturnValueWithScriptValue] @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
                 @constValueInFunction = @constValueInFunction OUTPUT, @constValueInScript = @constValueInScript OUTPUT, @isMatch = @isMatch OUTPUT;
 
             IF (@isMatch = 0)

@@ -1,5 +1,5 @@
 ﻿
-CREATE PROC [tCodeQuality].[Private_ColumnsWithBigintTypes]
+CREATE PROC [tCodeQuality].[Test_$ColumnsWithBigintTypes]
 AS
 BEGIN
     WITH BigIntColumns

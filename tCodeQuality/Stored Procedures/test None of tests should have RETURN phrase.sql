@@ -13,7 +13,7 @@ BEGIN
 		AND CHARINDEX('RETURN', OBJECT_DEFINITION(O.object_id)) > 0 --
 		AND O.name <> 'test None of tests should have RETURN phrase';
 
-	DECLARE @errorMessage TSTRING = @objectName + ' has [RETURN] phrase';
+	DECLARE @errorMessage TSTRING = @objectName + ' has a [RETURN] phrase';
 
 	IF (@objectName IS NOT NULL) --
 		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @errorMessage;

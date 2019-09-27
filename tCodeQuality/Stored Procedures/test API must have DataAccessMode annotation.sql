@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [tCodeQuality].[test dataAccessMode annotation existance in proc]
+﻿CREATE PROCEDURE [tCodeQuality].[test API must have DataAccessMode annotation]
 AS
 BEGIN
     DECLARE @msg TBIGSTRING = --
@@ -24,5 +24,3 @@ BEGIN
 	IF (@msg IS NOT NULL)
 		EXEC dsp.Exception_ThrowGeneral @message = @msg;
 END;
-
-

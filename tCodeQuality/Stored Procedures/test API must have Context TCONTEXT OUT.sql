@@ -9,7 +9,6 @@ BEGIN
 	DECLARE @procedureName TSTRING;
 
 	-- Getting list all procedures with pagination
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with api schema';
 	DECLARE @t TABLE (schemaName TSTRING NULL,
 		procedureName TSTRING NULL,
 		script TBIGSTRING NULL);
@@ -20,7 +19,6 @@ BEGIN
 	WHERE	PD.schemaName = 'api';
 
 	-- Looking for "@context TCONTEXT OUT" phrase
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "@context TCONTEXT OUT" phrase';
 	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
 	WHERE	CHARINDEX(@pattern_Context, script) < 1;

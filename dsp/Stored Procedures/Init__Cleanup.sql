@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Init_$Cleanup]
+﻿CREATE PROCEDURE dsp.[Init_$Cleanup]
     @isProductionEnvironment BIT OUT, @isWithCleanup BIT OUT
 AS
 BEGIN
@@ -50,7 +50,7 @@ BEGIN
     EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'Cleaning "{1}" database of "{0}"', @param0 = @@sERVERNAME, @param1 = @dataBaseName;
 
     -- CleanUp dspAuth if exists
-    IF (dsp.Metadata_IsObjectExists('dspAuth', 'Init_Cleanup', 'P') = 1) EXEC sys.sp_executesql @stmt='EXEC dspAuth.Init_Cleanup';
+    IF (dsp.Metadata_ObjectExists('dspAuth', 'Init_Cleanup', 'P') = 1) EXEC sys.sp_executesql @stmt='EXEC dspAuth.Init_Cleanup';
 
     -- Cleanup dbo
     EXEC dbo.Init_Cleanup;

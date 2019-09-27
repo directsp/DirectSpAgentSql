@@ -114,10 +114,8 @@
     <Build Include="dsp\Functions\Log_FormatMessage2.sql" />
     <Build Include="dsp\Functions\Log_IsEnabled.sql" />
     <Build Include="dsp\Functions\Metadata_ExtendedPropertyValueOfSchema.sql" />
-    <Build Include="dsp\Functions\Metadata_IsObjectExists.sql" />
     <Build Include="dsp\Functions\Metadata_ProceduresDefination.sql" />
     <Build Include="dsp\Functions\Metadata_StoreProcedureAnnotation.sql" />
-    <Build Include="dsp\Functions\Metadata_SystemTypeName.sql" />
     <Build Include="dsp\Functions\Param_IsChanged.sql" />
     <Build Include="dsp\Functions\Param_IsSet.sql" />
     <Build Include="dsp\Functions\Param_IsSetBase.sql" />
@@ -205,12 +203,8 @@
     <Build Include="tCodeQuality\Stored Procedures\test API must have Context TCONTEXT OUT.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test API must have Context_Verify.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test API must have WITH EXECUTE AS OWNER.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test const Functions must have WITH SCHEMABINDING.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test DataAccessMode annotation existance in proc.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test dbo should not have WITH EXECUTE AS OWNER.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Declare BIGINT.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Declare generic types INT, TSTRING.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test description must be nvarchar_max_.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test None of tests should have RETURN phrase.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Pagination.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Relations for ForeignKeys.sql" />
@@ -262,6 +256,14 @@
     <Build Include="api\Stored Procedures\User_CreateOrUpdateByAuthClaims.sql" />
     <Build Include="api\Stored Procedures\System_Api.sql" />
     <Build Include="dsp\Stored Procedures\Exception_ThrowGeneral.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dsp\Functions\Metadata_ObjectExists.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\RunAll.sql" />
+    <Build Include="dbo\User Defined Types\TUSERID.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\test Description must be nvarchar_max_.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\test Const Functions must have WITH SCHEMABINDING.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\test API must have DataAccessMode annotation.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">

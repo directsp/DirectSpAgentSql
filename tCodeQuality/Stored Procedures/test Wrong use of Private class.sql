@@ -1,6 +1,8 @@
 ﻿CREATE PROCEDURE [tCodeQuality].[test Wrong use of Private class]
 AS
 BEGIN
+    SET NOCOUNT ON;
+
 	-- Declaring pattern
 	DECLARE @schemaName TSTRING;
 	DECLARE @objectName TSTRING;

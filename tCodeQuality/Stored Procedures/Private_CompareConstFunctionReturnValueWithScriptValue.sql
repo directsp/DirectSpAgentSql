@@ -1,4 +1,4 @@
-﻿CREATE PROC [tCodeQuality].[Private_CompareConstFunctionReturnValueWithScriptValue]
+﻿CREATE PROC [tCodeQuality].[Test_$CompareConstFunctionReturnValueWithScriptValue]
 	@script TBIGSTRING OUT, @constFunctionName TSTRING OUT, @constValueInFunction INT OUT, @constValueInScript INT OUT, @isMatch BIT OUT
 AS
 BEGIN

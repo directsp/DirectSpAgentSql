@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [tCodeQuality].[test const Functions must have WITH SCHEMABINDING]
+﻿CREATE PROCEDURE [tCodeQuality].[test Const Functions must have WITH SCHEMABINDING]
 AS
 BEGIN
 
@@ -9,7 +9,6 @@ BEGIN
 	DECLARE @functionName TSTRING;
 
 	-- Getting list all procedures with pagination
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all functions with const schema';
 	DECLARE @t TABLE (schemaName TSTRING NULL,
 		FunctionName TSTRING NULL,
 		script TBIGSTRING NULL);
@@ -19,7 +18,6 @@ BEGIN
 	WHERE	PD.schemaName = 'const';
 
 	-- Looking for "@context TCONTEXT OUT" phrase
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "WITH SCHEMABINDING" phrase';
 	SELECT	@functionName = schemaName + '.' + FunctionName
 	FROM	@t
 	WHERE	CHARINDEX(@pattern_Context, script) < 1 AND CHARINDEX('TSTRING', script) = 0;

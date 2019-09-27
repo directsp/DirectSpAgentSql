@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [tCodeQuality].[test dbo should not have WITH EXECUTE AS OWNER]
+﻿CREATE PROCEDURE [tCodeQuality].[test WITH EXECUTE AS OWNER should not exist in non api]
 AS
 BEGIN
 	-- Declaring pattern
@@ -8,7 +8,6 @@ BEGIN
 	DECLARE @procedureName TSTRING;
 
 	-- Getting list all procedures with pagination
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with pagination';
 	DECLARE @t TABLE (schemaName TSTRING NULL,
 		procedureName TSTRING NULL,
 		script TBIGSTRING NULL);
@@ -16,10 +15,9 @@ BEGIN
 	INSERT INTO @t
 	SELECT	PD.schemaName, PD.objectName, PD.script
 	FROM	dsp.Metadata_ProceduresDefination() AS PD
-	WHERE	PD.schemaName IN ( 'dbo', 'dsp', 'perm' );
+	WHERE	PD.schemaName <> 'api';
 
 	-- Looking for "With Execute AS owner" phrase
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "With Execute AS owner" phrase';
 	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
 	WHERE	CHARINDEX(@pattern_WithExecuteASOwner, script) > 0 OR	CHARINDEX(@pattern_WithExecASOwner, script) > 0;

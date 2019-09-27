@@ -7,7 +7,6 @@ BEGIN
     DECLARE @msg TSTRING;
 
     -- Getting list all procedures with pagination
-    EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with pagination';
     DECLARE @t TABLE (schemaName TSTRING NULL,
         procedureName TSTRING  NULL,
         script TBIGSTRING NULL);
@@ -18,7 +17,6 @@ BEGIN
      WHERE  PD.schemaName = 'api';
 
     -- Looking for "With Execute AS owner" phrase
-    EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "With Execute AS owner" phrase';
     SET @msg = (   SELECT   schemaName + '.' + procedureName AS procedureName
                      FROM   @t
                     WHERE   CHARINDEX(@pattern_WithExecuteASOwner, script) = 0 AND  CHARINDEX(@pattern_WithExecASOwner, script) = 0

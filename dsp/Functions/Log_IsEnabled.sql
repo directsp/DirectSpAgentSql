@@ -1,6 +1,6 @@
 ﻿
 
-CREATE FUNCTION [dsp].[Log_IsEnabled] ()
+CREATE FUNCTION dsp.Log_IsEnabled ()
 RETURNS BIT
 AS
 BEGIN
@@ -10,7 +10,7 @@ BEGIN
 
     SELECT  @log_IsEnabled = LU.[isEnabled]
       FROM  dsp.LogUser AS LU
-     WHERE  LU.[userName] = SYSTEM_USER;
+     WHERE  LU.logUserId = SYSTEM_USER;
 
     SET @log_IsEnabled = ISNULL(@log_IsEnabled, 0);
     EXEC sys.sp_set_session_context @key = 'dsp.Log_IsEnabled', @value = @log_IsEnabled, @read_only = 0;

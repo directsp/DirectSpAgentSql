@@ -8,6 +8,8 @@
 CREATE PROCEDURE [tCodeQuality].[test Pagination]
 AS
 BEGIN
+	SET NOCOUNT ON
+
 	-- Declaring pattern
 	DECLARE @pattern_Offset TSTRING = dsp.String_RemoveWhitespaces('OFFSET @recordIndex ROWS FETCH NEXT @recordCount ROWS ONLY');
 	DECLARE @pattern_PageIndex TSTRING = dsp.String_RemoveWhitespaces('@recordIndex = @recordIndex');
@@ -15,7 +17,6 @@ BEGIN
 	DECLARE @procedureName TSTRING;
 
 	-- Getting list all procedures with pagination
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with pagination';
 	DECLARE @t TABLE (schemaName TSTRING NULL,
 		procedureName TSTRING NULL,
 		script TBIGSTRING NULL);
@@ -28,7 +29,6 @@ BEGIN
 
 
 	-- Checking implementation paging in api and dbo StoreProcedure
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Checking implementation paging in api and dbo StoreProcedure';
 	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
 	WHERE	(	CHARINDEX(@pattern_PageIndex, script) > 0 --  Wrapper Phrase: (@recordIndex = @recordIndex) 

@@ -4,7 +4,9 @@
     [stringId]      NVARCHAR (100) NULL,
     [description]   NVARCHAR (MAX) NULL,
     CONSTRAINT [PK_Exception] PRIMARY KEY CLUSTERED ([exceptionId] ASC),
-    CONSTRAINT [FK_Exception_StringTable_stringId] FOREIGN KEY ([stringId]) REFERENCES [dsp].[StringTable] ([stringId])
+    CONSTRAINT [FK_Exception_stringId] FOREIGN KEY ([stringId]) REFERENCES [dsp].[StringTable] ([stringId])
 );
+
+
 
 

@@ -5,17 +5,15 @@ BEGIN
 	DECLARE @procedureName TSTRING;
 
 	-- Getting list all procedures with pagination
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Getting list all procedures with api schema';
-	DECLARE @t TABLE (schemaName TSTRING,
-		procedureName TSTRING,
-		script TBIGSTRING);
+	DECLARE @t TABLE (schemaName TSTRING NULL,
+		procedureName TSTRING NULL,
+		script TBIGSTRING NULL);
 	INSERT INTO @t
 	SELECT	PD.schemaName, PD.objectName, PD.script
 	FROM	dsp.Metadata_ProceduresDefination() AS PD
 	WHERE	PD.objectName NOT IN ('Convert_ToString', 'Convert_ToSqlvariant', 'CRYPT_PBKDF2_VARBINARY_SHA512');
 
 	-- Looking for "tinyint and smallint" phrase
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "tinyint and smallint" phrase';
 	SET @procedureName = NULL;
 	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t
@@ -27,7 +25,6 @@ BEGIN
 	END;
 
 	-- Looking for "NVARCHAR(MAX)" phrase
-	EXEC dsp.Log_Trace @procId = @@PROCID, @message = N'Looking for "NVARCHAR(MAX)" phrase';
 	SET @procedureName = NULL;
 	SELECT	@procedureName = schemaName + '.' + procedureName
 	FROM	@t

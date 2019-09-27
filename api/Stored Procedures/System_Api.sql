@@ -14,7 +14,7 @@ BEGIN
 	SET NOCOUNT ON;
 	EXEC dsp.Context_Verify @context = @context OUT, @procId = @@PROCID;
 
-	-- Any user should have access to this procedure
+	-- All users should have access to this procedure
 
 	-- Call dsp
 	EXEC dsp.System_Api @api = @api OUTPUT;

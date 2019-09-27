@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Log_Enable]
+﻿CREATE PROCEDURE dsp.Log_Enable
     @removeAllFilters AS BIT = 0
 AS
 BEGIN
@@ -8,16 +8,16 @@ BEGIN
     DECLARE @isEnabled BIT;
     SELECT  @isEnabled = LU.[isEnabled]
       FROM  dsp.LogUser AS LU
-     WHERE  LU.[userName] = SYSTEM_USER;
+     WHERE  LU.logUserId = SYSTEM_USER;
 
     -- Set enable flag
     IF (@isEnabled IS NULL)
-        INSERT  dsp.LogUser ([userName], [isEnabled])
+        INSERT  dsp.LogUser (logUserId, [isEnabled])
         VALUES (SYSTEM_USER, 1);
     ELSE
         UPDATE  dsp.LogUser
            SET  [isEnabled] = 1
-         WHERE  [userName] = SYSTEM_USER;
+         WHERE  logUserId = SYSTEM_USER;
 
     -- Remove All old filters
     IF (@removeAllFilters = 1)
