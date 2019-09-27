@@ -198,8 +198,6 @@
     <Build Include="dsp\Tables\LogUser.sql" />
     <Build Include="dsp\Tables\Setting.sql" />
     <Build Include="dsp\Tables\StringTable.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\Private_ColumnsWithBigintTypes.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\Private_CompareConstFunctionReturnValueWithScriptValue.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test API must have Context TCONTEXT OUT.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test API must have Context_Verify.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test API must have WITH EXECUTE AS OWNER.sql" />
@@ -258,12 +256,14 @@
     <Build Include="dsp\Stored Procedures\Exception_ThrowGeneral.sql" />
     <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dsp\Functions\Metadata_ObjectExists.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\RunAll.sql" />
     <Build Include="dbo\User Defined Types\TUSERID.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Description must be nvarchar_max_.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Const Functions must have WITH SCHEMABINDING.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test API must have DataAccessMode annotation.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\Test_RunAll_1.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\Test__CompareConstFunctionReturnValueWithScriptValue_1.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\Test__ColumnsWithBigintTypes_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">
