@@ -44,6 +44,3 @@ BEGIN
 	
 	SET @script = SUBSTRING(@script, @startIndex, (LEN(@script)))
 END;
-
-
-

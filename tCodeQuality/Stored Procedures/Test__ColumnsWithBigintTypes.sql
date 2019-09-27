@@ -15,5 +15,3 @@ BEGIN
      WHERE  dsp.String_RemoveWhitespacesBig(REPLACE(SM.definition, 'INTO', '')) LIKE '%' + BC.columnName + 'INT%' --
         AND S.name <> 'tSQLt';
 END;
-
-
