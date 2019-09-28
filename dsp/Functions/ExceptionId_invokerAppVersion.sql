@@ -1,0 +1,7 @@
+﻿
+CREATE FUNCTION [dsp].[ExceptionId_invokerAppVersion] ()
+RETURNS INT WITH SCHEMABINDING
+AS
+BEGIN
+	RETURN 55026;
+END

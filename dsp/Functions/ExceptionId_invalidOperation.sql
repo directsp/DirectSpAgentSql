@@ -1,0 +1,7 @@
+﻿
+CREATE FUNCTION [dsp].ExceptionId_invalidOperation()
+RETURNS INT WITH SCHEMABINDING
+AS
+BEGIN
+	RETURN 55016;
+END

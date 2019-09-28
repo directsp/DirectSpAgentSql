@@ -1,0 +1,7 @@
+﻿
+CREATE FUNCTION [dsp].ExceptionId_objectAlreadyExists()
+RETURNS INT WITH SCHEMABINDING
+AS
+BEGIN
+	RETURN 55004;
+END
