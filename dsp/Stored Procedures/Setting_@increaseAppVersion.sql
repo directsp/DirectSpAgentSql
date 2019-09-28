@@ -1,4 +1,4 @@
-﻿CREATE PROC [dsp].[Setting_$IncreaseAppVersion]
+﻿CREATE PROC dsp.Setting_@increaseAppVersion
     @appVersion TSTRING OUT, @forceIncrease INT
 AS
 BEGIN

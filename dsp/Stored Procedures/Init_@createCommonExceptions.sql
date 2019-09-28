@@ -15,7 +15,7 @@ BEGIN
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_invalidOperation(), N'InvalidOperation');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_notSupported(), N'NotSupported');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_notImplemented(), N'NotImplemented');
-	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_UserIsDisabled(), N'UserIsDisabled');
+	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_userIsDisabled(), N'UserIsDisabled');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_ambiguous(), N'Ambiguous');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_noOperation(), N'NoOperation');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_invalidCaptcha(), N'InvalidCaptcha');

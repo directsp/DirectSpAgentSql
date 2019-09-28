@@ -54,7 +54,7 @@ BEGIN
 
 
 	-- Configure large fields
-	EXEC dsp.Table_UpdateToUseBlobForFields;
+	EXEC dsp.Table_updateToUseBlobForFields;
 
 	-- Report it is done
 	EXEC dsp.Log_trace @procId = @@PROCID, @message = 'Init has been completed.';

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Context_verify]
+﻿CREATE PROCEDURE dsp.Context_verify
     @context TCONTEXT OUT, @procId INT
 AS
 BEGIN
@@ -77,7 +77,7 @@ BEGIN
         IF (@contextAuthUserId = '$$')
             SET @contextUserId = ISNULL(@appUserId, @systemUserId);
         ELSE
-            EXEC dbo.User_UserIdByAuthUserId @authUserId = @contextAuthUserId, @userId = @contextUserId OUT;
+            EXEC dbo.User_userIdByAuthUserId @authUserId = @contextAuthUserId, @userId = @contextUserId OUT;
     END;
 
     -------------
@@ -87,7 +87,7 @@ BEGIN
         EXEC dsp.Context_propsSet @context = @context OUTPUT, @userId = @contextUserId, @appVersion = @appVersion;
 
     -- Call update context
-    EXEC dbo.Context_Update @context = @context OUTPUT, @procId = @procId;
+    EXEC dbo.Context_update @context = @context OUTPUT, @procId = @procId;
 END;
 
 

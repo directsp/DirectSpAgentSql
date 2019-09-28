@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE dbo.User_UserIdByAuthUserId
+CREATE PROCEDURE dbo.User_userIdByAuthUserId
     @authUserId TSTRING, @userId TUSERID OUT
 AS
 BEGIN

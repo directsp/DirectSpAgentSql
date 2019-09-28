@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].[Context_UserId] (@context TCONTEXT)
+CREATE FUNCTION dsp.Context_userId (@context TCONTEXT)
 RETURNS TSTRING
 AS
 BEGIN

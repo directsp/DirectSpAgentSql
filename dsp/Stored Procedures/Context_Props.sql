@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Context_props]
+﻿CREATE PROCEDURE dsp.Context_props
     @context TCONTEXT OUT, @appName TSTRING = N'<notset>' OUT, @authUserId TSTRING = N'<notset>' OUT, @userId TSTRING = N'<notset>' OUT,
     @audience TSTRING = N'<notset>' OUT, @isCaptcha INT = -1 OUT, @recordCount INT = -1 OUT, @recordIndex INT = -1 OUT,
     @clientVersion TSTRING = N'<notset>' OUT, @invokerAppVersion TSTRING = NULL OUT, @isReadonlyIntent BIT = NULL OUT, @isInvokedByMidware BIT = NULL OUT
@@ -33,7 +33,7 @@ BEGIN
     BEGIN
         SET @recordCount = JSON_VALUE(@invokeOptions, N'$.recordCount');
         SET @recordIndex = JSON_VALUE(@invokeOptions, N'$.recordIndex');
-        EXEC dsp.[Context_$ValidatePagination] @recordCount = @recordCount OUTPUT, @recordIndex = @recordIndex OUTPUT;
+        EXEC dsp.Context_@validatePagination @recordCount = @recordCount OUTPUT, @recordIndex = @recordIndex OUTPUT;
     END;
 
     IF (@invokerAppVersion IS NULL OR   @invokerAppVersion <> -1)

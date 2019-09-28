@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Table_UpdateToUseBlobForFields]
+﻿CREATE PROCEDURE dsp.Table_updateToUseBlobForFields
 AS
 BEGIN
 	DECLARE @tableName TSTRING;

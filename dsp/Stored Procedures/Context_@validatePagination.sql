@@ -1,4 +1,4 @@
-﻿CREATE	PROCEDURE [dsp].[Context_$ValidatePagination]
+﻿CREATE	PROCEDURE dsp.Context_@validatePagination
 	@recordCount INT OUT, @recordIndex INT OUT
 AS
 BEGIN

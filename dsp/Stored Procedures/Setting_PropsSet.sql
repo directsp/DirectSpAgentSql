@@ -1,5 +1,5 @@
 ﻿
-CREATE PROC [dsp].[Setting_propsSet]
+CREATE PROC dsp.Setting_propsSet
     @appName TSTRING = N'<notset>', @appVersion TSTRING = N'<notset>', @systemUserId TSTRING = N'<notset>', @appUserId TSTRING = N'<notset>',
     @paginationDefaultRecordCount INT = -1, @paginationMaxRecordCount INT = -1, @isProductionEnvironment INT = -1, @isUnitTestMode INT = -1,
     @confirmServerName TSTRING = NULL, @maintenanceMode INT = -1
@@ -25,7 +25,7 @@ BEGIN
 
     IF (dsp.Param_isSet(@appVersion) = 1)
     BEGIN
-        EXEC dsp.[Setting_$IncreaseAppVersion] @appVersion = @appVersion OUTPUT, @forceIncrease = 0;
+        EXEC dsp.Setting_@increaseAppVersion @appVersion = @appVersion OUTPUT, @forceIncrease = 0;
         IF (@appVersion IS NULL) --
             EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = 'appVersion contains an invalid value!';
         UPDATE  dsp.Setting

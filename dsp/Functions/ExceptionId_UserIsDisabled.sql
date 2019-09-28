@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_UserIsDisabled()
+CREATE FUNCTION dsp.ExceptionId_userIsDisabled()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

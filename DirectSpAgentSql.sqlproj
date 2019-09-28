@@ -79,7 +79,6 @@
     <Build Include="dsp\Functions\Const_maintenanceMode_block.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_none.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_readonly.sql" />
-    <Build Include="dsp\Functions\Context_UserId.sql" />
     <Build Include="dsp\Functions\Convert_binaryFromBase64.sql" />
     <Build Include="dsp\Functions\Convert_binaryToBase64.sql" />
     <Build Include="dsp\Functions\Convert_toSqlvariant.sql" />
@@ -135,7 +134,6 @@
     <Build Include="dsp\Stored Procedures\Audit_error.sql" />
     <Build Include="dsp\Stored Procedures\Audit_trace.sql" />
     <Build Include="dsp\Stored Procedures\Audit_warning.sql" />
-    <Build Include="dsp\Stored Procedures\Context__ValidatePagination.sql" />
     <Build Include="dsp\Stored Procedures\Context_create.sql" />
     <Build Include="dsp\Stored Procedures\Context_createSystem.sql" />
     <Build Include="dsp\Stored Procedures\Context_props.sql" />
@@ -167,14 +165,12 @@
     <Build Include="dsp\Stored Procedures\SetIfChanged_money.sql" />
     <Build Include="dsp\Stored Procedures\SetIfChanged_string.sql" />
     <Build Include="dsp\Stored Procedures\SetIfChanged_time.sql" />
-    <Build Include="dsp\Stored Procedures\Setting__IncreaseAppVersion.sql" />
     <Build Include="dsp\Stored Procedures\Setting_props.sql" />
     <Build Include="dsp\Stored Procedures\Setting_propsSet.sql" />
     <Build Include="dsp\Stored Procedures\String_tokenize.sql" />
     <Build Include="dsp\Stored Procedures\Synonym_create.sql" />
     <Build Include="dsp\Stored Procedures\System_api.sql" />
     <Build Include="dsp\Stored Procedures\Table_compareData.sql" />
-    <Build Include="dsp\Stored Procedures\Table_UpdateToUseBlobForFields.sql" />
     <Build Include="dsp\Stored Procedures\Exception_throwAccessDeniedOrObjectNotExists.sql" />
     <Build Include="dsp\Stored Procedures\Exception_throw.sql" />
     <Build Include="dsp\Stored Procedures\Exception_throwJson.sql" />
@@ -216,7 +212,6 @@
     <Build Include="dsp\Functions\ExceptionId_batchIsNotAllowed.sql" />
     <Build Include="dsp\Functions\ExceptionId_authUserNotFound.sql" />
     <Build Include="dsp\Functions\ExceptionId_ValidationError.sql" />
-    <Build Include="dsp\Functions\ExceptionId_UserIsDisabled.sql" />
     <Build Include="dsp\Functions\ExceptionId_pageSizeTooLarge.sql" />
     <Build Include="dsp\Functions\ExceptionId_objectIsInUse.sql" />
     <Build Include="dsp\Functions\ExceptionId_objectAlreadyExists.sql" />
@@ -231,7 +226,6 @@
     <Build Include="dsp\Functions\ExceptionId_ambiguous.sql" />
     <Build Include="dsp\Functions\ExceptionId_accessDeniedOrObjectNotExists.sql" />
     <Build Include="dbo\Tables\Setting.sql" />
-    <Build Include="dbo\Stored Procedures\User_UserIdByAuthUserId.sql" />
     <Build Include="dbo\Stored Procedures\Setting_propsSet.sql" />
     <Build Include="dbo\Stored Procedures\Setting_props.sql" />
     <Build Include="dbo\Stored Procedures\Init_fillStrings.sql" />
@@ -239,7 +233,6 @@
     <Build Include="dbo\Stored Procedures\Init_fillExceptions.sql" />
     <Build Include="dbo\Stored Procedures\Init_fillData.sql" />
     <Build Include="dbo\Stored Procedures\Init_cleanup.sql" />
-    <Build Include="dbo\Stored Procedures\Context_Update.sql" />
     <Build Include="api\Stored Procedures\User_createOrUpdateByAuthClaims.sql" />
     <Build Include="api\Stored Procedures\System_api.sql" />
     <Build Include="dsp\Stored Procedures\Exception_throwGeneral.sql" />
@@ -261,6 +254,13 @@
     <Build Include="dsp\Stored Procedures\Init_%40initSettings.sql" />
     <Build Include="dsp\Stored Procedures\Init_%40createCommonExceptions.sql" />
     <Build Include="dsp\Stored Procedures\Init_%40cleanup.sql" />
+    <Build Include="dsp\Functions\ExceptionId_userIsDisabled.sql" />
+    <Build Include="dsp\Functions\Context_userId.sql" />
+    <Build Include="dsp\Stored Procedures\Table_updateToUseBlobForFields.sql" />
+    <Build Include="dsp\Stored Procedures\Setting_%40increaseAppVersion.sql" />
+    <Build Include="dsp\Stored Procedures\Context_%40validatePagination.sql" />
+    <Build Include="dbo\Stored Procedures\User_userIdByAuthUserId.sql" />
+    <Build Include="dbo\Stored Procedures\Context_update.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">
