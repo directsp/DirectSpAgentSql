@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Convert_ToString] (@value SQL_VARIANT)
+﻿CREATE FUNCTION [dsp].[Convert_toString] (@value SQL_VARIANT)
 RETURNS TSTRING
 BEGIN
 	RETURN CAST(@value AS NVARCHAR(4000));

@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Metadata_ExtendedPropertyValueOfSchema] (@schemaName TSTRING,
+﻿CREATE FUNCTION [dsp].[Metadata_extendedPropertyValueOfSchema] (@schemaName TSTRING,
 	@extendedPropertyName TSTRING)
 RETURNS SQL_VARIANT
 AS

@@ -3,11 +3,11 @@
 -- String not set value: <notset>
 -- Int not set value: -1
 -- datetime not set value: '1753-01-01
-CREATE FUNCTION [dsp].[Param_IsSetOrNotNullString] (
+CREATE FUNCTION [dsp].[Param_isSetOrNotNullString] (
 	@value TSTRING
 )
 RETURNS BIT
 AS
 BEGIN
-	RETURN IIF(@value IS NULL OR dsp.Param_IsSetString(@value) = 0, 0, 1);
+	RETURN IIF(@value IS NULL OR dsp.Param_isSetString(@value) = 0, 0, 1);
 END;

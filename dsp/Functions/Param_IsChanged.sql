@@ -1,6 +1,6 @@
 ﻿
 --Check if a parameter has been updated or not
-CREATE FUNCTION [dsp].[Param_IsChanged] (
+CREATE FUNCTION dsp.Param_isChanged (
 	@oldValue SQL_VARIANT,
 	@newValue SQL_VARIANT,
 	@nullAsNotSet BIT
@@ -8,5 +8,5 @@ CREATE FUNCTION [dsp].[Param_IsChanged] (
 RETURNS BIT
 AS
 BEGIN
-	RETURN IIF(dsp.Param_IsSetBase(@newValue, @nullAsNotSet) = 1 AND dsp.Util_IsEqual(@oldValue, @newValue) = 0, 1, 0);
+	RETURN IIF(dsp.Param_isSetBase(@newValue, @nullAsNotSet) = 1 AND dsp.Util_equals(@oldValue, @newValue) = 0, 1, 0);
 END;

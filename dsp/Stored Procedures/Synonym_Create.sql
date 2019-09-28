@@ -1,4 +1,4 @@
-﻿CREATE PROC [dsp].[Synonym_Create]
+﻿CREATE PROC [dsp].[Synonym_create]
 	@schemaName TSTRING, @synonymName TSTRING, @objectName TSTRING
 AS
 BEGIN

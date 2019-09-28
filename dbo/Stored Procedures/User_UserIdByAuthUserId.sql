@@ -1,6 +1,6 @@
 ﻿
 CREATE PROCEDURE dbo.User_UserIdByAuthUserId
-    @authUserId INT, @userId TSTRING OUT
+    @authUserId TSTRING, @userId TUSERID OUT
 AS
 BEGIN
     SET @userId = NULL;
@@ -10,7 +10,7 @@ BEGIN
 
     IF (@userId IS NULL)
 	BEGIN
-		DECLARE @exceptionId INT = dsp.ExceptionId_AuthUserNotFound();
-        EXEC dsp.Exception_Throw @procId = @@PROCID, @exceptionId = @exceptionId, @message = 'AuthUserId: {0}', @param0 = @authUserId;
+		DECLARE @exceptionId INT = dsp.ExceptionId_authUserNotFound();
+        EXEC dsp.Exception_throw @procId = @@PROCID, @exceptionId = @exceptionId, @message = 'AuthUserId: {0}', @param0 = @authUserId;
 	END
 END;

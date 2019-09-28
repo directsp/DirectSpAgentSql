@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Path_RemoveExtension] (
+﻿CREATE FUNCTION [dsp].[Path_removeExtension] (
 	@path TSTRING)
 RETURNS TSTRING
 BEGIN

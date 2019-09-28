@@ -1,4 +1,4 @@
-﻿CREATE	FUNCTION [dsp].[Param_IsSetBase] (@value SQL_VARIANT,
+﻿CREATE	FUNCTION [dsp].[Param_isSetBase] (@value SQL_VARIANT,
 	@nullAsNotSet BIT)
 RETURNS BIT WITH SCHEMABINDING
 AS

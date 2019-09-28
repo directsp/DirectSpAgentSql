@@ -13,8 +13,8 @@ BEGIN
 	DECLARE _cursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR --
 	SELECT	PD.schemaName, PD.objectName, REPLACE(REPLACE(REPLACE(PD.script, CHAR(10), ''), CHAR(13), ''), CHAR(9), ' '), --
 		SUBSTRING(PD.objectName, 1, CHARINDEX('_', PD.objectName) - 1) AS ClassName
-	FROM	dsp.Metadata_ProceduresDefination() AS PD
-	WHERE	PD.objectName NOT LIKE '%test%' AND CHARINDEX('_', PD.objectName) > 0 AND	CHARINDEX('_$', PD.script) > 0 AND	CHARINDEX('_$', PD.objectName) = 0;
+	FROM	dsp.Metadata_proceduresDefination() AS PD
+	WHERE	PD.objectName NOT LIKE '%test%' AND CHARINDEX('_', PD.objectName) > 0 AND	CHARINDEX('_@', PD.script) > 0 AND	CHARINDEX('_@', PD.objectName) = 0;
 
 	OPEN _cursor;
 
@@ -29,11 +29,11 @@ BEGIN
 		DECLARE @hasWrongClassName BIT = 0;
 		SELECT @hasWrongClassName = 1
 		FROM	STRING_SPLIT(@script, ' ') AS SS
-		WHERE	CHARINDEX('_$', SS.value) > 0 AND	REPLACE(SS.value, '[', '') NOT LIKE '%.' + @className + '_$%';
+		WHERE	CHARINDEX('_@', SS.value) > 0 AND	REPLACE(SS.value, '[', '') NOT LIKE '%.' + @className + '_@%';
 
-		EXEC @msg = dsp.Formatter_FormatMessage @message = 'objectName: [{0}].[{1}]', @param0 = @schemaName, @param1 = @objectName;
+		EXEC @msg = dsp.Formatter_formatMessage @message = 'objectName: [{0}].[{1}]', @param0 = @schemaName, @param1 = @objectName;
 		IF (@hasWrongClassName = 1) --
-			EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
+			EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
 
 		-- fetch next record
 		FETCH NEXT FROM _cursor

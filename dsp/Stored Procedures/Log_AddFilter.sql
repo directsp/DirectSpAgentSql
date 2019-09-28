@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dsp.Log_AddFilter
+﻿CREATE PROCEDURE dsp.Log_addFilter
     @filter TSTRING = NULL,
     @isExclude BIT = 0
 AS
@@ -7,8 +7,8 @@ BEGIN
 	SET @isExclude = ISNULL(@isExclude, 0);
 
 	-- Enable the Log System
-	IF (dsp.Log_IsEnabled() = 0)
-		EXEC dsp.Log_Enable;
+	IF (dsp.Log_isEnabled() = 0)
+		EXEC dsp.Log_enable;
 	
 	-- Clear Filters
 	IF (@filter IS NULL AND @isExclude = 1)

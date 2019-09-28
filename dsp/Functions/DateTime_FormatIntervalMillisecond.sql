@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[DateTime_FormatIntervalMillisecond] (@millisecond BIGINT,
+﻿CREATE FUNCTION [dsp].[DateTime_formatIntervalMillisecond] (@millisecond BIGINT,
     @format TSTRING)
 RETURNS TSTRING
 AS

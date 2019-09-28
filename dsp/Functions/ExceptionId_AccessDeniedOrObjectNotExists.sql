@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_AccessDeniedOrObjectNotExists()
+CREATE FUNCTION [dsp].ExceptionId_accessDeniedOrObjectNotExists()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

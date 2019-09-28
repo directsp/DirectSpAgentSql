@@ -1,12 +1,12 @@
 ﻿-- @filter if NULL then all filter will be removed
-CREATE PROCEDURE dsp.Log_RemoveFilter
+CREATE PROCEDURE dsp.Log_removeFilter
     @filter TSTRING = NULL
 AS
 BEGIN
 	SET NOCOUNT ON;
 	-- Enable the Log System
-    IF ( dsp.Log_IsEnabled() = 0 )
-        EXEC dsp.Log_Enable;
+    IF ( dsp.Log_isEnabled() = 0 )
+        EXEC dsp.Log_enable;
 
 	-- Remove all filters
     IF ( @filter IS NULL )

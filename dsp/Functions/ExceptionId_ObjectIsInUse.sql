@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_ObjectIsInUse()
+CREATE FUNCTION [dsp].ExceptionId_objectIsInUse()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

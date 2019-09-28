@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Metadata_StoreProcedures]
+﻿CREATE PROCEDURE [dsp].[Metadata_storeProcedures]
     @api TJSON OUT
 AS
 BEGIN
@@ -19,11 +19,11 @@ BEGIN
         CAST((   SELECT [Procedure].schemaName, [Procedure].name AS procedureName, Params.paramName, Params.isOutput, Params.systemTypeName,
                      Params.userTypeName, Params.length AS length, [Procedure].ExtendedProps AS ExtendedProps
                    FROM (   SELECT  [Procedure].object_id, [Schema].name AS schemaName, [Procedure].name,
-                                JSON_QUERY(dsp.Metadata_StoreProcedureAnnotation([Schema].name + '.' + [Procedure].name), '$') AS ExtendedProps
+                                JSON_QUERY(dsp.Metadata_storeProcedureAnnotation([Schema].name + '.' + [Procedure].name), '$') AS ExtendedProps
                               FROM  sys.procedures AS [Procedure]
                                     INNER JOIN sys.schemas AS [Schema] ON [Schema].schema_id = [Procedure].schema_id) AS [Procedure]
                         INNER JOIN @params AS Params ON Params.object_id = [Procedure].object_id
-                  WHERE --dsp.Metadata_ExtendedPropertyValueOfSchema([Procedure].schemaName, @extendedPropertyName) = 1 OR	
+                  WHERE --dsp.Metadata_extendedPropertyValueOfSchema([Procedure].schemaName, @extendedPropertyName) = 1 OR	
                      [Procedure].schemaName = 'api'
                   ORDER BY [Procedure].name
                  FOR JSON AUTO) AS NVARCHAR(/*NoCodeQuality*/ MAX));

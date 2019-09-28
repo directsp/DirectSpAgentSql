@@ -2,8 +2,8 @@
 AS
 BEGIN
     -- Declaring pattern
-    DECLARE @pattern_WithExecuteASOwner TSTRING = dsp.String_RemoveWhitespaces('WITH EXECUTE AS OWNER');
-    DECLARE @pattern_WithExecASOwner TSTRING = dsp.String_RemoveWhitespaces('WITH EXEC AS OWNER');
+    DECLARE @pattern_withExecuteASOwner TSTRING = dsp.String_removeWhitespaces('WITH EXECUTE AS OWNER');
+    DECLARE @pattern_withExecASOwner TSTRING = dsp.String_removeWhitespaces('WITH EXEC AS OWNER');
     DECLARE @msg TSTRING;
 
     -- Getting list all procedures with pagination
@@ -12,18 +12,18 @@ BEGIN
         script TBIGSTRING NULL);
 
     INSERT INTO @t
-    SELECT  PD.schemaName, PD.objectName AS procedureName, dsp.String_RemoveWhitespacesBig(PD.script)
-      FROM  dsp.Metadata_ProceduresDefination() AS PD
+    SELECT  PD.schemaName, PD.objectName AS procedureName, dsp.String_removeWhitespacesBig(PD.script)
+      FROM  dsp.Metadata_proceduresDefination() AS PD
      WHERE  PD.schemaName = 'api';
 
     -- Looking for "With Execute AS owner" phrase
     SET @msg = (   SELECT   schemaName + '.' + procedureName AS procedureName
                      FROM   @t
-                    WHERE   CHARINDEX(@pattern_WithExecuteASOwner, script) = 0 AND  CHARINDEX(@pattern_WithExecASOwner, script) = 0
+                    WHERE   CHARINDEX(@pattern_withExecuteASOwner, script) = 0 AND  CHARINDEX(@pattern_withExecASOwner, script) = 0
                    FOR JSON AUTO);
 
     IF (@msg IS NOT NULL) --
-        EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
+        EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
 END;
 
 

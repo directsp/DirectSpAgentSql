@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[ExceptionId_InvalidParamSignature] ()
+﻿CREATE FUNCTION [dsp].[ExceptionId_invalidParamSignature] ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Metadata_ProceduresDefination] ()
+﻿CREATE FUNCTION [dsp].[Metadata_proceduresDefination] ()
 RETURNS TABLE
 AS
 RETURN SELECT	S.name AS schemaName, O.name AS objectName, O.type AS Type, OBJECT_DEFINITION(O.object_id) AS script

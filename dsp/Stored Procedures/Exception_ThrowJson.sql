@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].Exception_ThrowJson
+﻿CREATE PROCEDURE [dsp].Exception_throwJson
 	@exception TJSON
 AS
 BEGIN

@@ -2,7 +2,7 @@
 -- 0: Ok
 -- 1: Index not exists
 -- 2: IndexName is incorrect 
-CREATE FUNCTION [dsp].[Table_IndexName] (
+CREATE FUNCTION [dsp].[Table_indexName] (
 	@tableName TSTRING,
 	@columnName TSTRING)
 RETURNS TSTRING

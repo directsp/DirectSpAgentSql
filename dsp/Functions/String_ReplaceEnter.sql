@@ -1,5 +1,5 @@
 ﻿-- Create Function String
-CREATE FUNCTION [dsp].[String_ReplaceEnter] (@value TSTRING)
+CREATE FUNCTION [dsp].[String_replaceEnter] (@value TSTRING)
 RETURNS TSTRING
 AS
 BEGIN

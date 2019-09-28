@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Util_CreateRandomString]
+﻿CREATE PROCEDURE [dsp].[Util_createRandomString]
     @length INT,
     @includeLetter BIT = 1 ,
     @includeDigit BIT = 1 ,

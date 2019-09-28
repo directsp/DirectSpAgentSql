@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_BatchIsNotAllowed ()
+CREATE FUNCTION [dsp].ExceptionId_batchIsNotAllowed ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

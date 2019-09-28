@@ -10,8 +10,8 @@ BEGIN
 		script TBIGSTRING NULL);
 	INSERT INTO @t
 	SELECT	PD.schemaName, PD.objectName, PD.script
-	FROM	dsp.Metadata_ProceduresDefination() AS PD
-	WHERE	PD.objectName NOT IN ('Convert_ToString', 'Convert_ToSqlvariant', 'CRYPT_PBKDF2_VARBINARY_SHA512');
+	FROM	dsp.Metadata_proceduresDefination() AS PD
+	WHERE	PD.objectName NOT IN ('Convert_toString', 'Convert_toSqlvariant', 'CRYPT_PBKDF2_VARBINARY_SHA512');
 
 	-- Looking for "tinyint and smallint" phrase
 	SET @procedureName = NULL;
@@ -21,7 +21,7 @@ BEGIN
 	IF (@procedureName IS NOT NULL)
 	BEGIN
 		SET @msg = 'Code should not contains SMALLINT or TINYINT in procedure: ' + @procedureName;
-		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
+		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
 	END;
 
 	-- Looking for "NVARCHAR(MAX)" phrase
@@ -33,7 +33,7 @@ BEGIN
 	IF (@procedureName IS NOT NULL)
 	BEGIN
 		SET @msg = 'Code should not contains NVARCHAR(XX) in procedure: ' + @procedureName;
-		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
+		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
 	END;
 
 END;

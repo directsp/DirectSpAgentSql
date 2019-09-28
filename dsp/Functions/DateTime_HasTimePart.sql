@@ -1,4 +1,4 @@
-﻿create FUNCTION [dsp].[DateTime_HasTimePart] (@time DATETIME)
+﻿create FUNCTION [dsp].[DateTime_hasTimePart] (@time DATETIME)
 RETURNS BIT
 AS
 BEGIN

@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].[ExceptionId_InvokerAppVersion] ()
+CREATE FUNCTION [dsp].[ExceptionId_invokerAppVersion] ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

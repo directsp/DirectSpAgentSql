@@ -1,6 +1,6 @@
 ﻿
 -- Create Procedure RecreatePermissionFunctions
-CREATE PROC [dsp].[Init_RecreateEnumFunctions]
+CREATE PROC [dsp].[Init_recreateEnumFunctions]
 	@schemaName TSTRING, @tableSchemaName TSTRING = 'dbo', @tableName TSTRING, @keyColumnName TSTRING, @textColumnName TSTRING, @functionBody TSTRING = NULL, @functionNamePostfix TSTRING = NULL
 AS
 BEGIN
@@ -26,7 +26,7 @@ END
 	SET @functionBody = REPLACE(@functionBody, '@functionNamePostfix', @functionNamePostfix);
 
 	-- Drop Functions
-	EXEC dsp.Schema_DropObjects @schemaName = @schemaName, @dropFunctions = 1;
+	EXEC dsp.Schema_dropObjects @schemaName = @schemaName, @dropFunctions = 1;
 
 	CREATE TABLE #EnumIdName (ObjectId NVARCHAR(/*Ignore code quality*/ 500),
 		objectName NVARCHAR(/*Ignore code quality*/ 500));

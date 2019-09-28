@@ -1,11 +1,11 @@
 ﻿
-CREATE PROC [dsp].[Util_ProtectProductionEnvironment]
+CREATE PROC [dsp].[Util_protectProductionEnvironment]
 AS
 BEGIN
     SET NOCOUNT ON;
 
     DECLARE @isProductionEnvironment BIT;
-    EXEC dsp.Setting_Props @isProductionEnvironment = @isProductionEnvironment OUTPUT;
+    EXEC dsp.Setting_props @isProductionEnvironment = @isProductionEnvironment OUTPUT;
     IF (@isProductionEnvironment = 1) --
-        EXEC dsp.Exception_ThrowAccessDeniedOrObjectNotExists @procId = @@PROCID, @message = 'This operation can not be executed in ProductionEnvironment!';
+        EXEC dsp.Exception_throwAccessDeniedOrObjectNotExists @procId = @@PROCID, @message = 'This operation can not be executed in ProductionEnvironment!';
 END;

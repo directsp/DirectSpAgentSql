@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_PageSizeTooLarge()
+CREATE FUNCTION [dsp].ExceptionId_pageSizeTooLarge()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION dsp.Metadata_ObjectExists (@schemaName TSTRING,
+﻿CREATE FUNCTION dsp.Metadata_objectExists (@schemaName TSTRING,
     @objectName TSTRING,
     @typeName TSTRING)
 RETURNS BIT

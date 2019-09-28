@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[DateTime_FromUnixTimeStamp] (
+﻿CREATE FUNCTION [dsp].[DateTime_fromUnixTimeStamp] (
 @unixTime BIGINT
 )
 RETURNS datetime

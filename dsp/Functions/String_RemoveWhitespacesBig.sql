@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[String_RemoveWhitespacesBig] ( @string TBIGSTRING )
+﻿CREATE FUNCTION [dsp].[String_removeWhitespacesBig] ( @string TBIGSTRING )
 RETURNS TBIGSTRING
 AS
 BEGIN

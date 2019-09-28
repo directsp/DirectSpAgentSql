@@ -1,9 +1,9 @@
-﻿CREATE FUNCTION [dsp].[Formatter_FormatCardNumber] (
+﻿CREATE FUNCTION [dsp].[Formatter_formatCardNumber] (
 	@cardNumber TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
-	SET @cardNumber = dsp.Formatter_FormatString(@cardNumber);
+	SET @cardNumber = dsp.Formatter_formatString(@cardNumber);
 	SET @cardNumber = REPLACE(@cardNumber, ' ', '');
 	SET @cardNumber = REPLACE(@cardNumber, '-', '');
 	SET @cardNumber = REPLACE(@cardNumber, '$', '');

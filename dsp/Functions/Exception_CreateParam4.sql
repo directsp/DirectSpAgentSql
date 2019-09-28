@@ -1,4 +1,4 @@
-﻿CREATE	FUNCTION [dsp].[Exception_CreateParam4] (@procId INT,
+﻿CREATE	FUNCTION [dsp].[Exception_createParam4] (@procId INT,
 	@exceptionId  INT,
 	@message TSTRING = NULL,
 	@param0 TSTRING = '<notset>',
@@ -21,11 +21,11 @@ BEGIN
 	BEGIN
 		SET @message = 'Inavlid AppExceptionId; exceptionId: {0}';
 		SET @param0 = @exceptionId ;
-		SET @exceptionId  = dsp.ExceptionId_General();
+		SET @exceptionId  = dsp.ExceptionId_general();
 	END;
 
 	-- Replace Message
-	EXEC @message = dsp.Formatter_FormatMessage @message = @message, @param0 = @param0, @param1 = @param1, @param2 = @param2, @param3 = @param3;
+	EXEC @message = dsp.Formatter_formatMessage @message = @message, @param0 = @param0, @param1 = @param1, @param2 = @param2, @param3 = @param3;
 
 	-- generate exception
 	DECLARE @exception TJSON = '{}';

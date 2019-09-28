@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Formatter_FormatMobileNumber] ( @mobileNumber TSTRING )
+﻿CREATE FUNCTION [dsp].[Formatter_formatMobileNumber] ( @mobileNumber TSTRING )
 RETURNS TSTRING
 BEGIN
     SET @mobileNumber = REPLACE(@mobileNumber, ' ', '');

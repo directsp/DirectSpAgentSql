@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[String_Tokenize]
+﻿CREATE PROCEDURE [dsp].[String_tokenize]
 	@expression TSTRING, @delimeter TSTRING, @position INT OUTPUT, @token TSTRING OUTPUT
 AS
 BEGIN

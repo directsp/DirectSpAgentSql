@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[DateTime_ToUnixTimeStamp] (@time DATETIME)
+﻿CREATE FUNCTION [dsp].[DateTime_toUnixTimeStamp] (@time DATETIME)
 RETURNS INTEGER
 AS
 BEGIN

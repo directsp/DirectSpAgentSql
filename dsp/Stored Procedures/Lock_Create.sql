@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Lock_Create]
+﻿CREATE PROCEDURE [dsp].[Lock_create]
 	@objectTypeName TSTRING, @objectName TSTRING = NULL, @isTransactionMode BIT = 1, @lockId TSTRING = NULL OUT
 AS
 BEGIN
@@ -15,7 +15,7 @@ BEGIN
 
 	-- throw error for error result
 	IF (@result < 0) 
-		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = N'Get AppLock Error! ErrorNumber: {0}', @param0 = @result;
+		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = N'Get AppLock Error! ErrorNumber: {0}', @param0 = @result;
 
 	SET @lockId = JSON_MODIFY(@lockId, '$.lockOwner', @lockOwner);
 	SET @lockId = JSON_MODIFY(@lockId, '$.lockName', @lockName);

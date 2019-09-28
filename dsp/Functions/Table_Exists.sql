@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Table_Exists](@schemaName TSTRING, @Table TSTRING)
+﻿CREATE FUNCTION [dsp].[Table_exists](@schemaName TSTRING, @Table TSTRING)
 RETURNS INT
 AS
 BEGIN

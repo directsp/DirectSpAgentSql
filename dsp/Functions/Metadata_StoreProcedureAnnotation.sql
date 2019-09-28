@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].[Metadata_StoreProcedureAnnotation]
+CREATE FUNCTION [dsp].[Metadata_storeProcedureAnnotation]
 (
   @storeProcedureName TSTRING
 )

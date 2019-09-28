@@ -7,11 +7,11 @@ BEGIN
 
 	DECLARE @paginationMaxRecordCount INT;
 	DECLARE @paginationDefaultRecordCount INT;
-	EXEC dsp.Setting_Props @paginationDefaultRecordCount = @paginationDefaultRecordCount OUTPUT,
+	EXEC dsp.Setting_props @paginationDefaultRecordCount = @paginationDefaultRecordCount OUTPUT,
 		@paginationMaxRecordCount = @paginationMaxRecordCount OUTPUT;
 
 	-- Set Default
-	IF (dsp.Param_IsSetOrNotNull(@recordCount) = 0)
+	IF (dsp.Param_isSetOrNotNull(@recordCount) = 0)
 		SET @recordCount = @paginationDefaultRecordCount;
 
 	-- Set Max
@@ -20,7 +20,7 @@ BEGIN
 
 	IF (@recordCount > @paginationMaxRecordCount) --
 	BEGIN
-		DECLARE @exceptionId INT = dsp.ExceptionId_PageSizeTooLarge();
-		EXEC dsp.Exception_Throw @procId = @@PROCID, @exceptionId = @exceptionId;
+		DECLARE @exceptionId INT = dsp.ExceptionId_pageSizeTooLarge();
+		EXEC dsp.Exception_throw @procId = @@PROCID, @exceptionId = @exceptionId;
 	END
 END;

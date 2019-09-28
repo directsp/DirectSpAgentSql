@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Exception_InvalidArgumentName] (
+﻿CREATE FUNCTION [dsp].[Exception_invalidArgumentName] (
 	@errorMessage TSTRING
 )
 RETURNS TSTRING

@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_General()
+CREATE FUNCTION [dsp].ExceptionId_general()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

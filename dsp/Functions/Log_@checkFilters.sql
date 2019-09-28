@@ -1,6 +1,6 @@
 ﻿
 -- returns 1, should the message be printed
-CREATE FUNCTION dsp.[Log_$CheckFilters] ( @message TSTRING )
+CREATE FUNCTION dsp.Log_@checkFilters ( @message TSTRING )
 RETURNS BIT
 AS
 BEGIN

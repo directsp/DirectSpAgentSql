@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_ValidationError()
+CREATE FUNCTION [dsp].ExceptionId_validationError()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

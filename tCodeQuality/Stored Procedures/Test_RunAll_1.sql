@@ -1,7 +1,7 @@
 ﻿
 -- A simple checkup
 -- Note: You do not need to use this method if you install tSQLt in your project
-CREATE PROC tCodeQuality.Test_RunAll
+CREATE PROC tCodeQuality.Test_runAll
 AS
 BEGIN
     SET NOCOUNT ON;

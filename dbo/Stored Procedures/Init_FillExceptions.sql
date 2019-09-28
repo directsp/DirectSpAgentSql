@@ -1,5 +1,5 @@
 ﻿
-CREATE PROC dbo.Init_FillExceptions
+CREATE PROC dbo.Init_fillExceptions
 AS
 BEGIN
     SET NOCOUNT ON;

@@ -1,4 +1,4 @@
-﻿CREATE PROC [dsp].[Context_PropsSet]
+﻿CREATE PROC [dsp].[Context_propsSet]
     @context TCONTEXT OUT, @appName TSTRING = N'<notset>', @appVersion TSTRING = N'<notset>', @authUserId TSTRING = N'<notset>', @userId TSTRING = N'<notset>',
     @audience TSTRING = N'<notset>', @isCaptcha BIT = NULL, @recordCount INT = -1, @recordIndex INT = -1, @clientVersion TSTRING = N'<notset>'
 AS
@@ -9,9 +9,9 @@ BEGIN
     -- manage built-in users
     IF (@userId = N'$' OR   @userId = N'$$')
     BEGIN
-        DECLARE @systemUserId TSTRING;
-        DECLARE @appUserId TSTRING;
-        EXEC dsp.Setting_Props @systemUserId = @systemUserId OUT, @appUserId = @appUserId OUT;
+        DECLARE @systemUserId TUSERID;
+        DECLARE @appUserId TUSERID;
+        EXEC dsp.Setting_props @systemUserId = @systemUserId OUT, @appUserId = @appUserId OUT;
 
         IF (@userId = N'$')
             SET @userId = @systemUserId;

@@ -1,6 +1,6 @@
 ﻿
 
-CREATE FUNCTION [dsp].[Formatter_FormatNumeric] (@numberStr TSTRING)
+CREATE FUNCTION [dsp].[Formatter_formatNumeric] (@numberStr TSTRING)
 RETURNS TSTRING
 AS
 BEGIN

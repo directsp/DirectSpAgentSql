@@ -1,5 +1,5 @@
 ﻿
-CREATE PROC dbo.Init_FillLookups
+CREATE PROC dbo.Init_fillLookups
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -12,9 +12,9 @@ BEGIN
 	-- SELECT * INTO #LookupTable FROM dbo.LookupTable WHERE 1 = 0;
 	-- INSERT INTO #LookupTable (lookupKey, lookupName)
 	-- VALUES 
-	--	(const.Gender_Male(), N'Male'),
-	--	(const.Gender_Female(), N'Female');
+	--	(const.Gender_male(), N'Male'),
+	--	(const.Gender_female(), N'Female');
 
-	-- EXEC dsp.Table_CompareData @destinationTableName = @tableName;
+	-- EXEC dsp.Table_compareData @destinationTableName = @tableName;
 
 END

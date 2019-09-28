@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_TooManyRequest ()
+CREATE FUNCTION [dsp].ExceptionId_tooManyRequest ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

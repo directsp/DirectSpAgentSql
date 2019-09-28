@@ -39,7 +39,7 @@ BEGIN
         IF EXISTS (   SELECT    1
                         FROM    sys.extended_properties AS ep
                        WHERE ep.name = 'MS_Description' AND ep.major_id = @tableId AND  ep.minor_id = @columnId AND
-                             CHARINDEX(LOWER(ISNULL(dsp.Convert_ToString(ep.value), '')), '/nofk') <> 0)
+                             CHARINDEX(LOWER(ISNULL(dsp.Convert_toString(ep.value), '')), '/nofk') <> 0)
             CONTINUE;
 
 		-- check for foreign key existance
@@ -52,7 +52,7 @@ BEGIN
                                COL_NAME(fc.referenced_object_id, fc.referenced_column_id) = @columnName))
         BEGIN
             DECLARE @msg TSTRING = 'Relation does not exist for ' + @tableName + '.' + @columnName;
-            EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
+            EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
         END;
 
 		-- validate foreign key name
@@ -66,7 +66,7 @@ BEGIN
                            COL_NAME(fc.referenced_object_id, fc.referenced_column_id) = @columnName) AND  F.name <> @flName)
         BEGIN
             SET @msg = 'Relation name is not correct for ' + @tableName + '.' + @columnName;
-            EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
+            EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
         END;
 
     END;

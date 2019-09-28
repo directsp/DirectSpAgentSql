@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dsp.Log_Enable
+﻿CREATE PROCEDURE dsp.Log_enable
     @removeAllFilters AS BIT = 0
 AS
 BEGIN
@@ -21,10 +21,10 @@ BEGIN
 
     -- Remove All old filters
     IF (@removeAllFilters = 1)
-        EXEC dsp.Log_RemoveFilter @filter = NULL;
+        EXEC dsp.Log_removeFilter @filter = NULL;
 
    -- Cache the result
-    EXEC sys.sp_set_session_context @key='dsp.Log_IsEnabled', @value = 1, @read_only = 0;
+    EXEC sys.sp_set_session_context @key='dsp.Log_isEnabled', @value = 1, @read_only = 0;
 
     PRINT 'LogSystem> LogSystem has been enabled.';
 END;

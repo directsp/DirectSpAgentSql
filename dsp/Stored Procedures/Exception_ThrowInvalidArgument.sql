@@ -1,5 +1,5 @@
 ﻿
-CREATE	PROC [dsp].[Exception_ThrowInvalidArgument]
+CREATE	PROC [dsp].[Exception_throwInvalidArgument]
 	@procId INT, @argumentName TSTRING, @argumentValue TSTRING, @message TSTRING = NULL
 AS
 BEGIN
@@ -7,17 +7,17 @@ BEGIN
 
 	-- build exception
 	DECLARE @argMessage TSTRING;
-	EXEC @argMessage = dsp.Formatter_FormatMessage @message = N'{"ArgumentName": "{0}", "ArgumentValue": "{1}"}', @param0 = @argumentName,
+	EXEC @argMessage = dsp.Formatter_formatMessage @message = N'{"ArgumentName": "{0}", "ArgumentValue": "{1}"}', @param0 = @argumentName,
 		@param1 = @argumentValue;
 
 	IF (@message IS NOT NULL)
 		SET @argMessage = JSON_MODIFY(@argMessage, '$.message', @message);
 
-	DECLARE @exceptionId INT = dsp.ExceptionId_InvalidArgument();
-	DECLARE @exception TJSON = dsp.[Exception_Create](@procId, @exceptionId, @argMessage);
+	DECLARE @exceptionId INT = dsp.ExceptionId_invalidArgument();
+	DECLARE @exception TJSON = dsp.[Exception_create](@procId, @exceptionId, @argMessage);
 
 	-- throw the exception
-	EXEC dsp.Exception_ThrowJson @exception = @exception;
+	EXEC dsp.Exception_throwJson @exception = @exception;
 END;
 
 

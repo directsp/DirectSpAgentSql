@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Formatter_FormatString] (@str TSTRING)
+﻿CREATE FUNCTION [dsp].[Formatter_formatString] (@str TSTRING)
 RETURNS TSTRING
 AS
 BEGIN

@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_InvalidCaptcha ()
+CREATE FUNCTION [dsp].ExceptionId_invalidCaptcha ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

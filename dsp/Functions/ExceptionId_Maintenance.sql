@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[ExceptionId_Maintenance] ()
+﻿CREATE FUNCTION [dsp].[ExceptionId_maintenance] ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[ExceptionId_MaintenanceReadOnly] ()
+﻿CREATE FUNCTION [dsp].[ExceptionId_maintenanceReadOnly] ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

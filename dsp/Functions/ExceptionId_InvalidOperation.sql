@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_InvalidOperation()
+CREATE FUNCTION [dsp].ExceptionId_invalidOperation()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

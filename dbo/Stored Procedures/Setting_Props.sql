@@ -1,6 +1,6 @@
 ﻿
 -- Retrieve Application settings
-CREATE PROCEDURE dbo.Setting_Props
+CREATE PROCEDURE dbo.Setting_props
     @appSetting1 INT = -1 OUT, @appSetting2 INT = -1 OUT
 AS
 BEGIN

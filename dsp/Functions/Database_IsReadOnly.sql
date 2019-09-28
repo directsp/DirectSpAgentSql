@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Database_IsReadOnly] (@databaseName TSTRING)
+﻿CREATE FUNCTION [dsp].[Database_isReadOnly] (@databaseName TSTRING)
 RETURNS BIT
 AS
 BEGIN

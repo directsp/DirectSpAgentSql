@@ -15,6 +15,6 @@ BEGIN
 	IF (@msg IS NOT NULL)
 	BEGIN
 		SET @msg = '"description and type TSTRING" was not found in table ' + @msg;
-		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @msg;
+		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
 	END;
 END;

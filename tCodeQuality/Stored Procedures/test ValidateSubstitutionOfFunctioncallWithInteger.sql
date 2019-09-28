@@ -1,11 +1,11 @@
-﻿CREATE PROC [tCodeQuality].[test ValidateSubstitutionOfFunctioncallWithInteger]
+﻿CREATE PROC tCodeQuality.[test ValidateSubstitutionOfFunctioncallWithInteger]
 AS
 BEGIN
     SET NOCOUNT ON;
     -- Getting Stored Procedures and Functions definition
     DECLARE _cursor CURSOR FAST_FORWARD FORWARD_ONLY FORWARD_ONLY LOCAL FOR
     SELECT  PD.schemaName, PD.objectName, PD.script
-      FROM  dsp.Metadata_ProceduresDefination() AS PD
+      FROM  dsp.Metadata_proceduresDefination() AS PD
      WHERE  PD.schemaName IN ( 'api', 'dbo' );
 
     OPEN _cursor;
@@ -23,7 +23,7 @@ BEGIN
             BREAK;
 
         -- Removing Space, Tab, line feed
-        SET @script = dsp.String_RemoveWhitespacesBig(@script);
+        SET @script = dsp.String_removeWhitespacesBig(@script);
 
         -- Cutting out text before /*co+nst
         DECLARE @startIndex INT = CHARINDEX(@pattern, @script);
@@ -39,16 +39,16 @@ BEGIN
             DECLARE @constValueInFunction INT;
             DECLARE @constValueInScript INT;
             DECLARE @isMatch BIT;
-            EXEC tCodeQuality.[Test_$CompareConstFunctionReturnValueWithScriptValue] @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
+            EXEC tCodeQuality.Test_@compareConstFunctionReturnValueWithScriptValue @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
                 @constValueInFunction = @constValueInFunction OUTPUT, @constValueInScript = @constValueInScript OUTPUT, @isMatch = @isMatch OUTPUT;
 
             IF (@isMatch = 0)
             BEGIN
                 DECLARE @message TSTRING;
                 DECLARE @fullObjectName TSTRING = @schemaName + '.' + @objectName;
-                EXEC @message = dsp.Formatter_FormatMessage @message = N'ConstValueInFunction({0}) and ConstValueInScript({1}) are inconsistence; the function name is: {2} in the SP: {3}',
+                EXEC @message = dsp.Formatter_formatMessage @message = N'ConstValueInFunction({0}) and ConstValueInScript({1}) are inconsistence; the function name is: {2} in the SP: {3}',
                     @param0 = @constValueInFunction, @param1 = @constValueInScript, @param2 = @constFunctionName, @param3 = @fullObjectName;
-                EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @message;
+                EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @message;
             END;
 
             SET @startIndex = CHARINDEX(@pattern, @script);

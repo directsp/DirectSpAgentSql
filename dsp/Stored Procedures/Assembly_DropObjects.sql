@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Assembly_DropObjects]
+﻿CREATE PROCEDURE [dsp].[Assembly_dropObjects]
 	@assemblyName TSTRING
 AS
 BEGIN

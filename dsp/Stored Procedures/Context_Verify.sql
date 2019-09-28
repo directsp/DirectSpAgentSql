@@ -1,19 +1,19 @@
-﻿CREATE PROCEDURE [dsp].[Context_Verify]
+﻿CREATE PROCEDURE [dsp].[Context_verify]
     @context TCONTEXT OUT, @procId INT
 AS
 BEGIN
     -- Settings
     DECLARE @appName TSTRING;
     DECLARE @appVersion TSTRING;
-    DECLARE @appUserId TSTRING;
-    DECLARE @systemUserId TSTRING;
+    DECLARE @appUserId TUSERID;
+    DECLARE @systemUserId TUSERID;
     DECLARE @maintenanceMode INT;
-    EXEC dsp.Setting_Props @appVersion = @appVersion OUT, @appName = @appName OUT, @appUserId = @appUserId OUT, @systemUserId = @systemUserId OUT,
+    EXEC dsp.Setting_props @appVersion = @appVersion OUT, @appName = @appName OUT, @appUserId = @appUserId OUT, @systemUserId = @systemUserId OUT,
         @maintenanceMode = @maintenanceMode OUT;
 
     -- Set SystemContext
-    IF (@context = N'$') EXEC dsp.Context_CreateSystem @systemContext = @context OUTPUT;
-    IF (@context = N'$$') EXEC dsp.Context_Create @userId = '$$', @context = @context OUT, @isCaptcha = 1;
+    IF (@context = N'$') EXEC dsp.Context_createSystem @systemContext = @context OUTPUT;
+    IF (@context = N'$$') EXEC dsp.Context_create @userId = '$$', @context = @context OUT, @isCaptcha = 1;
 
     -- Context 
     DECLARE @contextAuthUserId TSTRING;
@@ -22,7 +22,7 @@ BEGIN
     DECLARE @contextInvokerAppVersion TSTRING;
     DECLARE @isReadonlyIntent BIT;
     DECLARE @isInvokedByMidware BIT;
-    EXEC dsp.Context_Props @context = @context OUTPUT, @authUserId = @contextAuthUserId OUTPUT, @userId = @contextUserId OUTPUT,
+    EXEC dsp.Context_props @context = @context OUTPUT, @authUserId = @contextAuthUserId OUTPUT, @userId = @contextUserId OUTPUT,
         @appName = @contextAppName OUTPUT, @invokerAppVersion = @contextInvokerAppVersion OUT, @isReadonlyIntent = @isReadonlyIntent OUT,
         @isInvokedByMidware = @isInvokedByMidware OUT;
     DECLARE @contextUserIdOrg TSTRING = @contextUserId;
@@ -34,28 +34,28 @@ BEGIN
     BEGIN
         IF (@maintenanceMode = 2) --
 		BEGIN
-			SET @exceptionId = dsp.ExceptionId_Maintenance();
-		    EXEC dsp.Exception_Throw @procId = @procId, @exceptionId = @exceptionId;
+			SET @exceptionId = dsp.ExceptionId_maintenance();
+		    EXEC dsp.Exception_throw @procId = @procId, @exceptionId = @exceptionId;
 		END
 
-        IF (@isReadonlyIntent = 0 AND   (@maintenanceMode = 1 OR dsp.Database_IsReadOnly(DB_NAME()) = 1))
+        IF (@isReadonlyIntent = 0 AND   (@maintenanceMode = 1 OR dsp.Database_isReadOnly(DB_NAME()) = 1))
 		BEGIN
-			SET @exceptionId = dsp.ExceptionId_MaintenanceReadOnly();
-		    EXEC dsp.Exception_Throw @procId = @procId, @exceptionId = @exceptionId;
+			SET @exceptionId = dsp.ExceptionId_maintenanceReadOnly();
+		    EXEC dsp.Exception_throw @procId = @procId, @exceptionId = @exceptionId;
 		END
     END;
 
 
     -- Validate appName
     IF (@contextAppName IS NULL OR  @contextAppName <> @appName) --
-        EXEC dsp.Exception_ThrowGeneral @procId = @procId, @message = N'the app property of context is not valid! appName: {0}; contextAppName: {1}',
+        EXEC dsp.Exception_throwGeneral @procId = @procId, @message = N'the app property of context is not valid! appName: {0}; contextAppName: {1}',
             @param0 = @appName, @param1 = @contextAppName;
 
     -- Check InvokerAppVersion if set
     IF (@contextInvokerAppVersion IS NOT NULL AND   @contextInvokerAppVersion <> @appVersion)
 	BEGIN
-		SET @exceptionId = dsp.ExceptionId_InvokerAppVersion();
-		EXEC dsp.Exception_Throw @procId = @procId, @exceptionId = @exceptionId;
+		SET @exceptionId = dsp.ExceptionId_invokerAppVersion();
+		EXEC dsp.Exception_throw @procId = @procId, @exceptionId = @exceptionId;
 	END
 
     -------------
@@ -68,7 +68,7 @@ BEGIN
     BEGIN
         SET @contextUserId = @systemUserId;
         IF (@contextUserId IS NULL) --
-            EXEC dsp.Exception_ThrowGeneral @procId = @procId, @message = 'systemUserId has not been initailized';
+            EXEC dsp.Exception_throwGeneral @procId = @procId, @message = 'systemUserId has not been initailized';
     END;
 
     -- Find UserId by AuthUserId
@@ -84,7 +84,7 @@ BEGIN
     -- Update Context if user context
     -------------
     IF (@contextUserIdOrg IS NULL OR @contextUserIdOrg <> @contextUserId) --
-        EXEC dsp.Context_PropsSet @context = @context OUTPUT, @userId = @contextUserId, @appVersion = @appVersion;
+        EXEC dsp.Context_propsSet @context = @context OUTPUT, @userId = @contextUserId, @appVersion = @appVersion;
 
     -- Call update context
     EXEC dbo.Context_Update @context = @context OUTPUT, @procId = @procId;

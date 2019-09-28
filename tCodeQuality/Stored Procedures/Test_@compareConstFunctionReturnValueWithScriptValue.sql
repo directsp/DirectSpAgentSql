@@ -1,4 +1,4 @@
-﻿CREATE PROC [tCodeQuality].[Test_$CompareConstFunctionReturnValueWithScriptValue]
+﻿CREATE PROC tCodeQuality.Test_@compareConstFunctionReturnValueWithScriptValue
 	@script TBIGSTRING OUT, @constFunctionName TSTRING OUT, @constValueInFunction INT OUT, @constValueInScript INT OUT, @isMatch BIT OUT
 AS
 BEGIN
@@ -28,7 +28,7 @@ BEGIN
 		SET @constValueInScript = CAST(SUBSTRING(@script, @startNumPadIndex, @endStrNumdIndex - @startNumPadIndex) AS INT);
 	END TRY
 	BEGIN CATCH
-		EXEC dsp.Log_Trace @procId = @@PROCID, @message = 'ConstFunctionValue has written before ConstFunctionName!';
+		EXEC dsp.Log_trace @procId = @@PROCID, @message = 'ConstFunctionValue has written before ConstFunctionName!';
 	END CATCH;
 
 	-- Getting Function Id

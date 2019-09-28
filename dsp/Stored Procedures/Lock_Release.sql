@@ -1,4 +1,4 @@
-﻿create PROCEDURE [dsp].[Lock_Release]
+﻿create PROCEDURE [dsp].[Lock_release]
 	@lockId TSTRING
 	AS
 BEGIN
@@ -22,7 +22,7 @@ BEGIN
 
 	-- throw error for error result
 	IF (@result < 0) --
-		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = N'Release AppLock Error! ErrorNumber: {0}', @param0 = @result;
+		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = N'Release AppLock Error! ErrorNumber: {0}', @param0 = @result;
 	
 	SET @lockId = NULL;
 END;

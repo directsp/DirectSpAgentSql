@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[DateTime_StartOfDayTime] (@time DATETIME)
+﻿CREATE FUNCTION [dsp].[DateTime_startOfDayTime] (@time DATETIME)
 RETURNS DATETIME
 AS
 BEGIN

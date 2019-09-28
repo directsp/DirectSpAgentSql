@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_Ambiguous()
+CREATE FUNCTION [dsp].ExceptionId_ambiguous()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[DateTime_EndOfDayTime] (
+﻿CREATE FUNCTION [dsp].[DateTime_endOfDayTime] (
 	@time DATETIME)
 RETURNS DATETIME
 AS

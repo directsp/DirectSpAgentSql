@@ -1,6 +1,6 @@
 ﻿/*TO check if two input are equal*/
 --null aware
-CREATE FUNCTION [dsp].[Util_IsEqual] (
+CREATE FUNCTION dsp.Util_equals (
 	@Value1 SQL_VARIANT,
 	@Value2 SQL_VARIANT)
 RETURNS BIT

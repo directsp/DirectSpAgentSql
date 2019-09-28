@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dsp].[Audit_Trace]
+﻿CREATE PROCEDURE [dsp].[Audit_trace]
 	@procId AS INT,
 	@message AS TSTRING,
 	@param0 AS TSTRING = '<notset>',
@@ -7,5 +7,5 @@
 AS
 BEGIN
 	-- Format Message
-	EXEC dsp.Log_Trace @procId = @procId, @message = @message, @param0 = @param0, @param1 = @param1, @param2 = @param2;
+	EXEC dsp.Log_trace @procId = @procId, @message = @message, @param0 = @param0, @param1 = @param1, @param2 = @param2;
 END;

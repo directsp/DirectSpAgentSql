@@ -1,5 +1,5 @@
 ﻿
-CREATE PROC dbo.Init_FillStrings
+CREATE PROC dbo.Init_fillStrings
 AS
 BEGIN
     SET NOCOUNT ON;

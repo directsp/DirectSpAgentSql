@@ -1,6 +1,6 @@
 ﻿
 -- #Inliner {"InlineMode":"none"} 
-CREATE FUNCTION [dsp].[Convert_BinaryFromBase64](@base64 TSTRING)
+CREATE FUNCTION [dsp].[Convert_binaryFromBase64](@base64 TSTRING)
 RETURNS VARBINARY(MAX)
 AS
 BEGIN

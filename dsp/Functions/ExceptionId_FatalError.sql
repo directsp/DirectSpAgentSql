@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_FatalError()
+CREATE FUNCTION [dsp].ExceptionId_fatalError()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

@@ -1,11 +1,11 @@
 ﻿
-CREATE PROC dbo.Init_Cleanup
+CREATE PROC dbo.Init_cleanup
 AS
 BEGIN
     SET NOCOUNT ON;
 
 	-- Protect production environment
-	EXEC dsp.Util_ProtectProductionEnvironment
+	EXEC dsp.Util_protectProductionEnvironment
 			
 	-- Delete Junction Tables 
 

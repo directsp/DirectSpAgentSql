@@ -1,4 +1,4 @@
-﻿CREATE	PROCEDURE [dsp].[Lock_Hold]
+﻿CREATE	PROCEDURE [dsp].[Lock_hold]
 	@objectTypeName TSTRING, @objectName TSTRING = NULL, @isTransactionMode BIT = NULL, @isLockHold BIT = NULL OUT
 AS
 BEGIN

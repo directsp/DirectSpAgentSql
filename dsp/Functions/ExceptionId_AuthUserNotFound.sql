@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].[ExceptionId_AuthUserNotFound] ()
+CREATE FUNCTION [dsp].[ExceptionId_authUserNotFound] ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

@@ -1,5 +1,5 @@
 ﻿-- @objectType Can be 'FN' or 'P'
-CREATE PROC [dsp].[Schema_DropObjects]
+CREATE PROC [dsp].[Schema_dropObjects]
 	@schemaName TSTRING, @dropFunctions BIT = 0, @dropProcedures BIT = 0
 AS
 BEGIN

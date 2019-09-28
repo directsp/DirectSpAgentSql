@@ -16,7 +16,7 @@ BEGIN
 	DECLARE @errorMessage TSTRING = @objectName + ' has a [RETURN] phrase';
 
 	IF (@objectName IS NOT NULL) --
-		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = @errorMessage;
+		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @errorMessage;
 
 
 

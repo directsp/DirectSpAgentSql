@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Log_FormatMessage] (
+﻿CREATE FUNCTION [dsp].[Log_formatMessage] (
 	@procId INT,
 	@message TSTRING,
 	@elipsis BIT = 0,
@@ -13,7 +13,7 @@ BEGIN
 	SET @elipsis = ISNULL(@elipsis, 0);
 
 	-- Format Message
-	SET @message = dsp.Formatter_FormatMessage(@message, @param0, @param1, @param2, @param3);
+	SET @message = dsp.Formatter_formatMessage(@message, @param0, @param1, @param2, @param3);
 
 	-- Put elipsis
 	IF (@elipsis = 1)

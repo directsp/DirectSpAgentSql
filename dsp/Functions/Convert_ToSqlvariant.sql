@@ -1,6 +1,6 @@
 ﻿
 
-CREATE FUNCTION [dsp].[Convert_ToSqlvariant] (@value TBIGSTRING)
+CREATE FUNCTION [dsp].[Convert_toSqlvariant] (@value TBIGSTRING)
 RETURNS SQL_VARIANT
 AS
 BEGIN

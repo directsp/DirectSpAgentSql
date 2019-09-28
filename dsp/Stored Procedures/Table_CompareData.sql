@@ -1,4 +1,4 @@
-﻿CREATE PROC [dsp].[Table_CompareData]
+﻿CREATE PROC [dsp].[Table_compareData]
 	@sourceSchemaName TSTRING = NULL, @sourceTableName TSTRING = NULL, @destinationTableName TSTRING, @destinationSchemaName TSTRING = 'dbo',
 	@isWithDelete BIT = 1
 AS
@@ -6,11 +6,11 @@ BEGIN
 	SET @sourceTableName = ISNULL(@sourceSchemaName, '#' + @destinationTableName);
 
 	DECLARE @sourceTable TSTRING = @sourceTableName;
-	IF (dsp.Formatter_FormatString(@sourceSchemaName) IS NOT NULL)
+	IF (dsp.Formatter_formatString(@sourceSchemaName) IS NOT NULL)
 		SET @sourceTable = @sourceSchemaName + '.' + @sourceTableName;
 
 	DECLARE @destinationTable TSTRING = @destinationTableName;
-	IF (dsp.Formatter_FormatString(@destinationSchemaName) IS NOT NULL)
+	IF (dsp.Formatter_formatString(@destinationSchemaName) IS NOT NULL)
 		SET @destinationTable = @destinationSchemaName + '.' + @destinationTableName;
 
 	-- find primary key
@@ -21,7 +21,7 @@ BEGIN
 			TABLE_SCHEMA = @destinationSchemaName;
 
 	IF (@primaryKey IS NULL)
-		EXEC dsp.Exception_ThrowGeneral @procId = @@PROCID, @message = 'Could not find Primary key for table {0}!', @param0 = @destinationTableName
+		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = 'Could not find Primary key for table {0}!', @param0 = @destinationTableName
 
 	-- columns
 	DECLARE @columnsForUpdate TSTRING =

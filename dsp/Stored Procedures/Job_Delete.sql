@@ -1,4 +1,4 @@
-﻿CREATE PROC [dsp].[Job_Delete]
+﻿CREATE PROC [dsp].[Job_delete]
 	@jobNamePattern TSTRING
 AS
 BEGIN

@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Const_MaintenanceMode_None] ()
+﻿CREATE FUNCTION [dsp].[Const_maintenanceMode_none] ()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

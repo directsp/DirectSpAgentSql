@@ -1,4 +1,4 @@
-﻿CREATE	FUNCTION [dsp].[DateTime_FirstNextDayOfWeek] (@nextDay INT)
+﻿CREATE	FUNCTION [dsp].[DateTime_firstNextDayOfWeek] (@nextDay INT)
 RETURNS DATETIME
 AS
 BEGIN

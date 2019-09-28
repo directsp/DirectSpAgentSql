@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].[StringTable_Value] (@stringId TSTRING)
+CREATE FUNCTION [dsp].[StringTable_value] (@stringId TSTRING)
 RETURNS TSTRING
 AS
 BEGIN
@@ -9,5 +9,5 @@ BEGIN
       FROM  dsp.StringTable AS ST
      WHERE  ST.stringId = @stringId;
 
-    RETURN dsp.String_ReplaceEnter(@value);
+    RETURN dsp.String_replaceEnter(@value);
 END;

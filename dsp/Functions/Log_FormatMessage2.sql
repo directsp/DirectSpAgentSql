@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dsp].[Log_FormatMessage2] (@procId INT,
+﻿CREATE FUNCTION [dsp].[Log_formatMessage2] (@procId INT,
 	@message TSTRING,
 	@elipsis BIT = 0,
 	@param0 TSTRING = '<notset>',
@@ -13,15 +13,15 @@ BEGIN
 	SET @elipsis = ISNULL(@elipsis, 0);
 
 	-- Validate Params
-	SET @param0 = dsp.Formatter_FormatParam(@param0);
-	SET @param1 = dsp.Formatter_FormatParam(@param1);
-	SET @param2 = dsp.Formatter_FormatParam(@param2);
-	SET @param3 = dsp.Formatter_FormatParam(@param3);
-	SET @param4 = dsp.Formatter_FormatParam(@param4);
-	SET @param5 = dsp.Formatter_FormatParam(@param5);
+	SET @param0 = dsp.Formatter_formatParam(@param0);
+	SET @param1 = dsp.Formatter_formatParam(@param1);
+	SET @param2 = dsp.Formatter_formatParam(@param2);
+	SET @param3 = dsp.Formatter_formatParam(@param3);
+	SET @param4 = dsp.Formatter_formatParam(@param4);
+	SET @param5 = dsp.Formatter_formatParam(@param5);
 
 	-- Replace Message
-	SET @message = dsp.Formatter_FormatString(@message);
+	SET @message = dsp.Formatter_formatString(@message);
 	SET @message = REPLACE(@message, '{0}', @param0);
 	SET @message = REPLACE(@message, '{1}', @param1);
 	SET @message = REPLACE(@message, '{2}', @param2);
@@ -44,7 +44,7 @@ BEGIN
 
 	-- Format message 
 	DECLARE @msg TSTRING = @procName + '> ' + @message;
-	RETURN dsp.String_ReplaceEnter(@msg);
+	RETURN dsp.String_replaceEnter(@msg);
 END;
 
 

@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [dsp].[Setting_Props]
-    @appName TSTRING = NULL OUT, @appVersion TSTRING = NULL OUT, @systemUserId TSTRING = NULL OUT, @appUserId TSTRING = NULL OUT,
+﻿CREATE PROCEDURE [dsp].[Setting_props]
+    @appName TSTRING = NULL OUT, @appVersion TSTRING = NULL OUT, @systemUserId TUSERID = NULL OUT, @appUserId TUSERID = NULL OUT,
     @isProductionEnvironment BIT = NULL OUT, @paginationDefaultRecordCount INT = NULL OUT, @paginationMaxRecordCount INT = NULL OUT,
     @isUnitTestMode BIT = NULL OUT, @maintenanceMode INT = NULL OUT
 AS

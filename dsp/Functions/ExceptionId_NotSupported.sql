@@ -1,5 +1,5 @@
 ﻿
-CREATE FUNCTION [dsp].ExceptionId_NotSupported()
+CREATE FUNCTION [dsp].ExceptionId_notSupported()
 RETURNS INT WITH SCHEMABINDING
 AS
 BEGIN

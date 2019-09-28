@@ -1,4 +1,4 @@
-﻿CREATE PROC [dsp].[Init]
+﻿CREATE PROC dsp.Init
     @isProductionEnvironment BIT = NULL
 AS
 BEGIN
@@ -8,7 +8,7 @@ BEGIN
     IF (@tranCount = 0)
         BEGIN TRANSACTION;
     BEGIN TRY
-        EXEC dsp.[Init_$Start] @isProductionEnvironment = @isProductionEnvironment, @isWithCleanup = NULL, @reserved = NULL;
+        EXEC dsp.Init_@start @isProductionEnvironment = @isProductionEnvironment, @isWithCleanup = NULL, @reserved = NULL;
 
         IF (@tranCount = 0) COMMIT;
     END TRY
