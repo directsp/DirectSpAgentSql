@@ -1,7 +1,0 @@
-﻿CREATE FUNCTION [dsp].[Const_maintenanceMode_readonly] ()
-RETURNS INT
-WITH SCHEMABINDING
-AS
-BEGIN
-    RETURN 1;
-END;

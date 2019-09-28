@@ -1,7 +1,0 @@
-﻿
-CREATE FUNCTION [dsp].ExceptionId_invalidCaptcha ()
-RETURNS INT WITH SCHEMABINDING
-AS
-BEGIN
-	RETURN 55022;
-END

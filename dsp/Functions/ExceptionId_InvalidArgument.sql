@@ -1,7 +1,0 @@
-﻿
-CREATE FUNCTION [dsp].ExceptionId_invalidArgument()
-RETURNS INT WITH SCHEMABINDING
-AS
-BEGIN
-	RETURN 55011;
-END

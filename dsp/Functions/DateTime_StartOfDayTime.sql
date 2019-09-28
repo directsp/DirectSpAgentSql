@@ -1,8 +1,0 @@
-﻿CREATE FUNCTION [dsp].[DateTime_startOfDayTime] (@time DATETIME)
-RETURNS DATETIME
-AS
-BEGIN
-	DECLARE @previousDay DATETIME = CAST(CAST(@time AS DATE) AS DATETIME);
-
-	RETURN @previousDay;
-END;
