@@ -233,8 +233,6 @@
     <Build Include="dbo\Stored Procedures\Init_fillExceptions.sql" />
     <Build Include="dbo\Stored Procedures\Init_fillData.sql" />
     <Build Include="dbo\Stored Procedures\Init_cleanup.sql" />
-    <Build Include="api\Stored Procedures\User_createOrUpdateByAuthClaims.sql" />
-    <Build Include="api\Stored Procedures\System_api.sql" />
     <Build Include="dsp\Stored Procedures\Exception_throwGeneral.sql" />
     <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dsp\Functions\Metadata_objectExists.sql" />
@@ -261,6 +259,8 @@
     <Build Include="dsp\Stored Procedures\Context_%40validatePagination.sql" />
     <Build Include="dbo\Stored Procedures\User_userIdByAuthUserId.sql" />
     <Build Include="dbo\Stored Procedures\Context_update.sql" />
+    <Build Include="api\Stored Procedures\User_createOrUpdateByAuthClaims.sql" />
+    <Build Include="api\Stored Procedures\System_api.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">
