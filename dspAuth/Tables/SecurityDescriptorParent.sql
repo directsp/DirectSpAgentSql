@@ -8,6 +8,16 @@
 
 
 GO
+ALTER TABLE [dspAuth].[SecurityDescriptorParent] NOCHECK CONSTRAINT [FK_SecurityDescriptorParernt_parentSecurityDescriptorId];
+
+
+GO
+ALTER TABLE [dspAuth].[SecurityDescriptorParent] NOCHECK CONSTRAINT [FK_SecurityDescriptorParernt_securityDescriptorId];
+
+
+
+
+GO
 CREATE NONCLUSTERED INDEX [IX_securityDescriptorId]
     ON [dspAuth].[SecurityDescriptorParent]([securityDescriptorId] ASC)
     INCLUDE([parentSecurityDescriptorId]);

@@ -7,3 +7,9 @@
     CONSTRAINT [FK_Exception_stringId] FOREIGN KEY ([stringId]) REFERENCES [dsp].[StringTable] ([stringId])
 );
 
+
+GO
+ALTER TABLE [dsp].[Exception] NOCHECK CONSTRAINT [FK_Exception_stringId];
+
+
+

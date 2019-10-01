@@ -4,10 +4,24 @@
     [modifiedByUserId] [dbo].[TUSERID] NOT NULL,
     [createdTime]      DATETIME        CONSTRAINT [DF_RoleMember_createdTime] DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_RoleMember] PRIMARY KEY CLUSTERED ([roleId] ASC, [memberRoleId] ASC),
-    CONSTRAINT [FK_RoleMember_roleId] FOREIGN KEY ([roleId]) REFERENCES [dspAuth].[Role] ([roleId]),
     CONSTRAINT [FK_RoleMember_memberRoleId] FOREIGN KEY ([memberRoleId]) REFERENCES [dspAuth].[Role] ([roleId]),
+    CONSTRAINT [FK_RoleMember_roleId] FOREIGN KEY ([roleId]) REFERENCES [dspAuth].[Role] ([roleId]),
     CONSTRAINT [FK_RoleMember_userId] FOREIGN KEY ([modifiedByUserId]) REFERENCES [dbo].[Users] ([userId])
 );
+
+
+GO
+ALTER TABLE [dspAuth].[RoleMemberRole] NOCHECK CONSTRAINT [FK_RoleMember_memberRoleId];
+
+
+GO
+ALTER TABLE [dspAuth].[RoleMemberRole] NOCHECK CONSTRAINT [FK_RoleMember_roleId];
+
+
+GO
+ALTER TABLE [dspAuth].[RoleMemberRole] NOCHECK CONSTRAINT [FK_RoleMember_userId];
+
+
 
 
 GO

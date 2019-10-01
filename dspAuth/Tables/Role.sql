@@ -4,9 +4,19 @@
     [ownerSecurityDescriptorId] BIGINT          NOT NULL,
     [modifiedByUserId]          [dbo].[TUSERID] NOT NULL,
     CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED ([roleId] ASC),
-    CONSTRAINT [FK_Role_ownerSecurityDescriptorId] FOREIGN KEY ([ownerSecurityDescriptorId]) REFERENCES [dspAuth].[SecurityDescriptor] ([securityDescriptorId]),
-    CONSTRAINT [FK_Role_modifiedByUserId] FOREIGN KEY ([modifiedByUserId]) REFERENCES [dbo].[Users] ([userId])
+    CONSTRAINT [FK_Role_modifiedByUserId] FOREIGN KEY ([modifiedByUserId]) REFERENCES [dbo].[Users] ([userId]),
+    CONSTRAINT [FK_Role_ownerSecurityDescriptorId] FOREIGN KEY ([ownerSecurityDescriptorId]) REFERENCES [dspAuth].[SecurityDescriptor] ([securityDescriptorId])
 );
+
+
+GO
+ALTER TABLE [dspAuth].[Role] NOCHECK CONSTRAINT [FK_Role_modifiedByUserId];
+
+
+GO
+ALTER TABLE [dspAuth].[Role] NOCHECK CONSTRAINT [FK_Role_ownerSecurityDescriptorId];
+
+
 
 
 GO

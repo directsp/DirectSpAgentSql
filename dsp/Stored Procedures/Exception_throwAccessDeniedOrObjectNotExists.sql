@@ -1,5 +1,5 @@
 ﻿CREATE PROC [dsp].Exception_throwAccessDeniedOrObjectNotExists
-    @procId INT, @objectTypeName TSTRING, @objectId TSTRING, @message TSTRING = NULL, @param0 TSTRING = '<notset>', @param1 TSTRING = '<notset>',
+    @procId INT, @objectTypeName TSTRING = NULL, @objectId TSTRING = NULL, @message TSTRING = NULL, @param0 TSTRING = '<notset>', @param1 TSTRING = '<notset>',
     @param2 TSTRING = '<notset>', @param3 TSTRING = '<notset>'
 AS
 BEGIN

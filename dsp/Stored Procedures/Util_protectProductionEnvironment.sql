@@ -2,8 +2,6 @@
 CREATE PROC [dsp].[Util_protectProductionEnvironment]
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     DECLARE @isProductionEnvironment BIT;
     EXEC dsp.Setting_props @isProductionEnvironment = @isProductionEnvironment OUTPUT;
     IF (@isProductionEnvironment = 1) --

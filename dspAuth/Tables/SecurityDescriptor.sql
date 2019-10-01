@@ -8,6 +8,12 @@
 
 
 GO
+ALTER TABLE [dspAuth].[SecurityDescriptor] NOCHECK CONSTRAINT [FK_SecurityDescriptor_objectTypeId];
+
+
+
+
+GO
 CREATE UNIQUE NONCLUSTERED INDEX [IX_objectTypeId]
     ON [dspAuth].[SecurityDescriptor]([objectTypeId] ASC, [objectId] ASC);
 

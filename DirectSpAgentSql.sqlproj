@@ -306,6 +306,7 @@
     <Build Include="dspAuth\Stored Procedures\Permission_props.sql" />
     <Build Include="dspAuth\Stored Procedures\Init_cleanup.sql" />
     <Build Include="Security\dspAuth.sql" />
+    <Build Include="dsp\Stored Procedures\Init_deleteAllDatabaseRecords.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">

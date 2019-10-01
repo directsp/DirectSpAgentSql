@@ -7,3 +7,9 @@
     CONSTRAINT [FK_LogFilterSetting_logUserId] FOREIGN KEY ([logUserId]) REFERENCES [dsp].[LogUser] ([logUserId])
 );
 
+
+GO
+ALTER TABLE [dsp].[LogFilterSetting] NOCHECK CONSTRAINT [FK_LogFilterSetting_logUserId];
+
+
+

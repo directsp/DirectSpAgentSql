@@ -17,5 +17,19 @@
 
 
 GO
+ALTER TABLE [dsp].[Setting] NOCHECK CONSTRAINT [CK_Setting_maintenaceMode];
+
+
+GO
+ALTER TABLE [dsp].[Setting] NOCHECK CONSTRAINT [FK_Setting_appUserId];
+
+
+GO
+ALTER TABLE [dsp].[Setting] NOCHECK CONSTRAINT [FK_Setting_systemUserId];
+
+
+
+
+GO
 EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'Midware uses this userId if it is set otherwise the midware use systemUserId', @level0type = N'SCHEMA', @level0name = N'dsp', @level1type = N'TABLE', @level1name = N'Setting', @level2type = N'COLUMN', @level2name = N'appUserId';
 
