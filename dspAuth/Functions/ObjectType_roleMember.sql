@@ -1,0 +1,6 @@
+﻿CREATE FUNCTION [dspAuth].[ObjectType_roleMember]()
+ RETURNS INT WITH SCHEMABINDING
+ AS 
+ BEGIN
+     RETURN 4;
+ END

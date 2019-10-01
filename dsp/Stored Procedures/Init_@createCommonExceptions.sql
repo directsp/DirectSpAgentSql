@@ -12,7 +12,6 @@ BEGIN
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_invalidArgument(), N'InvalidArgument');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_fatalError(), N'FatalError');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_validationError(), N'ValidationError');
-	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_invalidOperation(), N'InvalidOperation');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_notSupported(), N'NotSupported');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_notImplemented(), N'NotImplemented');
 	INSERT dsp.Exception ([exceptionId], [exceptionName]) VALUES (dsp.ExceptionId_userIsDisabled(), N'UserIsDisabled');

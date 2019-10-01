@@ -1,9 +1,5 @@
-﻿CREATE SCHEMA [str]
+﻿CREATE SCHEMA [dspAuth]
     AUTHORIZATION [dbo];
-
-
-
-
 
 
 

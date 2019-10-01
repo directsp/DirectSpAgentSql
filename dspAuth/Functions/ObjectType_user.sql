@@ -1,0 +1,6 @@
+﻿CREATE FUNCTION [dspAuth].[ObjectType_user]()
+ RETURNS INT WITH SCHEMABINDING
+ AS 
+ BEGIN
+     RETURN 2;
+ END

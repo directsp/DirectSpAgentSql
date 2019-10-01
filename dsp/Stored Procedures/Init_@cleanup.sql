@@ -41,16 +41,17 @@ BEGIN
         IF (@tranCount = 0)
             ROLLBACK TRANSACTION;
 
-        IF (ERROR_NUMBER() = dsp.ExceptionId_general() AND   CHARINDEX('dbo.Init_cleanup protection control', ERROR_MESSAGE()) > 0)
+        IF (ERROR_NUMBER() = dsp.ExceptionId_general() AND  CHARINDEX('dbo.Init_cleanup protection control', ERROR_MESSAGE()) > 0)
             THROW; -- Show the protection error
     END CATCH;
 
     -- Read CleanUp
     DECLARE @dataBaseName TSTRING = DB_NAME();
-    EXEC dsp.Log_trace @procId = @@PROCID, @message = 'Cleaning "{1}" database of "{0}"', @param0 = @@sERVERNAME, @param1 = @dataBaseName;
+    EXEC dsp.Log_trace @procId = @@PROCID, @message = 'Cleaning "{1}" database of "{0}"', @param0 = @@SERVERNAME, @param1 = @dataBaseName;
 
     -- CleanUp dspAuth if exists
-    IF (dsp.Metadata_objectExists('dspAuth', 'Init_cleanup', 'P') = 1) EXEC sys.sp_executesql @stmt='EXEC dspAuth.Init_cleanup';
+    IF (dsp.Metadata_objectExists('dspAuth', 'Init_cleanup', 'P') = 1) --
+        EXEC sys.sp_executesql @stmt = N'EXEC dspAuth.Init_cleanup';
 
     -- Cleanup dbo
     EXEC dbo.Init_cleanup;

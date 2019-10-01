@@ -74,6 +74,11 @@
     <Folder Include="api\" />
     <Folder Include="api\Stored Procedures\" />
     <Folder Include="dbo\User Defined Types\" />
+    <Folder Include="dspAuth\" />
+    <Folder Include="dspAuth\Tables\" />
+    <Folder Include="dspAuth\Views\" />
+    <Folder Include="dspAuth\Functions\" />
+    <Folder Include="dspAuth\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\api.sql" />
@@ -138,7 +143,6 @@
     <Build Include="dsp\Functions\ExceptionId_maintenance.sql" />
     <Build Include="dsp\Functions\ExceptionId_invokerAppVersion.sql" />
     <Build Include="dsp\Functions\ExceptionId_invalidParamSignature.sql" />
-    <Build Include="dsp\Functions\ExceptionId_invalidOperation.sql" />
     <Build Include="dsp\Functions\ExceptionId_invalidCaptcha.sql" />
     <Build Include="dsp\Functions\ExceptionId_invalidArgument.sql" />
     <Build Include="dsp\Functions\ExceptionId_general.sql" />
@@ -261,6 +265,47 @@
     <Build Include="dbo\User Defined Types\TDESCRIPTION.sql" />
     <Build Include="dbo\User Defined Types\TCONTEXT.sql" />
     <Build Include="dbo\User Defined Types\TBIGSTRING.sql" />
+    <Build Include="dsp\Stored Procedures\Exception_throwObjectAlreadyExists.sql" />
+    <Build Include="dspAuth\Tables\Permission.sql" />
+    <Build Include="dspAuth\Tables\PermissionGroup.sql" />
+    <Build Include="dspAuth\Tables\PermissionGroupPermission.sql" />
+    <Build Include="dspAuth\Tables\ObjectType.sql" />
+    <Build Include="dspAuth\Tables\Role.sql" />
+    <Build Include="dspAuth\Tables\RoleMemberRole.sql" />
+    <Build Include="dspAuth\Tables\SecurityDescriptorRolePermission.sql" />
+    <Build Include="dspAuth\Tables\SecurityDescriptorUserPermission.sql" />
+    <Build Include="dspAuth\Tables\SecurityDescriptorParent.sql" />
+    <Build Include="dspAuth\Tables\SecurityDescriptor.sql" />
+    <Build Include="dspAuth\Tables\RoleMemberUser.sql" />
+    <Build Include="dspAuth\Views\vw_rolePermission.sql" />
+    <Build Include="dspAuth\Functions\Role_hasUserMemberRecursive.sql" />
+    <Build Include="dspAuth\Functions\Role_isChildOf.sql" />
+    <Build Include="dspAuth\Functions\ObjectType_roleMember.sql" />
+    <Build Include="dspAuth\Functions\ObjectType_system.sql" />
+    <Build Include="dspAuth\Functions\ObjectType_user.sql" />
+    <Build Include="dspAuth\Functions\ObjectType_role.sql" />
+    <Build Include="dspAuth\Functions\SecurityDescriptor_parents.sql" />
+    <Build Include="dspAuth\Stored Procedures\Context_permissions.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_addMemberRole.sql" />
+    <Build Include="dspAuth\Stored Procedures\SecurityDescriptor_addParent.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_addMemberUser.sql" />
+    <Build Include="dspAuth\Stored Procedures\SecurityDescriptor_userPermissions.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_create.sql" />
+    <Build Include="dspAuth\Stored Procedures\Validate_checkAccess.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_delete.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_props.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_removeMemberRole.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_removeMemberUser.sql" />
+    <Build Include="dspAuth\Stored Procedures\SecurityDescriptor_securityDescriptorByObject.sql" />
+    <Build Include="dspAuth\Stored Procedures\SecurityDescriptor_addRolePermission.sql" />
+    <Build Include="dspAuth\Stored Procedures\SecurityDescriptor_addUserPermission.sql" />
+    <Build Include="dspAuth\Stored Procedures\SecurityDescriptor_create.sql" />
+    <Build Include="dspAuth\Stored Procedures\SecurityDescriptor_isParentOf.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_removeRoleMember.sql" />
+    <Build Include="dspAuth\Stored Procedures\Role_propsSet.sql" />
+    <Build Include="dspAuth\Stored Procedures\Permission_props.sql" />
+    <Build Include="dspAuth\Stored Procedures\Init_cleanup.sql" />
+    <Build Include="Security\dspAuth.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">
