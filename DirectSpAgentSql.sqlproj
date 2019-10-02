@@ -62,14 +62,14 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="tCodeQuality" />
+    <Folder Include="dsp.codeAnalysis" />
     <Folder Include="Security" />
     <Folder Include="dsp\" />
     <Folder Include="dsp\Tables\" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dsp\Functions\" />
-    <Folder Include="tCodeQuality\Stored Procedures\" />
+    <Folder Include="dsp.codeAnalysis\Stored Procedures" />
     <Folder Include="dsp\Stored Procedures\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="api\" />
@@ -80,14 +80,14 @@
     <Folder Include="dspAuth\Views\" />
     <Folder Include="dspAuth\Functions\" />
     <Folder Include="dspAuth\Stored Procedures\" />
-    <Folder Include="tCodeQuality\Views\" />
-    <Folder Include="tCodeQuality\Functions\" />
+    <Folder Include="dsp.codeAnalysis\Views" />
+    <Folder Include="dsp.codeAnalysis\Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\api.sql" />
     <Build Include="Security\dsp.sql" />
     <Build Include="Security\str.sql" />
-    <Build Include="Security\tCodeQuality.sql" />
+    <Build Include="Security\dspCodeAnalysis.sql" />
     <Build Include="dsp\Tables\StringTable.sql" />
     <Build Include="dsp\Tables\Setting.sql" />
     <Build Include="dsp\Tables\LogUser.sql" />
@@ -170,22 +170,22 @@
     <Build Include="dsp\Functions\Const_maintenanceMode_readonly.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_none.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_block.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\Test_runAll.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\Test_%40compareConstFunctionReturnValueWithScriptValue.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\Test_%40columnsWithBigintTypes.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test ValidateSubstitutionOfFunctioncallWithInteger.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Relations for ForeignKeys.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Pagination.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test None of tests should have RETURN phrase.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Description must be nvarchar_max_.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Declare generic types INT, TSTRING.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Declare BIGINT.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Const Functions must have WITH SCHEMABINDING.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test API must have WITH EXECUTE AS OWNER.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test API must have DataAccessMode annotation.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test API must have Context_verify.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test API must have Context TCONTEXT OUT.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\Test_runAll.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\Test_@compareConstFunctionReturnValueWithScriptValue.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\Test_@columnsWithBigintTypes.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test ValidateSubstitutionOfFunctioncallWithInteger.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test Relations for ForeignKeys.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test Pagination.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test None of tests should have RETURN phrase.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test Description must be nvarchar_max_.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test Declare generic types INT, TSTRING.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test Declare BIGINT.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test Const Functions must have WITH SCHEMABINDING.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test API must have WITH EXECUTE AS OWNER.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test API must have DataAccessMode annotation.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test API must have Context_verify.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test API must have Context TCONTEXT OUT.sql" />
     <Build Include="dsp\Stored Procedures\Validate_checkNotNull.sql" />
     <Build Include="dsp\Stored Procedures\Util_verifyServerName.sql" />
     <Build Include="dsp\Stored Procedures\Util_protectProductionEnvironment.sql" />
@@ -303,11 +303,12 @@
     <Build Include="dspAuth\Stored Procedures\Init_cleanup.sql" />
     <Build Include="Security\dspAuth.sql" />
     <Build Include="dsp\Stored Procedures\Init_deleteAllDatabaseRecords.sql" />
-    <Build Include="tCodeQuality\Views\ScriptView.sql" />
-    <Build Include="tCodeQuality\Functions\Test_%40removeWhitespacesBig.sql" />
-    <Build Include="tCodeQuality\Functions\Test_%40removeWhitespaces.sql" />
+    <Build Include="dsp.codeAnalysis\Views\ScriptView.sql" />
+    <Build Include="dsp.codeAnalysis\Functions\Test_@removeWhitespacesBig.sql" />
+    <Build Include="dsp.codeAnalysis\Functions\Test_@removeWhitespaces.sql" />
     <Build Include="dsp\Functions\Convert_toSqlVariant.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Wrong use of private method.sql" />
+    <Build Include="dsp.codeAnalysis\Stored Procedures\test Wrong use of private method.sql" />
+    <Build Include="Security\Schema1.hhh.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">

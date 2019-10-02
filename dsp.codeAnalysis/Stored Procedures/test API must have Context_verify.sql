@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE tCodeQuality.[test API must have Context_verify]
+CREATE PROCEDURE dspCodeAnalysis.[test API must have Context_verify]
 AS
 BEGIN
     DECLARE @msg TSTRING;
@@ -7,7 +7,7 @@ BEGIN
 
     -- Looking for "Context_verify" in api procedure
     SELECT  @procedureName = SV.fullName
-      FROM  tCodeQuality.ScriptView AS SV
+      FROM  dspCodeAnalysis.ScriptView AS SV
      WHERE  (SV.schemaName IN ( 'api' )) AND SV.type = 'P' AND  CHARINDEX('dsp.context_verify', SV.scriptNoSpace) = 0;
 
     IF (@procedureName IS NOT NULL)

@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [tCodeQuality].[test Description must be nvarchar(max)]
+CREATE PROCEDURE [dspCodeAnalysis].[test Description must be nvarchar(max)]
 AS
 BEGIN
 	DECLARE @msg TSTRING;

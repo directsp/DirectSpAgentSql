@@ -1,16 +1,16 @@
-﻿CREATE PROC tCodeQuality.[test API must have Context TCONTEXT OUT]
+﻿CREATE PROC dspCodeAnalysis.[test API must have Context TCONTEXT OUT]
 AS
 BEGIN
 
     -- Declearing pattern
-    DECLARE @pattern_context TCONTEXT = tCodeQuality.Test_@removeWhitespaces('@context TCONTEXT OUT');
+    DECLARE @pattern_context TCONTEXT = dspCodeAnalysis.Test_@removeWhitespaces('@context TCONTEXT OUT');
 
     DECLARE @msg TSTRING;
     DECLARE @procedureName TSTRING;
 
     -- Looking for "@context TCONTEXT OUT" phrase
     SELECT  @procedureName = SV.fullName
-      FROM  tCodeQuality.ScriptView AS SV
+      FROM  dspCodeAnalysis.ScriptView AS SV
      WHERE  CHARINDEX(@pattern_context, SV.scriptNoSpace) < 1 AND   SV.schemaName = 'api' AND   SV.type = 'P';
 
     IF (@procedureName IS NOT NULL)

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [tCodeQuality].[test Wrong use of private method]
+﻿CREATE PROCEDURE [dspCodeAnalysis].[test Wrong use of private method]
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -13,7 +13,7 @@ BEGIN
 	DECLARE _cursor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR --
 	SELECT	SV.schemaName, SV.scriptName, SV.script, --
 		SUBSTRING(SV.scriptName, 1, CHARINDEX('_', SV.scriptName) - 1) AS className
-	FROM	tCodeQuality.ScriptView AS SV
+	FROM	dspCodeAnalysis.ScriptView AS SV
 	WHERE	CHARINDEX('_', SV.scriptName) > 0;
 
 	OPEN _cursor;

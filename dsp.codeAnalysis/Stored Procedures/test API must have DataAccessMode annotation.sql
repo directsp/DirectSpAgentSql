@@ -1,9 +1,9 @@
-﻿CREATE PROCEDURE [tCodeQuality].[test API must have DataAccessMode annotation]
+﻿CREATE PROCEDURE [dspCodeAnalysis].[test API must have DataAccessMode annotation]
 AS
 BEGIN
     DECLARE @msg TBIGSTRING = --
             (   SELECT  CHAR(10) + VPD.fullName
-                  FROM  tCodeQuality.ScriptView AS VPD 
+                  FROM  dspCodeAnalysis.ScriptView AS VPD 
                  WHERE  VPD.type = 'P' AND  VPD.schemaName = 'api' AND --
                         JSON_VALUE(dsp.Metadata_storeProcedureAnnotation(VPD.fullName), '$.dataAccessMode') IS NULL
                 FOR XML PATH(''));
@@ -14,7 +14,7 @@ BEGIN
 
     SET @msg = --
             (   SELECT  CHAR(10) + VPD.fullName
-                  FROM  tCodeQuality.ScriptView AS VPD 
+                  FROM  dspCodeAnalysis.ScriptView AS VPD 
                  WHERE  VPD.type = 'P' AND  VPD.schemaName = 'api' --
                     AND JSON_VALUE(dsp.Metadata_storeProcedureAnnotation(VPD.fullName), '$.dataAccessMode') IS NOT NULL --
                     AND JSON_VALUE(dsp.Metadata_storeProcedureAnnotation(VPD.fullName), '$.dataAccessMode') NOT IN ( 'read', 'write', 'readSnapshot' )

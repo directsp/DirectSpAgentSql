@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION tCodeQuality.Test_@removeWhitespacesBig ( @string TBIGSTRING )
+﻿CREATE FUNCTION dspCodeAnalysis.Test_@removeWhitespacesBig ( @string TBIGSTRING )
 RETURNS TBIGSTRING
 AS
 BEGIN

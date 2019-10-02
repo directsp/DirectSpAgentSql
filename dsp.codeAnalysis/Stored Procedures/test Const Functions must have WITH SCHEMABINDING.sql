@@ -1,16 +1,16 @@
-﻿CREATE PROCEDURE tCodeQuality.[test Const Functions must have WITH SCHEMABINDING]
+﻿CREATE PROCEDURE dspCodeAnalysis.[test Const Functions must have WITH SCHEMABINDING]
 AS
 BEGIN
 
     -- Declaring pattern
-    DECLARE @pattern_context TCONTEXT = tCodeQuality.Test_@removeWhitespaces('WITH SCHEMABINDING');
+    DECLARE @pattern_context TCONTEXT = dspCodeAnalysis.Test_@removeWhitespaces('WITH SCHEMABINDING');
 
     DECLARE @msg TSTRING;
     DECLARE @functionName TSTRING;
 
     -- Looking for "@context TCONTEXT OUT" phrase
     SELECT  @functionName = SV.fullName
-      FROM  tCodeQuality.ScriptView AS SV
+      FROM  dspCodeAnalysis.ScriptView AS SV
      WHERE  (SV.schemaName = 'const' OR CHARINDEX('Const_', SV.scriptName) = 1) --
         AND CHARINDEX(@pattern_context, SV.scriptNoSpace) < 1 AND  CHARINDEX('return.tstring', SV.scriptNoSpace) = 0;
 

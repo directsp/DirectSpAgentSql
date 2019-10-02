@@ -8,8 +8,6 @@ BEGIN
     VALUES (@roleName, @ownerSecurityDescriptorId, @auditUserId);
     SET @roleId = SCOPE_IDENTITY();
 
-    DECLARE @securityDescriptorId BIGINT;
     DECLARE @objectTypeId INT = dspAuth.ObjectType_role();
     EXEC dspAuth.SecurityDescriptor_create @objectId = @roleId, @objectTypeId = @objectTypeId;
-
 END;

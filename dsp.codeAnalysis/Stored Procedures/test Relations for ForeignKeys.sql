@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE tCodeQuality.[test Relations for ForeignKeys]
+﻿CREATE PROCEDURE dspCodeAnalysis.[test Relations for ForeignKeys]
 AS
 BEGIN
     SET NOCOUNT ON;

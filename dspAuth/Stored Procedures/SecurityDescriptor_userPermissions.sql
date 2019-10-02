@@ -1,9 +1,9 @@
-﻿CREATE PROC dspAuth.SecurityDescriptor_userPermissions
+﻿CREATE PROC [dspAuth].[SecurityDescriptor_userPermissions]
     @objectId BIGINT, @objectTypeId INT, @userId INT, @permissions TSTRING = NULL OUT
 AS
 BEGIN
     -- Fill all permission groups in @permissionGroups
-    DECLARE @permissionGroups TABLE (permissionGroupId INT);
+    DECLARE @permissionGroups TABLE (permissionGroupId INT NOT NULL);
     DECLARE @roleId INT;
     DECLARE @permissionGroupId INT;
     SET @permissions = '{}';

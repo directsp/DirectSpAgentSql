@@ -1,11 +1,11 @@
-﻿CREATE PROC tCodeQuality.[test ValidateSubstitutionOfFunctioncallWithInteger]
+﻿CREATE PROC dspCodeAnalysis.[test ValidateSubstitutionOfFunctioncallWithInteger]
 AS
 BEGIN
     SET NOCOUNT ON;
     -- Getting Stored Procedures and Functions definition
     DECLARE _cursor CURSOR FAST_FORWARD FORWARD_ONLY FORWARD_ONLY LOCAL FOR
     SELECT  SV.schemaName, SV.schemaName, SV.script
-      FROM  tCodeQuality.ScriptView AS SV
+      FROM  dspCodeAnalysis.ScriptView AS SV
 
     OPEN _cursor;
 
@@ -22,7 +22,7 @@ BEGIN
             BREAK;
 
         -- Removing Space, Tab, line feed
-        SET @script = tCodeQuality.Test_@removeWhitespacesBig(@script);
+        SET @script = dspCodeAnalysis.Test_@removeWhitespacesBig(@script);
 
         -- Cutting out text before /*co+nst
         DECLARE @startIndex INT = CHARINDEX(@pattern, @script);
@@ -35,7 +35,7 @@ BEGIN
             DECLARE @constValueInFunction INT;
             DECLARE @constValueInScript INT;
             DECLARE @isMatch BIT;
-            EXEC tCodeQuality.Test_@compareConstFunctionReturnValueWithScriptValue @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
+            EXEC dspCodeAnalysis.Test_@compareConstFunctionReturnValueWithScriptValue @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
                 @constValueInFunction = @constValueInFunction OUTPUT, @constValueInScript = @constValueInScript OUTPUT, @isMatch = @isMatch OUTPUT;
 
             IF (@isMatch = 0)

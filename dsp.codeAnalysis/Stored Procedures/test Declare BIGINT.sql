@@ -1,4 +1,4 @@
-﻿CREATE PROC tCodeQuality.[test Declare BIGINT]
+﻿CREATE PROC dspCodeAnalysis.[test Declare BIGINT]
 AS
 BEGIN
     -- Getting procedures which have bigint columns with int declaration
@@ -7,7 +7,7 @@ BEGIN
         DEFINITION TBIGSTRING NULL,
         columnName TSTRING NULL);
     INSERT  @procInfo (schemaName, procedureName, DEFINITION, columnName)
-    EXEC tCodeQuality.Test_@columnsWithBigintTypes;
+    EXEC dspCodeAnalysis.Test_@columnsWithBigintTypes;
 
     -- Checking if there is any wrong type for Bigint Columns
     IF EXISTS (SELECT   1 FROM  @procInfo AS PI)

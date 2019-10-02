@@ -1,4 +1,4 @@
-﻿CREATE PROC tCodeQuality.Test_@compareConstFunctionReturnValueWithScriptValue
+﻿CREATE PROC dspCodeAnalysis.Test_@compareConstFunctionReturnValueWithScriptValue
 	@script TBIGSTRING OUT, @constFunctionName TSTRING OUT, @constValueInFunction INT OUT, @constValueInScript INT OUT, @isMatch BIT OUT
 AS
 BEGIN
