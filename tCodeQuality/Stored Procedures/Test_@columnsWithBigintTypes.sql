@@ -12,6 +12,6 @@ BEGIN
       FROM  BigIntColumns AS BC, sys.procedures AS P
                                  INNER JOIN sys.schemas AS S ON S.schema_id = P.schema_id
                                  INNER JOIN sys.sql_modules AS SM ON SM.object_id = P.object_id
-     WHERE  dsp.String_removeWhitespacesBig(REPLACE(SM.definition, 'INTO', '')) LIKE '%' + BC.columnName + 'INT%' --
+     WHERE  tCodeQuality.Test_@removeWhitespacesBig(REPLACE(SM.definition, 'INTO', '')) LIKE '%' + BC.columnName + 'INT%' --
         AND S.name <> 'tSQLt';
 END;

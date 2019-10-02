@@ -42,30 +42,32 @@ BEGIN
                              CHARINDEX(LOWER(ISNULL(dsp.Convert_toString(ep.value), '')), '/nofk') <> 0)
             CONTINUE;
 
-		-- check for foreign key existance
+        -- check for foreign key existance
         IF NOT EXISTS (   SELECT    1
                             FROM    sys.foreign_keys AS F
-                                    INNER JOIN sys.foreign_key_columns AS fc ON F.object_id = fc.constraint_object_id
+                                    INNER JOIN sys.foreign_key_columns AS FC ON F.object_id = FC.constraint_object_id
                            WHERE (F.parent_object_id = @tableId OR  F.referenced_object_id = @tableId) --
+                              AND   FC.parent_column_id = @columnId --
                               AND
-                              (COL_NAME(fc.parent_object_id, fc.parent_column_id) = @columnName OR
-                               COL_NAME(fc.referenced_object_id, fc.referenced_column_id) = @columnName))
+                              (COL_NAME(FC.parent_object_id, FC.parent_column_id) = @columnName OR
+                               COL_NAME(FC.referenced_object_id, FC.referenced_column_id) = @columnName))
         BEGIN
-            DECLARE @msg TSTRING = 'Relation does not exist for ' + @tableName + '.' + @columnName;
+            DECLARE @msg TSTRING = 'FK does not exist for ' + @tableName + '.' + @columnName;
             EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
         END;
 
-		-- validate foreign key name
+        -- validate foreign key name
         DECLARE @flName TSTRING = 'FK_' + @tableName + '_' + @columnName;
         IF EXISTS (   SELECT    1
                         FROM    sys.foreign_keys AS F
                                 INNER JOIN sys.foreign_key_columns AS fc ON F.object_id = fc.constraint_object_id
                        WHERE (F.parent_object_id = @tableId OR  F.referenced_object_id = @tableId) --
+                          AND   fc.parent_column_id = @columnId --
                           AND
                           (COL_NAME(fc.parent_object_id, fc.parent_column_id) = @columnName OR
                            COL_NAME(fc.referenced_object_id, fc.referenced_column_id) = @columnName) AND  F.name <> @flName)
         BEGIN
-            SET @msg = 'Relation name is not correct for ' + @tableName + '.' + @columnName;
+            SET @msg = 'FK name is not correct for ' + @tableName + '.' + @columnName + '. It should be: ' + @flName;
             EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = @msg;
         END;
 

@@ -19,8 +19,8 @@ BEGIN
 	IF (@elipsis = 1)
 	BEGIN
 		DECLARE @lastString TSTRING = SUBSTRING(@message, LEN(@message), 1);
-		IF (@lastString NOT LIKE '[.?!:>;]')
-			SET @message = @message + ' ...';
+		IF (@lastString NOT LIKE N'[.?!:>;]')
+			SET @message = @message + N' ...';
 	END;
 
 	-- Set Schema and ProcName

@@ -14,6 +14,20 @@ ALTER TABLE [dspAuth].[SecurityDescriptor] NOCHECK CONSTRAINT [FK_SecurityDescri
 
 
 GO
+ALTER TABLE [dspAuth].[SecurityDescriptor] NOCHECK CONSTRAINT [FK_SecurityDescriptor_objectTypeId];
+
+
+
+
+GO
 CREATE UNIQUE NONCLUSTERED INDEX [IX_objectTypeId]
     ON [dspAuth].[SecurityDescriptor]([objectTypeId] ASC, [objectId] ASC);
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'', @level0type = N'SCHEMA', @level0name = N'dspAuth', @level1type = N'TABLE', @level1name = N'SecurityDescriptor', @level2type = N'COLUMN', @level2name = N'securityDescriptorId';
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'/NoFK', @level0type = N'SCHEMA', @level0name = N'dspAuth', @level1type = N'TABLE', @level1name = N'SecurityDescriptor', @level2type = N'COLUMN', @level2name = N'objectId';
 

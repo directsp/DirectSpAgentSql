@@ -1,7 +1,7 @@
-﻿CREATE   PROCEDURE [dspAuth].[SecurityDescriptor_addRolePermission]
+﻿CREATE   PROCEDURE dspAuth.SecurityDescriptor_addRolePermission
     @securityDescriptorId BIGINT, @permissionGroupId INT, @roleId INT, @auditUserId INT
 AS
 BEGIN
-    INSERT  dspAuth.SecurityDescriptorRolePermission (securityDescriptorId, roleId, permissionGroupId, auditUserId)
+    INSERT  dspAuth.SecurityDescriptorRolePermission (securityDescriptorId, roleId, permissionGroupId, modifiedByUserId)
     VALUES (@securityDescriptorId, @roleId, @permissionGroupId, @auditUserId);
 END;

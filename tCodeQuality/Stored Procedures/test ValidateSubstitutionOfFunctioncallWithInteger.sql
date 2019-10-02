@@ -4,9 +4,8 @@ BEGIN
     SET NOCOUNT ON;
     -- Getting Stored Procedures and Functions definition
     DECLARE _cursor CURSOR FAST_FORWARD FORWARD_ONLY FORWARD_ONLY LOCAL FOR
-    SELECT  PD.schemaName, PD.objectName, PD.script
-      FROM  dsp.Metadata_proceduresDefination() AS PD
-     WHERE  PD.schemaName IN ( 'api', 'dbo' );
+    SELECT  SV.schemaName, SV.schemaName, SV.script
+      FROM  tCodeQuality.ScriptView AS SV
 
     OPEN _cursor;
 
@@ -23,14 +22,11 @@ BEGIN
             BREAK;
 
         -- Removing Space, Tab, line feed
-        SET @script = dsp.String_removeWhitespacesBig(@script);
+        SET @script = tCodeQuality.Test_@removeWhitespacesBig(@script);
 
         -- Cutting out text before /*co+nst
         DECLARE @startIndex INT = CHARINDEX(@pattern, @script);
         SET @script = SUBSTRING(@script, @startIndex - 1, (LEN(@script) - @startIndex) + 1);
-
-        IF (CHARINDEX(@pattern, @script) = 0)
-            CONTINUE;
 
         -- Validate Function Id with Corresponding value
         WHILE (CHARINDEX(@pattern, @script) > 0)

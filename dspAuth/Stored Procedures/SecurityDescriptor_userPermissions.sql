@@ -14,7 +14,7 @@ BEGIN
         @securityDescriptorId = @securityDescriptorId OUTPUT;
 
     -- Get all parent of SecurityDescriptor
-    DECLARE @securityDescriptor_parents TABLE (securityDescriptorId BIGINT);
+    DECLARE @securityDescriptor_parents TABLE (securityDescriptorId BIGINT NOT NULL);
     INSERT  @securityDescriptor_parents
     SELECT  SOPG.securityDescriptorId
       FROM  dspAuth.SecurityDescriptor_parents(@securityDescriptorId) AS SOPG;

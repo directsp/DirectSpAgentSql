@@ -8,6 +8,6 @@ BEGIN
      WHERE  SD.objectTypeId = @objectTypeId AND SD.objectId = @objectId;
 
     IF (@securityDescriptorId IS NULL) --
-        EXEC dsp.Exception_throwAccessDeniedOrObjectNotExists @procId = @@PROCID, @message = 'AccessDeniedOrObjectNotExists';
+        EXEC dsp.Exception_throwAccessDeniedOrObjectNotExists @procId = @@PROCID;
 
 END;

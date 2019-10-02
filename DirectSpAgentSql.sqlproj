@@ -50,6 +50,7 @@
     <WarningLevel>4</WarningLevel>
     <SuppressTSqlWarnings>
     </SuppressTSqlWarnings>
+    <SqlCodeAnalysisRules>-Microsoft.Rules.Data.SR0004;-Microsoft.Rules.Data.SR0005;-Microsoft.Rules.Data.SR0011;-Microsoft.Rules.Data.SR0013;-Microsoft.Rules.Data.SR0014</SqlCodeAnalysisRules>
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
@@ -79,6 +80,8 @@
     <Folder Include="dspAuth\Views\" />
     <Folder Include="dspAuth\Functions\" />
     <Folder Include="dspAuth\Stored Procedures\" />
+    <Folder Include="tCodeQuality\Views\" />
+    <Folder Include="tCodeQuality\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\api.sql" />
@@ -99,9 +102,6 @@
     <Build Include="dsp\Functions\Synonym_objectExists.sql" />
     <Build Include="dsp\Functions\StringTable_value.sql" />
     <Build Include="dsp\Functions\String_replaceEnter.sql" />
-    <Build Include="dsp\Functions\String_removeWhitespacesBig.sql" />
-    <Build Include="dsp\Functions\String_removeWhitespaces.sql" />
-    <Build Include="dsp\Functions\String_%40formatParam.sql" />
     <Build Include="dsp\Functions\Setting_systemUserId.sql" />
     <Build Include="dsp\Functions\Path_removeExtension.sql" />
     <Build Include="dsp\Functions\Param_isSetString.sql" />
@@ -164,18 +164,15 @@
     <Build Include="dsp\Functions\DateTime_endOfDayTime.sql" />
     <Build Include="dsp\Functions\Database_isReadOnly.sql" />
     <Build Include="dsp\Functions\Convert_toString.sql" />
-    <Build Include="dsp\Functions\Convert_toSqlvariant.sql" />
     <Build Include="dsp\Functions\Convert_binaryToBase64.sql" />
     <Build Include="dsp\Functions\Convert_binaryFromBase64.sql" />
     <Build Include="dsp\Functions\Context_userId.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_readonly.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_none.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_block.sql" />
-    <Build Include="dsp\Functions\Metadata_proceduresDefination.sql" />
     <Build Include="tCodeQuality\Stored Procedures\Test_runAll.sql" />
     <Build Include="tCodeQuality\Stored Procedures\Test_%40compareConstFunctionReturnValueWithScriptValue.sql" />
     <Build Include="tCodeQuality\Stored Procedures\Test_%40columnsWithBigintTypes.sql" />
-    <Build Include="tCodeQuality\Stored Procedures\test Wrong use of Private class.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test ValidateSubstitutionOfFunctioncallWithInteger.sql" />
     <Build Include="tCodeQuality\Stored Procedures\test Relations for ForeignKeys.sql" />
@@ -246,7 +243,6 @@
     <Build Include="dsp\Stored Procedures\Audit_warning.sql" />
     <Build Include="dsp\Stored Procedures\Audit_trace.sql" />
     <Build Include="dsp\Stored Procedures\Audit_error.sql" />
-    <Build Include="dsp\Stored Procedures\Assembly_dropObjects.sql" />
     <Build Include="dbo\Stored Procedures\User_userIdByAuthUserId.sql" />
     <Build Include="dbo\Stored Procedures\Setting_propsSet.sql" />
     <Build Include="dbo\Stored Procedures\Setting_props.sql" />
@@ -307,6 +303,11 @@
     <Build Include="dspAuth\Stored Procedures\Init_cleanup.sql" />
     <Build Include="Security\dspAuth.sql" />
     <Build Include="dsp\Stored Procedures\Init_deleteAllDatabaseRecords.sql" />
+    <Build Include="tCodeQuality\Views\ScriptView.sql" />
+    <Build Include="tCodeQuality\Functions\Test_%40removeWhitespacesBig.sql" />
+    <Build Include="tCodeQuality\Functions\Test_%40removeWhitespaces.sql" />
+    <Build Include="dsp\Functions\Convert_toSqlVariant.sql" />
+    <Build Include="tCodeQuality\Stored Procedures\test Wrong use of private method.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">

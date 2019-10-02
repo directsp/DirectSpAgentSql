@@ -1,6 +1,6 @@
 ﻿
-
-CREATE FUNCTION [dsp].[Convert_toSqlvariant] (@value TBIGSTRING)
+-- /dsp_suppress:1010
+CREATE FUNCTION dsp.Convert_toSqlVariant (@value TBIGSTRING)
 RETURNS SQL_VARIANT
 AS
 BEGIN

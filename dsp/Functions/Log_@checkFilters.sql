@@ -6,16 +6,16 @@ AS
 BEGIN
 	-- return 0 if @message likes exclude filters
 	IF EXISTS( SELECT 1 FROM dsp.LogFilterSetting AS LFS 
-		WHERE LFS.logUserId = SYSTEM_USER AND LFS.[isExludedFilter] = 1 AND @message LIKE '%'+ LFS.[filter] + '%' )
+		WHERE LFS.logUserId = SYSTEM_USER AND LFS.isExludedFilter = 1 AND @message LIKE '%'+ LFS.filter + '%' )
 		RETURN 0;
 
 	-- return 1 if include filters are empty
-	IF NOT EXISTS( SELECT 1 FROM dsp.LogFilterSetting AS LFS WHERE LFS.logUserId = SYSTEM_USER AND LFS.[isExludedFilter] = 0)
+	IF NOT EXISTS( SELECT 1 FROM dsp.LogFilterSetting AS LFS WHERE LFS.logUserId = SYSTEM_USER AND LFS.isExludedFilter = 0)
 		RETURN 1;
 	
 	--  return 1 if @message likes include filters  
 	IF EXISTS( SELECT 1 FROM dsp.LogFilterSetting AS LFS 
-		WHERE LFS.logUserId = SYSTEM_USER AND LFS.[isExludedFilter] = 0 AND @message LIKE '%'+ LFS.[filter] + '%' )
+		WHERE LFS.logUserId = SYSTEM_USER AND LFS.isExludedFilter = 0 AND @message LIKE '%'+ LFS.filter + '%' )
 		RETURN 1;
 
 	RETURN 0;
