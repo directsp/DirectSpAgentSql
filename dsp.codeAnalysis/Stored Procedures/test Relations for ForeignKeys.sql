@@ -1,8 +1,9 @@
-﻿CREATE PROCEDURE dspCodeAnalysis.[test Relations for ForeignKeys]
+﻿CREATE PROCEDURE [dspCodeAnalysis].[test Relations for ForeignKeys]
 AS
 BEGIN
     SET NOCOUNT ON;
 
+    DECLARE @schemaName TSTRING;
     DECLARE @tableName TSTRING;
     DECLARE @columnName TSTRING;
     DECLARE @tableId INT;
@@ -10,7 +11,7 @@ BEGIN
 
     -- select all non primary column
     DECLARE _columnCusrsor CURSOR LOCAL FAST_FORWARD READ_ONLY FOR
-    SELECT DISTINCT T.name AS tableName, C.name AS columnName, T.object_id AS tableId, C.column_id AS columnId
+    SELECT DISTINCT SCHEMA_NAME(T.schema_id) AS schemaName, T.name AS tableName, C.name AS columnName, T.object_id, C.column_id AS columnId
       FROM  sys.tables T
             LEFT JOIN sys.columns C ON T.object_id = C.object_id
             LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS KU ON SCHEMA_NAME(T.schema_id) = KU.TABLE_SCHEMA AND   T.name = KU.TABLE_NAME AND
@@ -18,14 +19,15 @@ BEGIN
             LEFT JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC ON TC.CONSTRAINT_NAME = KU.CONSTRAINT_NAME AND TC.TABLE_SCHEMA = KU.TABLE_SCHEMA AND
                                                                     TC.TABLE_NAME = KU.TABLE_NAME
             LEFT JOIN sys.extended_properties P2 ON T.object_id = P2.major_id AND   C.column_id = P2.minor_id AND   P2.name = 'MS_Description'
-     WHERE  C.name LIKE N'%Id' AND  (TC.CONSTRAINT_TYPE IS NULL OR  TC.CONSTRAINT_TYPE <> 'PRIMARY KEY');
+     WHERE  C.name LIKE N'%Id' AND  (TC.CONSTRAINT_TYPE IS NULL OR  TC.CONSTRAINT_TYPE <> 'PRIMARY KEY') AND
+            dspCodeAnalysis.CA_@IsTargetSchema(SCHEMA_NAME(T.schema_id)) = 1;
 
     OPEN _columnCusrsor;
 
     WHILE (1 = 1)
     BEGIN
         FETCH NEXT FROM _columnCusrsor
-         INTO @tableName, @columnName, @tableId, @columnId;
+         INTO @schemaName, @tableName, @columnName, @tableId, @columnId;
         IF (@@FETCH_STATUS <> 0)
             BREAK;
 

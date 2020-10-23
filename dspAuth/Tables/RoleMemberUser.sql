@@ -13,6 +13,16 @@ GO
 ALTER TABLE [dspAuth].[RoleMemberUser] NOCHECK CONSTRAINT [FK_RoleMemberUser_memberUserId];
 
 
+GO
+ALTER TABLE [dspAuth].[RoleMemberUser] NOCHECK CONSTRAINT [FK_RoleMemberUser_modifiedByUserId];
+
+
+
+
+GO
+ALTER TABLE [dspAuth].[RoleMemberUser] NOCHECK CONSTRAINT [FK_RoleMemberUser_memberUserId];
+
+
 
 
 GO

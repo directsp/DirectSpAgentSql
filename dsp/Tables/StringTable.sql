@@ -8,5 +8,11 @@
 
 
 GO
+EXECUTE sp_tableoption @TableNamePattern = N'[dsp].[StringTable]', @OptionName = N'large value types out of row', @OptionValue = N'1';
+
+
+
+
+GO
 EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'/NoFK', @level0type = N'SCHEMA', @level0name = N'dsp', @level1type = N'TABLE', @level1name = N'StringTable', @level2type = N'COLUMN', @level2name = N'stringId';
 

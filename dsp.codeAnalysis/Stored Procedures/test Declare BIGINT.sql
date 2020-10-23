@@ -7,7 +7,7 @@ BEGIN
         DEFINITION TBIGSTRING NULL,
         columnName TSTRING NULL);
     INSERT  @procInfo (schemaName, procedureName, DEFINITION, columnName)
-    EXEC dspCodeAnalysis.Test_@columnsWithBigintTypes;
+    EXEC dspCodeAnalysis.CA_@columnsWithBigintTypes;
 
     -- Checking if there is any wrong type for Bigint Columns
     IF EXISTS (SELECT   1 FROM  @procInfo AS PI)

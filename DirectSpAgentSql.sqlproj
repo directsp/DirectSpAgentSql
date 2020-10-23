@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{0f3e33ed-980a-4c93-83d4-5d13909cbbc8}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql140DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -82,6 +82,10 @@
     <Folder Include="dspAuth\Stored Procedures\" />
     <Folder Include="dsp.codeAnalysis\Views" />
     <Folder Include="dsp.codeAnalysis\Functions" />
+    <Folder Include="dspCodeAnalysis\" />
+    <Folder Include="dspCodeAnalysis\Views\" />
+    <Folder Include="dspCodeAnalysis\Functions\" />
+    <Folder Include="dspCodeAnalysis\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\api.sql" />
@@ -170,9 +174,6 @@
     <Build Include="dsp\Functions\Const_maintenanceMode_readonly.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_none.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_block.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\Test_runAll.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\Test_@compareConstFunctionReturnValueWithScriptValue.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\Test_@columnsWithBigintTypes.sql" />
     <Build Include="dsp.codeAnalysis\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
     <Build Include="dsp.codeAnalysis\Stored Procedures\test ValidateSubstitutionOfFunctioncallWithInteger.sql" />
     <Build Include="dsp.codeAnalysis\Stored Procedures\test Relations for ForeignKeys.sql" />
@@ -190,7 +191,6 @@
     <Build Include="dsp\Stored Procedures\Util_verifyServerName.sql" />
     <Build Include="dsp\Stored Procedures\Util_protectProductionEnvironment.sql" />
     <Build Include="dsp\Stored Procedures\Util_createRandomString.sql" />
-    <Build Include="dsp\Stored Procedures\Table_updateToUseBlobForFields.sql" />
     <Build Include="dsp\Stored Procedures\Table_compareData.sql" />
     <Build Include="dsp\Stored Procedures\System_api.sql" />
     <Build Include="dsp\Stored Procedures\Synonym_create.sql" />
@@ -219,8 +219,6 @@
     <Build Include="dsp\Stored Procedures\Lock_isHold.sql" />
     <Build Include="dsp\Stored Procedures\Lock_hold.sql" />
     <Build Include="dsp\Stored Procedures\Lock_create.sql" />
-    <Build Include="dsp\Stored Procedures\Job_delete.sql" />
-    <Build Include="dsp\Stored Procedures\Job_create.sql" />
     <Build Include="dsp\Stored Procedures\Init_recreateEnumFunctions.sql" />
     <Build Include="dsp\Stored Procedures\Init_cleanup.sql" />
     <Build Include="dsp\Stored Procedures\Init_%40start.sql" />
@@ -304,21 +302,27 @@
     <Build Include="Security\dspAuth.sql" />
     <Build Include="dsp\Stored Procedures\Init_deleteAllDatabaseRecords.sql" />
     <Build Include="dsp.codeAnalysis\Views\ScriptView.sql" />
-    <Build Include="dsp.codeAnalysis\Functions\Test_@removeWhitespacesBig.sql" />
     <Build Include="dsp.codeAnalysis\Functions\Test_@removeWhitespaces.sql" />
     <Build Include="dsp\Functions\Convert_toSqlVariant.sql" />
     <Build Include="dsp.codeAnalysis\Stored Procedures\test Wrong use of private method.sql" />
-    <Build Include="Security\Schema1.hhh.sql" />
+    <Build Include="dspCodeAnalysis\Views\TableView.sql" />
+    <Build Include="dspCodeAnalysis\Functions\CA_%40removeWhitespacesBig.sql" />
+    <Build Include="dspCodeAnalysis\Functions\CA_%40IsTargetSchema.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test Use blob for tables with big strings.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\CA_runAll.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\CA_%40compareConstFunctionReturnValueWithScriptValue.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\CA_%40columnsWithBigintTypes.sql" />
+    <Build Include="dsp\Stored Procedures\Table_setBlob.sql" />
   </ItemGroup>
   <ItemGroup>
-    <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac">
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\master.dacpac</HintPath>
-      <SuppressMissingDependenciesErrors>True</SuppressMissingDependenciesErrors>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\150\SqlSchemas\master.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\150\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
-    <ArtifactReference Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\msdb.dacpac">
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\SQLDB\Extensions\SqlServer\140\SqlSchemas\msdb.dacpac</HintPath>
-      <SuppressMissingDependenciesErrors>True</SuppressMissingDependenciesErrors>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\150\SqlSchemas\msdb.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\150\SqlSchemas\msdb.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>msdb</DatabaseVariableLiteralValue>
     </ArtifactReference>
   </ItemGroup>
@@ -330,5 +334,9 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DirectSpAgentSql.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DirectSpAgentSql.publish.xml" />
+    <None Include="VhCompare.scmp" />
   </ItemGroup>
 </Project>

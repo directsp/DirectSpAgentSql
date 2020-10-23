@@ -6,3 +6,9 @@
     CONSTRAINT [IX_permissionName] UNIQUE NONCLUSTERED ([permissionName] ASC)
 );
 
+
+GO
+EXECUTE sp_tableoption @TableNamePattern = N'[dspAuth].[Permission]', @OptionName = N'large value types out of row', @OptionValue = N'1';
+
+
+

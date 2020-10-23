@@ -9,8 +9,7 @@ BEGIN
 			INNER JOIN sys.types T ON C.system_type_id = T.user_type_id
 	WHERE	tb.is_ms_shipped = 0
 			AND C.name LIKE N'%description%'
-			AND (T.name != 'nvarchar'
-				OR	C.max_length != -1);
+			AND (C.max_length <> -1);
 
 	IF (@msg IS NOT NULL)
 	BEGIN

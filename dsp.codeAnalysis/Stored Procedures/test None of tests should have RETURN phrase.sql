@@ -9,7 +9,7 @@ BEGIN
             INNER JOIN sys.schemas AS S ON S.schema_id = O.schema_id
             INNER JOIN sys.extended_properties AS EP ON EP.major_id = S.schema_id
      WHERE  EP.name = 'tSQLt.TestClass' AND O.name LIKE 'test%' --
-        AND CHARINDEX('.return', LOWER(dspCodeAnalysis.Test_@removeWhitespacesBig(OBJECT_DEFINITION(O.object_id)))) > 0 --
+        AND CHARINDEX('.return', LOWER(dspCodeAnalysis.CA_@removeWhitespacesBig(OBJECT_DEFINITION(O.object_id)))) > 0 --
 		AND O.name <> OBJECT_NAME(@@PROCID);
 
     DECLARE @errorMessage TSTRING = @objectName + ' has atleast a [RETURN] phrase';

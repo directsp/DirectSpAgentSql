@@ -12,4 +12,14 @@ GO
 ALTER TABLE [dsp].[Exception] NOCHECK CONSTRAINT [FK_Exception_stringId];
 
 
+GO
+EXECUTE sp_tableoption @TableNamePattern = N'[dsp].[Exception]', @OptionName = N'large value types out of row', @OptionValue = N'1';
+
+
+
+
+GO
+ALTER TABLE [dsp].[Exception] NOCHECK CONSTRAINT [FK_Exception_stringId];
+
+
 

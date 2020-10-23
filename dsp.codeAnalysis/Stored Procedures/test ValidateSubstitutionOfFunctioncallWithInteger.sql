@@ -22,7 +22,7 @@ BEGIN
             BREAK;
 
         -- Removing Space, Tab, line feed
-        SET @script = dspCodeAnalysis.Test_@removeWhitespacesBig(@script);
+        SET @script = dspCodeAnalysis.CA_@removeWhitespacesBig(@script);
 
         -- Cutting out text before /*co+nst
         DECLARE @startIndex INT = CHARINDEX(@pattern, @script);
@@ -35,7 +35,7 @@ BEGIN
             DECLARE @constValueInFunction INT;
             DECLARE @constValueInScript INT;
             DECLARE @isMatch BIT;
-            EXEC dspCodeAnalysis.Test_@compareConstFunctionReturnValueWithScriptValue @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
+            EXEC dspCodeAnalysis.CA_@compareConstFunctionReturnValueWithScriptValue @script = @script OUTPUT, @constFunctionName = @constFunctionName OUTPUT,
                 @constValueInFunction = @constValueInFunction OUTPUT, @constValueInScript = @constValueInScript OUTPUT, @isMatch = @isMatch OUTPUT;
 
             IF (@isMatch = 0)

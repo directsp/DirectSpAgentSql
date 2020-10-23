@@ -5,3 +5,9 @@
     CONSTRAINT [PK_PermissionGroup] PRIMARY KEY CLUSTERED ([permissionGroupId] ASC)
 );
 
+
+GO
+EXECUTE sp_tableoption @TableNamePattern = N'[dspAuth].[PermissionGroup]', @OptionName = N'large value types out of row', @OptionValue = N'1';
+
+
+
