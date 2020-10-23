@@ -15,7 +15,7 @@ BEGIN
 
 	-- throw error for error result
 	IF (@result < 0) 
-		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = N'Get AppLock Error! ErrorNumber: {0}', @param0 = @result;
+		EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = N'Get AppLock Error! ResultCode: {0}', @param0 = @result;
 
 	SET @lockId = JSON_MODIFY(@lockId, '$.lockOwner', @lockOwner);
 	SET @lockId = JSON_MODIFY(@lockId, '$.lockName', @lockName);
