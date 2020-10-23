@@ -1,8 +1,10 @@
 ﻿CREATE TABLE [dbo].[Users] (
-    [userId]     [dbo].[TUSERID] NOT NULL,
+    [userId]     [dbo].[TUSERID] IDENTITY (1, 1) NOT NULL,
     [authUserId] CHAR (40)       NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([userId] ASC)
 );
+
+
 
 
 

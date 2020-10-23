@@ -13,6 +13,34 @@ BEGIN
     EXEC dsp.Init_@initSettings;
 
     ----------------
+    -- Init SystemUsers
+    ----------------
+    DECLARE @systemUserId TUSERID, @appUserId TUSERID;
+    EXEC dsp.Setting_props @systemUserId = @systemUserId OUTPUT, @appUserId = @appUserId OUTPUT;
+    IF (@systemUserId IS NULL)
+    BEGIN
+        INSERT  dbo.Users (authUserId)
+        VALUES ('$');
+
+        SET @systemUserId = SCOPE_IDENTITY();
+        EXEC dsp.Setting_propsSet @systemUserId = @systemUserId;
+        EXEC dsp.Log_trace @procId = @@PROCID, @message = 'SystemUser ($) has been created';
+    END;
+
+    ----------------
+    -- Init AppUsers
+    ----------------
+    IF (@appUserId IS NULL)
+    BEGIN
+        INSERT  dbo.Users (authUserId)
+        VALUES ('$$');
+
+        SET @appUserId = SCOPE_IDENTITY();
+        EXEC dsp.Setting_propsSet @appUserId = @appUserId;
+        EXEC dsp.Log_trace @procId = @@PROCID, @message = 'AppUser ($$) has been created';
+    END;
+
+    ----------------
     -- Recreate Strings
     ----------------
     IF (@reserved = 1) EXEC dsp.Log_trace @procId = @@PROCID, @message = 'Recreating strings';
