@@ -52,9 +52,6 @@ BEGIN
         RETURN 0;
     END;
 
-    -- Configure large fields
-    EXEC dsp.Init_@blobTables;
-
     -- Report it is done
     EXEC dsp.Log_trace @procId = @@PROCID, @message = 'Init has been completed.';
 

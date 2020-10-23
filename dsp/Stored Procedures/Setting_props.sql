@@ -5,8 +5,10 @@
 AS
 BEGIN
 
+    DECLARE @settingId AS INT;
+
     SELECT --
-        @appName = appName, --
+        @settingId = settingId, @appName = appName, --
         @appVersion = appVersion, -- 
         @systemUserId = systemUserId, -- 
         @appUserId = appUserId, -- 
@@ -17,5 +19,8 @@ BEGIN
         @isUnitTestMode = isUnitTestMode, --
         @maintenanceMode = maintenanceMode --
       FROM  dsp.Setting;
+
+    IF (@settingId IS NULL) --
+        EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = 'DirectSp has not been initialized! Please run dsp.Init';
 
 END;
