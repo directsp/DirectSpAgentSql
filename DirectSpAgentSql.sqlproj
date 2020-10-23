@@ -313,6 +313,7 @@
     <Build Include="dspCodeAnalysis\Stored Procedures\CA_%40compareConstFunctionReturnValueWithScriptValue.sql" />
     <Build Include="dspCodeAnalysis\Stored Procedures\CA_%40columnsWithBigintTypes.sql" />
     <Build Include="dsp\Stored Procedures\Table_setBlob.sql" />
+    <Build Include="api\Stored Procedures\Test_info.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\150\SqlSchemas\master.dacpac">

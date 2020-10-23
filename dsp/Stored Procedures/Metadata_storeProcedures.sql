@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [dsp].[Metadata_storeProcedures]
-    @api TJSON OUT
+﻿CREATE PROCEDURE dsp.Metadata_storeProcedures
+    @procInfos TJSON OUT
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -16,7 +16,7 @@ BEGIN
       FROM  sys.parameters AS params
             INNER JOIN sys.types AS Type ON Type.user_type_id = params.user_type_id;
 
-    SET @api =
+    SET @procInfos =
         CAST((   SELECT [Procedure].schemaName, [Procedure].name AS procedureName, params.paramName, params.isOutput, params.systemTypeName,
                      params.userTypeName, params.length AS length, [Procedure].extendedProps AS extendedProps
                    FROM (   SELECT  [Procedure].object_id, [Schema].name AS schemaName, [Procedure].name,
