@@ -62,14 +62,12 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="dsp.codeAnalysis" />
     <Folder Include="Security" />
     <Folder Include="dsp\" />
     <Folder Include="dsp\Tables\" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dsp\Functions\" />
-    <Folder Include="dsp.codeAnalysis\Stored Procedures" />
     <Folder Include="dsp\Stored Procedures\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="api\" />
@@ -80,8 +78,6 @@
     <Folder Include="dspAuth\Views\" />
     <Folder Include="dspAuth\Functions\" />
     <Folder Include="dspAuth\Stored Procedures\" />
-    <Folder Include="dsp.codeAnalysis\Views" />
-    <Folder Include="dsp.codeAnalysis\Functions" />
     <Folder Include="dspCodeAnalysis\" />
     <Folder Include="dspCodeAnalysis\Views\" />
     <Folder Include="dspCodeAnalysis\Functions\" />
@@ -175,19 +171,6 @@
     <Build Include="dsp\Functions\Const_maintenanceMode_readonly.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_none.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_block.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test ValidateSubstitutionOfFunctioncallWithInteger.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test Relations for ForeignKeys.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test Pagination.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test None of tests should have RETURN phrase.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test Description must be nvarchar_max_.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test Declare generic types INT, TSTRING.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test Declare BIGINT.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test Const Functions must have WITH SCHEMABINDING.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test API must have WITH EXECUTE AS OWNER.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test API must have DataAccessMode annotation.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test API must have Context_verify.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test API must have Context TCONTEXT OUT.sql" />
     <Build Include="dsp\Stored Procedures\Validate_checkNotNull.sql" />
     <Build Include="dsp\Stored Procedures\Util_verifyServerName.sql" />
     <Build Include="dsp\Stored Procedures\Util_protectProductionEnvironment.sql" />
@@ -300,10 +283,7 @@
     <Build Include="dspAuth\Stored Procedures\Permission_props.sql" />
     <Build Include="Security\dspAuth.sql" />
     <Build Include="dsp\Stored Procedures\Init_deleteAllDatabaseRecords.sql" />
-    <Build Include="dsp.codeAnalysis\Views\ScriptView.sql" />
-    <Build Include="dsp.codeAnalysis\Functions\Test_@removeWhitespaces.sql" />
     <Build Include="dsp\Functions\Convert_toSqlVariant.sql" />
-    <Build Include="dsp.codeAnalysis\Stored Procedures\test Wrong use of private method.sql" />
     <Build Include="dspCodeAnalysis\Views\TableView.sql" />
     <Build Include="dspCodeAnalysis\Functions\CA_%40removeWhitespacesBig.sql" />
     <Build Include="dspCodeAnalysis\Functions\CA_%40IsTargetSchema.sql" />
@@ -318,6 +298,24 @@
     <Build Include="dsp\Functions\Context_%40create.sql" />
     <Build Include="dspTest\Stored Procedures\test Cleanup protection.sql" />
     <Build Include="Security\dspTest.sql" />
+    <Build Include="dspTest\Stored Procedures\tSQLt.sql" />
+    <Build Include="Security\tSQLt.sql" />
+    <Build Include="dspCodeAnalysis\Functions\Test_%40removeWhitespaces.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test API must have Context TCONTEXT OUT.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test API must have Context_verify.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test API must have DataAccessMode annotation.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test API must have WITH EXECUTE AS OWNER.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test Const Functions must have WITH SCHEMABINDING.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test Declare BIGINT.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test Declare generic types INT, TSTRING.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test Description must be nvarchar_max_.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test None of tests should have RETURN phrase.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test Pagination.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test Relations for ForeignKeys.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test ValidateSubstitutionOfFunctioncallWithInteger.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
+    <Build Include="dspCodeAnalysis\Stored Procedures\test Wrong use of private method.sql" />
+    <Build Include="dspCodeAnalysis\Views\ScriptView.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\150\SqlSchemas\master.dacpac">

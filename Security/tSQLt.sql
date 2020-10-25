@@ -1,4 +1,4 @@
-﻿CREATE SCHEMA [api]
+﻿CREATE SCHEMA [tSQLt]
     AUTHORIZATION [dbo];
 
 
