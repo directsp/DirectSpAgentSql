@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE dspTest.[test Cleanup protection]
+CREATE PROCEDURE [dspTest].[test Cleanup protection]
 AS
 BEGIN
     DECLARE @msg TSTRING;
@@ -38,42 +38,48 @@ BEGIN
     END CATCH;
     ROLLBACK TRANSACTION Test;
 
-    
-	-----------
+
+    -----------
     /* check: */ SET @msg = 'if @isAutoCleanup is false, dsp.init should not delete records';
     -----------
     SAVE TRANSACTION Test;
     EXEC dsp.Setting_propsSet @isAutoCleanup = 0, @isProductionEnvironment = 1;
 
-    INSERT INTO dsp.Setting (settingId, appName)
-    VALUES (5555, N'ZooZoo');
+    CREATE TABLE dbo.Test_CleanUpFoo1 (id NCHAR(100));
+    INSERT INTO dbo.Test_CleanUpFoo1 (id)
+    VALUES (1);
+    INSERT INTO dbo.Test_CleanUpFoo1 (id)
+    VALUES (2);
 
     EXEC dsp.Init;
 
-    IF ((SELECT COUNT(1) FROM   dsp.Setting) = 1) EXEC tSQLt.Fail @Message0 = @msg;
+    IF ((SELECT COUNT(1) FROM   dbo.Test_CleanUpFoo1) <> 2) EXEC tSQLt.Fail @Message0 = @msg;
     ROLLBACK TRANSACTION Test;
 
     -----------
     /* check: */ SET @msg = 'if @isAutoCleanup is true, dsp.init should delete records';
     -----------
-	EXEC dsp.Log_trace @procId = @@PROCID, @message = @msg;
+    EXEC dsp.Log_trace @procId = @@PROCID, @message = @msg;
     SAVE TRANSACTION Test;
     EXEC dsp.Setting_propsSet @isAutoCleanup = 1, @isProductionEnvironment = 0;
-	
-    INSERT INTO dsp.Setting (settingId, appName)
-    VALUES (5555, N'ZooZoo');
+
+    CREATE TABLE dbo.Test_CleanUpFoo2 (id NCHAR(100));
+    INSERT INTO dbo.Test_CleanUpFoo2 (id)
+    VALUES (1);
+    INSERT INTO dbo.Test_CleanUpFoo2 (id)
+    VALUES (2);
 
     EXEC dsp.Init;
 
-    IF ((SELECT COUNT(1) FROM   dsp.Setting) > 1) EXEC tSQLt.Fail @Message0 = @msg;
+    IF ((SELECT COUNT(1) FROM   dbo.Test_CleanUpFoo2) <> 0) EXEC tSQLt.Fail @Message0 = @msg;
     ROLLBACK TRANSACTION Test;
 
-    -----------
-    -- check: autoCleanUp must be set after cleanuup
-    -----------
-    --SAVE TRANSACTION Test;
-    --EXEC dsp.Setting_propsSet @isAutoCleanup = 1, @isProductionEnvironment = 0;
-    --EXEC dsp.Init;
-    --ROLLBACK TRANSACTION Test;
+-----------
+-- check: autoCleanUp must be set after cleanuup
+-----------
+--SAVE TRANSACTION Test;
+--EXEC dsp.Setting_propsSet @isAutoCleanup = 1, @isProductionEnvironment = 0;
+--EXEC dsp.Init;
+--ROLLBACK TRANSACTION Test;
 
 END;
