@@ -8,7 +8,9 @@ BEGIN
     IF (@tranCount = 0)
         BEGIN TRANSACTION;
     BEGIN TRY
-        EXEC dsp.Init_@start @isProductionEnvironment = @isProductionEnvironment, @isWithCleanup = NULL, @reserved = NULL;
+
+        DECLARE @isAutoCleanup BIT = (SELECT    isAutoCleanup FROM  dsp.Setting);
+        EXEC dsp.Init_@start @isProductionEnvironment = @isProductionEnvironment, @isWithCleanup = @isAutoCleanup, @reserved = NULL;
 
         IF (@tranCount = 0) COMMIT;
     END TRY

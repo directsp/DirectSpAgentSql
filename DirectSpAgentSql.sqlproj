@@ -86,6 +86,8 @@
     <Folder Include="dspCodeAnalysis\Views\" />
     <Folder Include="dspCodeAnalysis\Functions\" />
     <Folder Include="dspCodeAnalysis\Stored Procedures\" />
+    <Folder Include="dspTest\" />
+    <Folder Include="dspTest\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\api.sql" />
@@ -170,7 +172,6 @@
     <Build Include="dsp\Functions\Convert_toString.sql" />
     <Build Include="dsp\Functions\Convert_binaryToBase64.sql" />
     <Build Include="dsp\Functions\Convert_binaryFromBase64.sql" />
-    <Build Include="dsp\Functions\Context_userId.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_readonly.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_none.sql" />
     <Build Include="dsp\Functions\Const_maintenanceMode_block.sql" />
@@ -248,7 +249,6 @@
     <Build Include="dbo\Stored Procedures\Init_fillLookups.sql" />
     <Build Include="dbo\Stored Procedures\Init_fillExceptions.sql" />
     <Build Include="dbo\Stored Procedures\Init_fillData.sql" />
-    <Build Include="dbo\Stored Procedures\Init_cleanup.sql" />
     <Build Include="dbo\Stored Procedures\Context_update.sql" />
     <Build Include="api\Stored Procedures\User_createOrUpdateByAuthClaims.sql" />
     <Build Include="api\Stored Procedures\System_api.sql" />
@@ -298,7 +298,6 @@
     <Build Include="dspAuth\Stored Procedures\Role_removeRoleMember.sql" />
     <Build Include="dspAuth\Stored Procedures\Role_propsSet.sql" />
     <Build Include="dspAuth\Stored Procedures\Permission_props.sql" />
-    <Build Include="dspAuth\Stored Procedures\Init_cleanup.sql" />
     <Build Include="Security\dspAuth.sql" />
     <Build Include="dsp\Stored Procedures\Init_deleteAllDatabaseRecords.sql" />
     <Build Include="dsp.codeAnalysis\Views\ScriptView.sql" />
@@ -314,6 +313,11 @@
     <Build Include="dspCodeAnalysis\Stored Procedures\CA_%40columnsWithBigintTypes.sql" />
     <Build Include="dsp\Stored Procedures\Table_setBlob.sql" />
     <Build Include="api\Stored Procedures\Test_info.sql" />
+    <Build Include="dsp\Functions\Setting_appUserId.sql" />
+    <Build Include="dsp\Functions\Context_%40updateSysUsers.sql" />
+    <Build Include="dsp\Functions\Context_%40create.sql" />
+    <Build Include="dspTest\Stored Procedures\test Cleanup protection.sql" />
+    <Build Include="Security\dspTest.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\150\SqlSchemas\master.dacpac">

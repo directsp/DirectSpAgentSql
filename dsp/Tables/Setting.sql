@@ -4,6 +4,7 @@
     [appVersion]                   VARCHAR (50)    CONSTRAINT [DF_Setting_appVersion] DEFAULT ('1.0.0') NOT NULL,
     [isUnitTestMode]               BIT             CONSTRAINT [DF_Setting_isUnitTestMode] DEFAULT ((0)) NOT NULL,
     [isProductionEnvironment]      BIT             CONSTRAINT [DF_Setting_isProductionEnvironment] DEFAULT ((0)) NOT NULL,
+    [isAutoCleanup]                BIT             CONSTRAINT [DF_Setting_isAutoCleanup] DEFAULT ((0)) NOT NULL,
     [paginationDefaultRecordCount] INT             CONSTRAINT [DF_Setting_paginationDefaultRecordCount] DEFAULT ((50)) NOT NULL,
     [paginationMaxRecordCount]     INT             CONSTRAINT [DF_Setting_paginationMaxRecordCount] DEFAULT ((200)*(1000000)) NOT NULL,
     [appUserId]                    [dbo].[TUSERID] NULL,
@@ -14,6 +15,20 @@
     CONSTRAINT [FK_Setting_appUserId] FOREIGN KEY ([appUserId]) REFERENCES [dbo].[Users] ([userId]),
     CONSTRAINT [FK_Setting_systemUserId] FOREIGN KEY ([systemUserId]) REFERENCES [dbo].[Users] ([userId])
 );
+
+
+GO
+ALTER TABLE [dsp].[Setting] NOCHECK CONSTRAINT [CK_Setting_maintenaceMode];
+
+
+GO
+ALTER TABLE [dsp].[Setting] NOCHECK CONSTRAINT [FK_Setting_appUserId];
+
+
+GO
+ALTER TABLE [dsp].[Setting] NOCHECK CONSTRAINT [FK_Setting_systemUserId];
+
+
 
 
 GO

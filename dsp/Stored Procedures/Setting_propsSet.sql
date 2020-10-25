@@ -2,7 +2,7 @@
 CREATE PROC dsp.Setting_propsSet
     @appName TSTRING = N'<notset>', @appVersion TSTRING = N'<notset>', @systemUserId TSTRING = N'<notset>', @appUserId TSTRING = N'<notset>',
     @paginationDefaultRecordCount INT = -1, @paginationMaxRecordCount INT = -1, @isProductionEnvironment INT = -1, @isUnitTestMode INT = -1,
-    @confirmServerName TSTRING = NULL, @maintenanceMode INT = -1
+    @maintenanceMode INT = -1, @isAutoCleanup INT = -1, @confirmServerName TSTRING = NULL
 AS
 BEGIN
 
@@ -16,12 +16,14 @@ BEGIN
 
         -- Update isProductionEnvironment
         UPDATE  dsp.Setting
-           SET  isProductionEnvironment = @isProductionEnvironment WHERE 1 = 1;
+           SET  isProductionEnvironment = @isProductionEnvironment
+         WHERE  1 = 1;
     END;
 
     IF (dsp.Param_isSet(@appName) = 1)
         UPDATE  dsp.Setting
-           SET  appName = @appName WHERE 1 = 1;
+           SET  appName = @appName
+         WHERE  1 = 1;
 
     IF (dsp.Param_isSet(@appVersion) = 1)
     BEGIN
@@ -29,31 +31,43 @@ BEGIN
         IF (@appVersion IS NULL) --
             EXEC dsp.Exception_throwGeneral @procId = @@PROCID, @message = 'appVersion contains an invalid value!';
         UPDATE  dsp.Setting
-           SET  appVersion = @appVersion WHERE 1 = 1;
+           SET  appVersion = @appVersion
+         WHERE  1 = 1;
     END;
+
+    IF (dsp.Param_isSet(@isAutoCleanup) = 1)
+        UPDATE  dsp.Setting
+           SET  isAutoCleanup = @isAutoCleanup
+         WHERE  1 = 1;
 
     IF (dsp.Param_isSet(@paginationDefaultRecordCount) = 1)
         UPDATE  dsp.Setting
-           SET  paginationDefaultRecordCount = @paginationDefaultRecordCount WHERE 1 = 1;
+           SET  paginationDefaultRecordCount = @paginationDefaultRecordCount
+         WHERE  1 = 1;
 
     IF (dsp.Param_isSet(@paginationMaxRecordCount) = 1)
-        UPDATE dsp.Setting
-           SET  paginationMaxRecordCount = @paginationMaxRecordCount WHERE 1 = 1;
+        UPDATE  dsp.Setting
+           SET  paginationMaxRecordCount = @paginationMaxRecordCount
+         WHERE  1 = 1;
 
     IF (dsp.Param_isSet(@isUnitTestMode) = 1)
         UPDATE  dsp.Setting
-           SET  isUnitTestMode = @isUnitTestMode WHERE 1 = 1;
+           SET  isUnitTestMode = @isUnitTestMode
+         WHERE  1 = 1;
 
     IF (dsp.Param_isSet(@systemUserId) = 1)
         UPDATE  dsp.Setting
-           SET  systemUserId = @systemUserId WHERE 1 = 1;
+           SET  systemUserId = @systemUserId
+         WHERE  1 = 1;
 
     IF (dsp.Param_isSet(@appUserId) = 1)
         UPDATE  dsp.Setting
-           SET  appUserId = @appUserId WHERE 1 = 1;
+           SET  appUserId = @appUserId
+         WHERE  1 = 1;
 
     IF (dsp.Param_isSet(@maintenanceMode) = 1)
         UPDATE  dsp.Setting
-           SET  maintenanceMode = @maintenanceMode WHERE 1 = 1;
+           SET  maintenanceMode = @maintenanceMode
+         WHERE  1 = 1;
 
 END;
