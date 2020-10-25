@@ -19,7 +19,7 @@ BEGIN
         BEGIN TRANSACTION;
     BEGIN TRY
 
-        DECLARE @whereand TSTRING = N'AND o.id NOT IN ( ISNULL(OBJECT_ID(''[dbo].[sysdiagrams]'',''[dsp].[LogFilterSetting]'',''[dsp].[LogUser]''),0))';
+        DECLARE @whereand TSTRING = N'AND o.name NOT IN ( ''sysdiagrams'', ''LogUser'', ''LogFilterSetting'')';
         EXEC sys.sp_MSforeachtable @command1 = N'ALTER TABLE ? NOCHECK CONSTRAINT ALL', @whereand = @whereand;
         EXEC sys.sp_MSforeachtable @command1 = N'DELETE FROM ?', @whereand = @whereand;
 
