@@ -316,6 +316,7 @@
     <Build Include="dspCodeAnalysis\Stored Procedures\test WITH EXECUTE AS OWNER should not exist in non api.sql" />
     <Build Include="dspCodeAnalysis\Stored Procedures\test Wrong use of private method.sql" />
     <Build Include="dspCodeAnalysis\Views\ScriptView.sql" />
+    <Build Include="dsp\Functions\Convert_binaryToBase64Max.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\150\SqlSchemas\master.dacpac">

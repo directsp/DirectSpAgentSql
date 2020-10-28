@@ -1,13 +1,8 @@
 ﻿
 -- #Inliner {"InlineMode":"none"} 
-CREATE FUNCTION [dsp].[Convert_binaryToBase64](@bin VARBINARY(MAX))
+CREATE FUNCTION [dsp].[Convert_binaryToBase64] (@bin VARBINARY(8000))
 RETURNS TSTRING
 AS
 BEGIN
-    DECLARE @base64 TSTRING
-    /*
-        SELECT dbo.f_BinaryToBase64(CONVERT(VARBINARY(MAX), 'Converting this text to Base64...'))
-    */
-    SET @base64 = CAST(N'' AS XML).value('xs:base64Binary(xs:hexBinary(sql:variable("@bin")))','TSTRING')
-    RETURN @base64
-END
+    RETURN 'aa';--dsp.Convert_binaryToBase64Max(CAST(@bin AS VARBINARY(MAX)));
+END;
